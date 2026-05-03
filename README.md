@@ -2,6 +2,11 @@
 
 Mini app estatica para preparar el examen de ingles B1 militar de acceso a suboficiales.
 
+## Version principal
+
+- `index.html`: version canonica para abrir en navegador o publicar con GitHub Pages.
+- `Entrenador_B1_Militar_Quickingles.html`: copia descargable independiente del mismo contenido.
+
 ## Que incluye
 
 - Banco de 141 preguntas unicas.
@@ -12,11 +17,17 @@ Mini app estatica para preparar el examen de ingles B1 militar de acceso a subof
 - Revision de respuestas con explicacion y estrategia.
 - Progreso local en el navegador mediante `localStorage`.
 
+## Material de apoyo incluido
+
+- `EXAM B IST ingles.pdf`
+- `examen b respuestas.pdf`
+- `BOE-A-2026-8623.pdf`
+- `SLP_presentaci_n (1).pdf`
+- `SLP_presentaci_n (1).pptx`
+
 ## Uso
 
-Abrir `index.html` en el navegador o publicarlo con GitHub Pages.
-
-El archivo `Entrenador_B1_Militar_Quickingles.html` es una copia descargable independiente.
+Abre `index.html` en el navegador o publicalo con GitHub Pages.
 
 ## Marca
 
