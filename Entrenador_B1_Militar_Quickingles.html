@@ -369,21 +369,21 @@ nav {
   </nav>
 
   <div class="home-hero">
-    <div class="callsign">// AGBS · PROCESO 2026022 · Quickinglés</div>
-    <h1>Entrena.<br><em>Aprueba.</em><br>Vuela.</h1>
-    <p>Preparación específica para el examen de inglés B1 militar de acceso a suboficiales — Ejército del Aire.</p>
+    <div class="callsign">// AGBS · CONVOCATORIA 2026 · Quickinglés</div>
+    <h1>Lee.<br><em>Elige.</em><br>Suma.</h1>
+    <p>Formato convocatoria 2026: 30 textos cortos + 30 huecos de gramática y vocabulario, nivel B1.</p>
   </div>
 
   <div class="stat-row">
     <div class="stat-card">
       <div class="lbl">Nota actual</div>
-      <div class="val amber">8,33</div>
-      <div class="sub">50 / 60 correctas</div>
+      <div class="val amber">30+</div>
+      <div class="sub">mínimo no eliminatorio</div>
     </div>
     <div class="stat-card">
       <div class="lbl">Objetivo</div>
-      <div class="val accent">9,50+</div>
-      <div class="sub">57+ / 60 correctas</div>
+      <div class="val accent">50+</div>
+      <div class="sub">objetivo competitivo</div>
     </div>
     <div class="stat-card">
       <div class="lbl">Acierto hoy</div>
@@ -391,9 +391,9 @@ nav {
       <div class="sub" id="home-pct-sub">Sin sesiones hoy</div>
     </div>
     <div class="stat-card">
-      <div class="lbl">Plazas disp.</div>
-      <div class="val" style="color:var(--danger)">2</div>
-      <div class="sub">Expediente: 9,54</div>
+      <div class="lbl">Cuenta</div>
+      <div class="val" style="color:var(--danger)">CF</div>
+      <div class="sub">PFC + PI/2</div>
     </div>
   </div>
 
@@ -403,8 +403,8 @@ nav {
       <h3>Comprensión escrita</h3>
       <p>Estrategias anti-trampa para los 3 tipos de error: datos numéricos, personajes múltiples y sinónimos ocultos.</p>
       <div class="module-meta">
-        <span><b>15</b> textos</span>
-        <span><b>3</b> tipos de trampa</span>
+        <span><b>60</b> textos</span>
+        <span><b>3</b> bloques</span>
         <span><b>50</b> min examen</span>
       </div>
       <div class="module-progress">
@@ -415,9 +415,9 @@ nav {
     <div class="module-card grammar" onclick="goModuleSelect('grammar')">
       <div class="module-tag">Parte 2</div>
       <h3>Gramática y vocabulario</h3>
-      <p>Los 7 errores detectados: tiempos verbales, gerundios, pronombres, pasiva, adverbios y collocations.</p>
+      <p>Huecos en blanco tipo B1: tiempos, gerundio/infinitivo, modales, pasiva, relativos, conectores y collocations.</p>
       <div class="module-meta">
-        <span><b>35</b> preguntas</span>
+        <span><b>77</b> huecos</span>
         <span><b>7</b> categorías</span>
         <span><b>50</b> min examen</span>
       </div>
@@ -428,8 +428,8 @@ nav {
 
     <div class="module-card" style="position:relative;overflow:hidden" onclick="goModuleSelect('real')">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#C9A84C,#A67A2E)"></div>
-      <div class="module-tag" style="background:rgba(16,185,129,0.15);color:#10b981">Fuente oficial</div>
-      <h3>Examen Real</h3>
+      <div class="module-tag" style="background:rgba(16,185,129,0.15);color:#10b981">Formato 2026</div>
+      <h3>Convocatoria 2026</h3>
       <p>50 preguntas de gramática + 10 textos de comprensión de exámenes reales de convocatorias anteriores.</p>
       <div class="module-meta">
         <span><b>60</b> preguntas</span>
@@ -456,7 +456,7 @@ nav {
     </div>
   </div>
 
-  <div class="footer">Quickinglés · B1 Militar · AGBS LII Promoción · quickingles.com</div>
+  <div class="footer">Quickinglés · B1 Militar · Convocatoria 2026 · quickingles.com</div>
 </div>
 
 <!-- ═══════════════════════════════════════════ MODULE SELECT ═══ -->
@@ -533,736 +533,199 @@ nav {
 /* ══════════════════════════════════════════════════════════════════
    DATA
 ══════════════════════════════════════════════════════════════════ */
+function q(passage, question, opts, correct, explanation, strategy, badge, topic) {
+  return { passage: passage, question: question, opts: opts, correct: correct, explanation: explanation, strategy: strategy, badge: badge, topic: topic };
+}
+
 const READING = {
-  numerica: {
-    label: 'Trampa numérica',
+  detalle_2026: {
+    label: 'Textos cortos - detalle',
     badge: 'numerica',
-    desc: 'Textos con varios números — asocia cada cifra a su referente antes de elegir',
+    desc: 'Lectura B1 con datos, condiciones, lugares, horarios y excepciones',
     questions: [
-      {
-        passage: 'Taylor Swift was born in <span class="hl-num">1989</span>. She started writing songs at the age of <span class="hl-num">14</span>, and by the time she was <span class="hl-num">16</span> she had already signed a record deal with a major label in Nashville. Her debut album sold over <span class="hl-num">1 million</span> copies in its first week of release.',
-        question: 'According to the text, at what age did Taylor Swift sign a record deal?',
-        opts: ['At 14', 'At 15', 'At 16', 'In 1989'],
-        correct: 2,
-        explanation: 'El texto dice <em>"by the time she was 16 she had already signed a record deal"</em>. La trampa es confundir la edad en que empezó a escribir canciones (14) con la del contrato (16). Ambos números son reales — hay que anclar cada uno a su acción.',
-        strategy: 'Mapa numérico: 1989 = año de nacimiento · 14 = empezó a escribir · 16 = firmó contrato · 1M = copias vendidas.'
-      },
-      {
-        passage: 'The Cork International Jazz Festival attracts visitors from all over the world. Last year\'s edition lasted <span class="hl-num">4</span> days and welcomed <span class="hl-num">over 40,000</span> people. A total of <span class="hl-num">1,200</span> musicians performed across <span class="hl-num">75</span> different venues throughout the city centre.',
-        question: 'How many musicians performed at the festival?',
-        opts: ['75', '4,000', '1,200', '40,000'],
-        correct: 2,
-        explanation: 'El texto menciona 4 cifras distintas y el examen las usa TODAS como opciones. Solo 1,200 corresponde a "musicians". El número 40,000 era de visitantes y 75 de locales.',
-        strategy: 'Cuando el texto tiene 4+ números, anótalos todos antes de leer las opciones. El examen usará todos como distractores.'
-      },
-      {
-        passage: 'Paula Radcliffe set the women\'s marathon world record in <span class="hl-num">2003</span>. She completed the <span class="hl-num">26.2</span>-mile course in <span class="hl-num">2 hours 15 minutes</span> and <span class="hl-num">25 seconds</span>. The record stood for <span class="hl-num">16 years</span> before it was broken in <span class="hl-num">2019</span>.',
-        question: 'For how long did Paula Radcliffe hold the world record?',
-        opts: ['2 hours 15 minutes', '2003 years', '16 years', '25 seconds'],
-        correct: 2,
-        explanation: 'La pregunta pide la duración del récord, no el tiempo de la carrera. <em>"The record stood for 16 years"</em> es la respuesta. La opción A es la trampa más convincente porque es el dato más memorable del texto.',
-        strategy: 'Lee la pregunta ANTES del texto para saber exactamente qué cifra necesitas. Aquí buscas "how long did she hold the record", no el tiempo de carrera.'
-      },
-      {
-        passage: 'The Eiffel Tower was built between <span class="hl-num">1887</span> and <span class="hl-num">1889</span> for the World\'s Fair in Paris. It stands <span class="hl-num">330 metres</span> tall and receives approximately <span class="hl-num">7 million</span> visitors per year, making it the most visited paid monument in the world.',
-        question: 'When was the Eiffel Tower completed?',
-        opts: ['1887', '1888', '1889', '330'],
-        correct: 2,
-        explanation: 'El texto dice que se construyó ENTRE 1887 y 1889. "Completed" (terminada) corresponde al año final: 1889. 1887 es cuando empezaron las obras.',
-        strategy: 'Ojo con "between X and Y" — el inicio y el fin son números distintos. "Completed / finished / built" = el año final.'
-      },
-      {
-        passage: 'The new sports centre opened last month with <span class="hl-num">3</span> swimming pools, <span class="hl-num">12</span> tennis courts and a gym with space for <span class="hl-num">500</span> people. Membership costs <span class="hl-num">£45</span> per month for adults and <span class="hl-num">£25</span> for students and under-16s.',
-        question: 'How much does an adult membership cost per month?',
-        opts: ['£12', '£25', '£45', '£500'],
-        correct: 2,
-        explanation: 'El texto asocia £45 a adultos y £25 a estudiantes/menores. La trampa es £25, que también aparece en el texto pero para otra categoría. Los otros números (3, 12, 500) aparecen como distractores aunque no tienen nada que ver con el precio.',
-        strategy: 'El examen convierte TODOS los números del texto en opciones. Identifica exactamente a qué concepto va ligado cada cifra.'
-      }
+      q('The base gym opens at 6:30 on weekdays, but on Saturdays it does not open until 9:00. Swimming lessons are only available on Tuesday and Thursday evenings.', 'When can soldiers attend swimming lessons?', ['On Tuesday and Thursday evenings', 'Every weekday morning', 'Only on Saturdays', 'At 6:30 every day'], 0, 'El texto dice que las clases de natacion solo son martes y jueves por la tarde.', 'Busca la condicion exacta: "only available" limita mucho la respuesta.', 'numerica', 'Detalle 2026'),
+      q('Candidates must bring a black pen, their identity card and a printed copy of the admission form. Mobile phones must be switched off and left in the bag before the test starts.', 'Which item must candidates bring?', ['A mobile phone', 'A printed admission form', 'A dictionary', 'A blue pencil'], 1, 'La copia impresa del formulario aparece en la lista obligatoria.', 'En textos de instrucciones, separa lo obligatorio de lo prohibido.', 'numerica', 'Detalle 2026'),
+      q('The military museum is closed on Mondays. From June to September it closes at 19:00, one hour later than during the rest of the year.', 'What is true about the museum in summer?', ['It closes at 18:00', 'It opens on Mondays', 'It closes at 19:00', 'It is closed every day'], 2, 'En verano cierra a las 19:00; el resto del aÃ±o cierra una hora antes.', 'Las fechas cambian la regla general. Fijate en "From June to September".', 'numerica', 'Detalle 2026'),
+      q('The first bus to the training area leaves the main gate at 7:15. A second bus leaves at 7:40, but it does not stop at the accommodation block.', 'Where does the second bus not stop?', ['At the main gate', 'At the training area', 'At the accommodation block', 'At the station'], 2, 'El segundo autobus no para en el bloque de alojamiento.', 'No confundas salida con parada. La pregunta pide donde no para.', 'numerica', 'Detalle 2026'),
+      q('The online course contains eight units. Students must complete units 1 to 6 before the final practice test. Units 7 and 8 are optional revision.', 'Which units are optional?', ['Units 1 and 2', 'Units 5 and 6', 'Units 7 and 8', 'All eight units'], 2, 'El texto dice que las unidades 7 y 8 son revision opcional.', 'Mandatory vs optional es una trampa clasica.', 'numerica', 'Detalle 2026'),
+      q('The cafeteria serves breakfast until 10:00. Hot meals are available from 13:00 to 15:30, and sandwiches can be bought throughout the day.', 'What can be bought throughout the day?', ['Breakfast', 'Hot meals', 'Sandwiches', 'Coffee only'], 2, 'Sandwiches can be bought throughout the day.', 'Throughout the day = durante todo el dia.', 'numerica', 'Detalle 2026'),
+      q('The application fee is 18 euros for adults and 9 euros for applicants under 18. Payment must be made online before the form is submitted.', 'How much does an applicant under 18 pay?', ['9 euros', '18 euros', '27 euros', 'Nothing'], 0, 'Menores de 18 pagan 9 euros.', 'Asocia cada numero con su grupo.', 'numerica', 'Detalle 2026'),
+      q('The lecture will take place in Room 204 because the main hall is being repaired. Signs at the entrance will show candidates where to go.', 'Why is the lecture in Room 204?', ['The main hall is unavailable', 'Room 204 is larger', 'The entrance is closed', 'Candidates asked for it'], 0, 'La razon es que el salon principal esta en reparacion.', 'Because introduce causa directa.', 'numerica', 'Detalle 2026'),
+      q('The written test lasts 50 minutes. Candidates who finish early must remain seated until the supervisor collects all answer sheets.', 'What must candidates do if they finish early?', ['Leave quietly', 'Ask for another sheet', 'Stay seated', 'Start the next test'], 2, 'Deben permanecer sentados hasta que se recojan las hojas.', 'Must remain seated = obligacion.', 'numerica', 'Detalle 2026'),
+      q('The new library card is free for students, but lost cards cost 5 euros to replace. Cards are valid for two years.', 'What costs 5 euros?', ['A new student card', 'Replacing a lost card', 'Using the library', 'Renewing every month'], 1, 'La reposicion de una tarjeta perdida cuesta 5 euros.', 'Cuidado: free y 5 euros aparecen juntos pero para cosas distintas.', 'numerica', 'Detalle 2026'),
+      q('The airport shuttle runs every 20 minutes during the morning. After 14:00 it runs every 30 minutes because there are fewer passengers.', 'How often does the shuttle run after 14:00?', ['Every 20 minutes', 'Every 30 minutes', 'Every 14 minutes', 'Only once'], 1, 'Despues de las 14:00 pasa cada 30 minutos.', 'After marca cambio de horario.', 'numerica', 'Detalle 2026'),
+      q('The sports competition was moved from Friday to Sunday due to bad weather. The meeting point and start time remain unchanged.', 'What changed?', ['The day of the competition', 'The start time', 'The meeting point', 'The type of sport'], 0, 'Solo cambio el dia: de viernes a domingo.', 'Remain unchanged significa que no cambia.', 'numerica', 'Detalle 2026'),
+      q('Visitors may enter the naval base only with a temporary pass. The pass must be returned at the security office before leaving.', 'What must visitors do before leaving?', ['Keep the pass', 'Return the pass', 'Buy a new pass', 'Call the museum'], 1, 'Deben devolver el pase en seguridad.', 'Before leaving suele introducir la ultima obligacion.', 'numerica', 'Detalle 2026'),
+      q('The training run is 5 kilometres long. Beginners may complete a shorter 3-kilometre route if they inform the instructor before starting.', 'Who may run 3 kilometres?', ['Everyone', 'Only beginners who inform the instructor', 'Only instructors', 'Nobody'], 1, 'La ruta corta es para principiantes si avisan antes.', 'If introduce condicion.', 'numerica', 'Detalle 2026'),
+      q('The weather report says the morning will be cloudy, but rain is expected after lunch. Outdoor lessons will continue unless there is a storm.', 'When is rain expected?', ['Before breakfast', 'After lunch', 'Only at night', 'During the weekend'], 1, 'Rain is expected after lunch.', 'No confundas cloudy con rain: son ideas diferentes.', 'numerica', 'Detalle 2026')
     ]
   },
-  personajes: {
-    label: 'Personajes múltiples',
-    badge: 'personajes',
-    desc: 'Textos con 2–3 personas — construye un mapa de quién hace qué antes de elegir',
-    questions: [
-      {
-        passage: 'The Jones family takes a very different approach to cooking. <span class="hl-who">Robert</span> spends hours in the kitchen every weekend preparing elaborate main dishes. His wife <span class="hl-who">Sandra</span>, however, prefers to barbecue outside when the weather allows. Their daughter <span class="hl-who">Emma</span> is responsible for making the desserts.',
-        question: 'Who cooks inside the house?',
-        opts: ['Sandra', 'Emma', 'Robert', 'Both Robert and Emma'],
-        correct: 2,
-        explanation: 'Mapa: Robert = cocina DENTRO. Sandra = barbacoa FUERA. Emma = postres. La opción A es la trampa clásica: Sandra sí cocina, pero fuera de casa, no dentro.',
-        strategy: 'Con múltiples personas, construye la tabla antes de las opciones: R=dentro · S=fuera · E=postres. El examen pone acciones reales en personas equivocadas.'
-      },
-      {
-        passage: '<span class="hl-who">Mark</span> and <span class="hl-who">Lisa</span> both work at the city hospital. Mark is a surgeon who operates three days a week, while Lisa works as a nurse in the emergency department every single day. Their colleague <span class="hl-who">Paul</span> is a radiologist who only comes in on Mondays and Thursdays.',
-        question: 'Who works at the hospital every day?',
-        opts: ['Mark', 'Paul', 'Mark and Lisa', 'Lisa'],
-        correct: 3,
-        explanation: 'Mapa: Mark = cirujano, 3 días/semana. Lisa = enfermera urgencias, CADA DÍA. Paul = radiólogo, lunes y jueves. La trampa es C ("Mark and Lisa") — ambos trabajan en el hospital, pero "every day" solo describe a Lisa.',
-        strategy: 'Lee la pregunta con cuidado: "every day" es la clave. Las opciones con "both" o "and" suelen ser trampas cuando la condición solo se aplica a uno.'
-      },
-      {
-        passage: 'In the office, <span class="hl-who">Sarah</span> is responsible for answering client calls and managing appointments. <span class="hl-who">David</span> handles all the accounts and prepares the monthly reports. <span class="hl-who">Their manager, Helen</span>, travels to meet clients every week and rarely works from the office.',
-        question: 'Who spends most of their time outside the office?',
-        opts: ['Sarah', 'David', 'Helen', 'Sarah and David'],
-        correct: 2,
-        explanation: 'Mapa: Sarah = llamadas y citas (en oficina). David = contabilidad e informes (en oficina). Helen = viaja a ver clientes cada semana, "raramente trabaja desde la oficina". Helen es quien está fuera.',
-        strategy: 'Busca en el texto las palabras que indican ubicación: "travels", "rarely works from the office". Son la evidencia directa para la respuesta.'
-      },
-      {
-        passage: 'The school\'s drama club is run by three teachers. <span class="hl-who">Mr Walsh</span> directs the plays and manages the budget. <span class="hl-who">Ms Reyes</span> teaches the students their lines and runs the acting workshops. <span class="hl-who">Mr Chen</span> is in charge of costumes and stage design.',
-        question: 'Who is responsible for the costumes?',
-        opts: ['Mr Walsh', 'Ms Reyes', 'Mr Chen', 'Ms Reyes and Mr Chen'],
-        correct: 2,
-        explanation: 'Directo del texto: "Mr Chen is in charge of costumes and stage design". La trampa es D porque Mr Chen también hace diseño de escenario — el examen puede hacer parecer que comparten la responsabilidad con alguien.',
-        strategy: 'Para preguntas de responsabilidad directa, busca frases exactas: "in charge of", "responsible for", "manages". No hay ambigüedad si te anclas al texto.'
-      },
-      {
-        passage: '<span class="hl-who">Alice</span> and <span class="hl-who">Ben</span> went on holiday together. Alice booked the flights and the hotel. Ben rented the car and planned all the day trips. On the last day, <span class="hl-who">their friend Kate</span> joined them and paid for the farewell dinner.',
-        question: 'Who organised the daily excursions?',
-        opts: ['Alice', 'Kate', 'Alice and Ben', 'Ben'],
-        correct: 3,
-        explanation: 'Mapa: Alice = vuelos y hotel. Ben = coche y EXCURSIONES. Kate = cena de despedida. "Day trips" = excursiones diarias. La trampa es C — Alice y Ben hicieron cosas juntos en general, pero las excursiones fueron solo de Ben.',
-        strategy: '"Day trips" = "daily excursions" → Ben. Este es un caso de sinónimo dentro de la trampa de personajes: el texto dice "day trips", la pregunta dice "excursions".'
-      }
-    ]
-  },
-  sinonimos: {
-    label: 'Sinónimo oculto',
+  parafrasis_2026: {
+    label: 'Textos cortos - parafrasis',
     badge: 'sinonimos',
-    desc: 'La respuesta correcta usa palabras distintas al texto — busca el significado, no la palabra',
+    desc: 'La opcion correcta dice lo mismo con otras palabras',
     questions: [
-      {
-        passage: 'Cork enjoys a <span class="hl-syn">temperate maritime climate</span>. Temperatures rarely drop below 5°C in winter and summer highs seldom exceed 20°C. Rainfall is <span class="hl-syn">spread throughout the year</span>, so visitors are always advised to carry a light jacket.',
-        question: 'What does the text say about the weather in Cork?',
-        opts: ['It is very sunny and hot', 'It is extremely cold in winter', 'It is pleasant and mild', 'It never rains in summer'],
-        correct: 2,
-        explanation: 'El texto NUNCA usa "pleasant" ni "mild", pero esas palabras son el sinónimo exacto de "temperate maritime climate" + temperaturas moderadas. Las opciones A y B contradicen el texto directamente.',
-        strategy: 'La respuesta correcta casi nunca copia palabras del texto. Pregúntate: ¿qué SIGNIFICA lo que dice el texto? "Temperate + rarely below 5°C + seldom exceed 20°C" = pleasant and mild.'
-      },
-      {
-        passage: 'The new community library opened three months ago and has quickly become <span class="hl-syn">very popular among local residents</span>. It offers free internet access, a children\'s corner and weekly film nights. The staff are <span class="hl-syn">always happy to help visitors</span> find what they need.',
-        question: 'What does the text say about the library staff?',
-        opts: ['They are difficult to contact', 'They are very helpful', 'They work long hours', 'They speak several languages'],
-        correct: 1,
-        explanation: '"Always happy to help visitors" = "very helpful". El texto nunca usa la palabra "helpful" — hay que inferir el significado. Las otras opciones no tienen base en el texto.',
-        strategy: 'Lista mental de sinónimos útiles: "happy to assist / help" → helpful. "Well-received / popular" → successful. "Reasonable price" → affordable.'
-      },
-      {
-        passage: 'The restaurant has received excellent reviews since it opened. The food is <span class="hl-syn">carefully prepared using fresh, local ingredients</span>, and portions are <span class="hl-syn">very generous</span>. The prices are <span class="hl-syn">surprisingly reasonable</span> given the quality on offer.',
-        question: 'What does the text suggest about the restaurant?',
-        opts: ['It is expensive', 'It offers good value for money', 'It is difficult to find', 'It is only open at weekends'],
-        correct: 1,
-        explanation: '"Prices are surprisingly reasonable given the quality" = "good value for money". El examen traduce "reasonable price + high quality" en "good value". La opción A es el contrario exacto del texto.',
-        strategy: '"Good value for money" es un sinónimo frecuente en este examen para: "reasonable prices", "not too expensive", "worth the price".'
-      },
-      {
-        passage: 'The national park covers an area of over 500 square kilometres. It is home to <span class="hl-syn">a wide variety of wildlife</span>, including deer, foxes and several rare bird species. The park is <span class="hl-syn">open to visitors throughout the year</span>, though summer is the most popular time to visit.',
-        question: 'What does the text tell us about the park?',
-        opts: ['It closes in winter', 'It only has birds', 'It can be visited any time of year', 'It covers exactly 500 square kilometres'],
-        correct: 2,
-        explanation: '"Open to visitors throughout the year" = "can be visited any time of year". La opción A es el contrario directo. La opción D cambia "over 500" por "exactly 500".',
-        strategy: 'Ojo con las opciones que toman un dato real del texto y lo modifican ligeramente: "over 500" ≠ "exactly 500". Siempre vuelve al texto para los detalles exactos.'
-      },
-      {
-        passage: 'Professor Anderson has spent thirty years <span class="hl-syn">researching animal behaviour in the wild</span>. She has written <span class="hl-syn">more than twenty books</span> on the subject and <span class="hl-syn">regularly gives lectures</span> at universities around the world. Her work has <span class="hl-syn">greatly influenced</span> the field of zoology.',
-        question: 'What does the text tell us about Professor Anderson\'s work?',
-        opts: ['She is a zoology student', 'She has had a significant impact on her field', 'She has written exactly twenty books', 'She rarely travels abroad'],
-        correct: 1,
-        explanation: '"Greatly influenced the field of zoology" = "significant impact on her field". La opción C cambia "more than twenty" por "exactly twenty". La opción D es el contrario de "regularly gives lectures at universities around the world".',
-        strategy: 'Sinónimo clave: "greatly influenced" = "significant impact". También: "widely known" = "famous" · "dedicated to" = "committed to" · "renowned" = "well-known".'
-      }
+      q('The town centre is within walking distance of the barracks, so most trainees do not need to use public transport.', 'What does the text say about the town centre?', ['It is close enough to walk to', 'It is too far from the barracks', 'It has no public transport', 'It is inside the barracks'], 0, 'Within walking distance = se puede ir andando.', 'Busca equivalencias, no palabras exactas.', 'sinonimos', 'Parafrasis 2026'),
+      q('The new timetable has made the morning routine more efficient. Soldiers now spend less time waiting between activities.', 'What has improved?', ['The amount of free time at night', 'The organisation of the morning', 'The quality of the food', 'The number of activities'], 1, 'More efficient y less time waiting indican mejor organizacion.', 'Efficient = bien organizado / sin perder tiempo.', 'sinonimos', 'Parafrasis 2026'),
+      q('Although the hotel is basic, it is clean, safe and reasonably priced.', 'What is the writer saying about the hotel?', ['It is luxurious', 'It offers acceptable value', 'It is dangerous', 'It is very expensive'], 1, 'Basic pero limpio, seguro y a precio razonable = buena relacion calidad-precio aceptable.', 'Although introduce un contraste moderado.', 'sinonimos', 'Parafrasis 2026'),
+      q('The instructor gave clear feedback, so the candidates understood exactly which areas they needed to improve.', 'What did the feedback help candidates do?', ['Know what to work on', 'Avoid all future tests', 'Change instructors', 'Finish the course early'], 0, 'Which areas they needed to improve = what to work on.', 'Feedback suele relacionarse con mejora concreta.', 'sinonimos', 'Parafrasis 2026'),
+      q('The charity event was well attended, with more than 300 people taking part in the run.', 'What does "well attended" mean?', ['Many people went to it', 'It was badly organised', 'It was cancelled', 'Few people knew about it'], 0, 'Well attended = asistio mucha gente.', 'Adjetivos de exito: popular, successful, well attended.', 'sinonimos', 'Parafrasis 2026'),
+      q('The new boots are lighter than the old model, but they are just as strong.', 'What is true about the new boots?', ['They are weaker', 'They are heavier', 'They are lighter but equally strong', 'They are only for officers'], 2, 'Lighter + just as strong = mas ligeras pero igual de resistentes.', 'Just as + adjective = igual de.', 'sinonimos', 'Parafrasis 2026'),
+      q('The guide advised visitors to avoid the main road because it is usually crowded at weekends.', 'Why should visitors avoid the main road?', ['It is often busy', 'It is closed forever', 'It is too short', 'It has no signs'], 0, 'Crowded = busy / lleno de gente.', 'Sinomimos frecuentes: crowded = busy, packed.', 'sinonimos', 'Parafrasis 2026'),
+      q('The candidate answered confidently, but some of his examples were not relevant to the question.', 'What was the problem?', ['He spoke too quietly', 'His examples did not fit the question', 'He refused to answer', 'He had no confidence'], 1, 'Not relevant = did not fit.', 'Relevant significa relacionado con lo preguntado.', 'sinonimos', 'Parafrasis 2026'),
+      q('The village is known for its annual air show, which attracts visitors from across the region.', 'Why is the village well known?', ['Because of its yearly air show', 'Because it has a large airport', 'Because pilots live there', 'Because it is very old'], 0, 'Annual = yearly.', 'Annual/yearly es una equivalencia basica de examen.', 'sinonimos', 'Parafrasis 2026'),
+      q('The new app allows trainees to check their progress without asking the instructor.', 'What can trainees do with the app?', ['Monitor their own progress', 'Contact every candidate', 'Change their marks', 'Avoid training'], 0, 'Check their progress = monitor their progress.', 'Check/monitor/follow progress suelen equivaler.', 'sinonimos', 'Parafrasis 2026'),
+      q('The restaurant was fully booked, so the group had to eat somewhere else.', 'Why did the group eat somewhere else?', ['The restaurant had no tables available', 'The food was bad', 'The group arrived too early', 'The restaurant was cheap'], 0, 'Fully booked = sin mesas disponibles.', 'Fully booked no significa cerrado; significa completo.', 'sinonimos', 'Parafrasis 2026'),
+      q('The officer asked for a brief report, not a detailed explanation of every decision.', 'What kind of report did the officer want?', ['A short report', 'A very long report', 'A report with no facts', 'A spoken report only'], 0, 'Brief = short.', 'Brief/short/concise son equivalentes.', 'sinonimos', 'Parafrasis 2026'),
+      q('The machine stopped working because it had not been serviced for several months.', 'Why did the machine fail?', ['It needed maintenance', 'It was too new', 'It was used for the first time', 'It had no electricity'], 0, 'Not been serviced = no habia recibido mantenimiento.', 'Service a machine = hacer mantenimiento.', 'sinonimos', 'Parafrasis 2026'),
+      q('The course is suitable for people who already have basic English and want to become more accurate.', 'Who is the course for?', ['Complete beginners only', 'People with some English', 'Native speakers only', 'Children under ten'], 1, 'Already have basic English = people with some English.', 'Suitable for = adecuado para.', 'sinonimos', 'Parafrasis 2026'),
+      q('The train was delayed, but the passengers were kept informed by regular announcements.', 'What helped the passengers?', ['They received frequent updates', 'They got free tickets', 'They changed trains', 'They left the station'], 0, 'Regular announcements = frequent updates.', 'Updates/announcements informan de cambios.', 'sinonimos', 'Parafrasis 2026')
+    ]
+  },
+  referencia_2026: {
+    label: 'Textos cortos - referencia',
+    badge: 'personajes',
+    desc: 'Personas, pronombres, grupos y acciones parecidas',
+    questions: [
+      q('Laura prepared the maps while Daniel checked the radios. Before leaving, she gave them to the instructor.', 'What did Laura give to the instructor?', ['The maps', 'The radios', 'The bags', 'The keys'], 0, 'She = Laura; them se refiere a the maps.', 'Sigue pronombres: she y them tienen referentes distintos.', 'personajes', 'Referencia 2026'),
+      q('Sergeant Hill spoke to the new recruits after they had finished breakfast. He reminded them to bring water to the field exercise.', 'Who needed to bring water?', ['Sergeant Hill', 'The new recruits', 'The kitchen staff', 'The visitors'], 1, 'Them se refiere a the new recruits.', 'Them suele retomar el grupo plural anterior.', 'personajes', 'Referencia 2026'),
+      q('Ana and Marta both applied for the course. Ana was accepted immediately, but Marta had to send one missing document.', 'Who needed to send a document?', ['Ana', 'Marta', 'Both Ana and Marta', 'Neither of them'], 1, 'Marta tuvo que enviar el documento que faltaba.', 'Cuando hay dos personas, haz mapa: Ana aceptada; Marta documento.', 'personajes', 'Referencia 2026'),
+      q('The mechanics inspected the vehicle before the driver collected it. They found a problem with one of the tyres.', 'Who found the problem?', ['The mechanics', 'The driver', 'The passengers', 'The instructor'], 0, 'They se refiere a the mechanics, plural anterior que inspecciona.', 'La accion logica ayuda: quien inspecciona encuentra el problema.', 'personajes', 'Referencia 2026'),
+      q('Carlos booked the classroom, but Elena prepared the presentation. It lasted about twenty minutes.', 'What lasted twenty minutes?', ['The classroom', 'The presentation', 'The booking', 'The break'], 1, 'It se refiere a la presentacion.', 'It puede referirse a una actividad, no solo a un objeto.', 'personajes', 'Referencia 2026'),
+      q('The medical team checked all candidates. Those with minor injuries were asked to wait for a second examination.', 'Who had to wait?', ['All candidates', 'The medical team', 'Candidates with minor injuries', 'Only the strongest candidates'], 2, 'Those with minor injuries = candidatos con lesiones leves.', 'Those with... define un subgrupo.', 'personajes', 'Referencia 2026'),
+      q('Mark cleaned the equipment and Peter put it back in the store room.', 'What did Peter put back?', ['The equipment', 'The store room', 'The cleaning products', 'The report'], 0, 'It se refiere a equipment.', 'Busca el objeto singular/colectivo anterior.', 'personajes', 'Referencia 2026'),
+      q('The first group started the test at 9:00. The second group began thirty minutes later.', 'When did the second group begin?', ['8:30', '9:00', '9:30', '10:30'], 2, 'Treinta minutos despues de las 9:00 es 9:30.', 'En grupos, controla el orden: first / second.', 'personajes', 'Referencia 2026'),
+      q('The old uniforms were collected on Monday. The new ones were delivered the next day.', 'What happened on Tuesday?', ['Old uniforms were collected', 'New uniforms were delivered', 'The store closed', 'Uniforms were designed'], 1, 'The next day after Monday is Tuesday; new ones = new uniforms.', 'Ones sustituye un sustantivo plural anterior.', 'personajes', 'Referencia 2026'),
+      q('Julia asked Roberto to print the forms because her printer was not working.', 'Whose printer was not working?', ['Juliaâ€™s', 'Robertoâ€™s', 'The office managerâ€™s', 'The instructorâ€™s'], 0, 'Her se refiere a Julia.', 'Pronombres posesivos: her = de ella.', 'personajes', 'Referencia 2026'),
+      q('The candidates met the guide at the station. He then took them to the accommodation block.', 'Who took the candidates to the accommodation block?', ['The guide', 'The station manager', 'The candidates', 'The driver'], 0, 'He se refiere al guia.', 'El sujeto masculino singular anterior es the guide.', 'personajes', 'Referencia 2026'),
+      q('The final exercise was harder than the previous one, but most trainees completed both.', 'What did most trainees complete?', ['Only the final exercise', 'Only the previous exercise', 'Both exercises', 'Neither exercise'], 2, 'Both = los dos ejercicios.', 'Both significa ambos.', 'personajes', 'Referencia 2026'),
+      q('Maria sent the email to the admissions office. They replied the following morning.', 'Who replied?', ['Maria', 'The admissions office', 'The candidates', 'The post office'], 1, 'They se refiere a admissions office como grupo/entidad.', 'Instituciones pueden usar they cuando actuan como equipo.', 'personajes', 'Referencia 2026'),
+      q('The hotel offers single rooms and shared rooms. The latter are cheaper but must be booked in advance.', 'Which rooms are cheaper?', ['Single rooms', 'Shared rooms', 'All rooms', 'No rooms'], 1, 'The latter = el segundo elemento mencionado: shared rooms.', 'Former = primero; latter = segundo.', 'personajes', 'Referencia 2026'),
+      q('The officer gave the keys to the driver, who put them in the vehicle immediately.', 'What did the driver put in the vehicle?', ['The keys', 'The officer', 'The documents', 'The fuel'], 0, 'Them se refiere a the keys.', 'Pronombres objeto plural: them = las llaves.', 'personajes', 'Referencia 2026')
     ]
   }
 };
 
 const GRAMMAR = {
-  going_to: {
-    label: 'Be going to — futuro',
-    badge: 'gramatica',
-    desc: 'Intención preformada vs decisión espontánea vs plan concreto',
-    questions: [
-      {
-        passage: 'Look at those dark clouds! It _____ rain.',
-        question: 'Choose the correct form:',
-        opts: ['will', 'is going to', 'rains', 'rained'],
-        correct: 1,
-        explanation: 'Evidencia visible en el presente (nubes oscuras) → <em>be going to</em>. Esta es la regla clave: cuando hay evidencia física presente que predice algo, siempre "be going to", nunca "will".',
-        strategy: 'Regla: evidencia visible/intención previa = going to · decisión espontánea = will · plan ya organizado = present continuous.'
-      },
-      {
-        passage: 'A: The phone is ringing! B: I _____ get it!',
-        question: 'Choose the correct form:',
-        opts: ['am going to', 'will', "am getting", 'get'],
-        correct: 1,
-        explanation: 'Decisión espontánea en el momento = <em>will</em>. B no tenía ninguna intención previa de coger el teléfono — la decisión surge al escucharlo sonar.',
-        strategy: 'Cuando alguien reacciona en el momento sin planificación previa → will. "I\'ll get it / I\'ll help you / I\'ll have the soup" son decisiones espontáneas.'
-      },
-      {
-        passage: 'I\'ve decided — I _____ study every evening this month.',
-        question: 'Choose the correct form:',
-        opts: ['will', 'am going to', 'study', 'studied'],
-        correct: 1,
-        explanation: '"I\'ve decided" indica que la intención ya estaba formada antes de hablar → <em>be going to</em>. La frase "I\'ve decided / I\'ve made up my mind" es la señal más clara de "going to".',
-        strategy: 'Señales de "going to": "I\'ve decided", "I\'ve made up my mind", "I plan to", "I intend to", o cualquier evidencia de intención previa.'
-      },
-      {
-        passage: 'She _____ not come to the party — she has already told everyone.',
-        question: 'Choose the correct form:',
-        opts: ["won\'t", "isn\'t going to", "doesn\'t", "didn\'t"],
-        correct: 1,
-        explanation: 'Forma negativa de "be going to": <em>is not going to</em> / <em>isn\'t going to</em>. El contexto ("she has already told everyone") confirma una intención ya comunicada → going to, no will.',
-        strategy: 'Negativa de going to: subject + am/is/are + NOT + going to + infinitivo. Nunca "no going to" sin el verbo to be.'
-      },
-      {
-        passage: 'They _____ get married next June. They\'ve already booked the venue.',
-        question: 'Choose the correct form:',
-        opts: ['will', 'are going to', 'are getting married', 'marry'],
-        correct: 1,
-        explanation: 'Tanto B como C son posibles con planes concretos, pero en el examen B1 la presencia de "already booked" (evidencia de planificación) es la señal que apunta a <em>are going to</em>.',
-        strategy: '"Already booked / already arranged / everything is set" → going to o present continuous. En el examen B1, estas señales apuntan siempre a going to como opción correcta.'
-      }
-    ]
-  },
-  gerund: {
-    label: 'Gerundio tras preposición',
-    badge: 'gramatica',
-    desc: 'Preposición + verbo → siempre gerundio (-ing), nunca infinitivo',
-    questions: [
-      {
-        passage: 'He\'s worried about _____ the English exam.',
-        question: 'Choose the correct form:',
-        opts: ['to fail', 'fail', 'failing', 'failed'],
-        correct: 2,
-        explanation: 'Preposición <em>about</em> + verbo = siempre gerundio: "worried about failing". Esta regla no tiene excepciones en inglés estándar.',
-        strategy: 'Regla absoluta: preposición + verbo = -ing. Las preposiciones más frecuentes en el examen: about, of, for, at, in, without, before, after, instead of.'
-      },
-      {
-        passage: 'She\'s very good at _____ foreign languages.',
-        question: 'Choose the correct form:',
-        opts: ['learn', 'to learn', 'learning', 'learned'],
-        correct: 2,
-        explanation: '<em>Good at</em> + verbo = gerundio. "Good at learning, playing, speaking, writing..." La preposición "at" exige -ing.',
-        strategy: 'Expresiones con preposición fija + gerundio: good at / bad at / interested in / fond of / keen on / afraid of / capable of.'
-      },
-      {
-        passage: 'Instead of _____ TV, why don\'t you go for a run?',
-        question: 'Choose the correct form:',
-        opts: ['watch', 'to watch', 'watched', 'watching'],
-        correct: 3,
-        explanation: '<em>Instead of</em> es una preposición compuesta → gerundio. "Instead of watching, studying, eating..." Una expresión muy frecuente en el examen B1.',
-        strategy: 'Preposiciones compuestas + gerundio: instead of / because of / in spite of / due to / on top of / as a result of.'
-      },
-      {
-        passage: 'I\'m really looking forward to _____ you again.',
-        question: 'Choose the correct form:',
-        opts: ['see', 'seeing', 'seen', 'to see'],
-        correct: 1,
-        explanation: '<em>Look forward to</em> — trampa clásica: el "to" aquí es una PREPOSICIÓN, no parte del infinitivo. Por tanto, va seguido de gerundio: "looking forward to seeing / meeting / hearing..."',
-        strategy: 'Trampas con "to" preposicional: look forward to + -ing · be used to + -ing · object to + -ing · when it comes to + -ing. Nunca infinitivo.'
-      },
-      {
-        passage: 'She left without _____ goodbye to anyone.',
-        question: 'Choose the correct form:',
-        opts: ['say', 'to say', 'saying', 'said'],
-        correct: 2,
-        explanation: '<em>Without</em> + verbo = gerundio. "Without saying, without thinking, without knowing..." Muy frecuente en el examen para describir acciones simultáneas o omitidas.',
-        strategy: 'Frase útil para recordar: "She left WITHOUT SAYING goodbye" = Se fue SIN DECIR adiós. El gerundio es el equivalente del infinitivo español tras "sin".'
-      }
-    ]
-  },
-  pronouns: {
-    label: 'Pronombres negativos',
-    badge: 'gramatica',
-    desc: 'anything / nothing / something — sin dobles negaciones en inglés',
-    questions: [
-      {
-        passage: 'I searched everywhere but I couldn\'t find _____.',
-        question: 'Choose the correct word:',
-        opts: ['nothing', 'something', 'anything', 'everything'],
-        correct: 2,
-        explanation: 'En inglés no hay doble negación. "Couldn\'t find" ya es negativo → el pronombre debe ser <em>anything</em>, no "nothing". "I couldn\'t find anything" = "I found nothing" (solo una negación).',
-        strategy: 'Regla: frase negativa (con not/n\'t) + anything. Frase afirmativa + something. Frase afirmativa sola = nothing (sin verbo negativo). NUNCA: didn\'t + nothing.'
-      },
-      {
-        passage: 'There is _____ wrong with this sentence — it\'s perfect.',
-        question: 'Choose the correct word:',
-        opts: ['anything', 'something', 'nothing', 'everything'],
-        correct: 2,
-        explanation: 'Frase afirmativa (sin "not") con significado negativo → <em>nothing</em>. "There is nothing wrong" = no hay nada mal. El verbo "is" está en afirmativo, así que usamos "nothing".',
-        strategy: 'Diferencia clave: "There is nothing wrong" (afirmativo + nothing) = "There isn\'t anything wrong" (negativo + anything). Mismo significado, distinta estructura.'
-      },
-      {
-        passage: 'Can I get you _____ to drink? Tea, coffee?',
-        question: 'Choose the correct word:',
-        opts: ['anything', 'nothing', 'something', 'everything'],
-        correct: 2,
-        explanation: 'En ofertas educadas en pregunta, se usa <em>something</em> en lugar de "anything". "Would you like something?" suena más cálido y educado que "anything".',
-        strategy: 'Excepción importante: preguntas de oferta educada (Can I get you / Would you like / Shall I bring) → something, no anything. "Anything" suena más neutro o indiferente.'
-      },
-      {
-        passage: 'He looked in every drawer but there was _____ there.',
-        question: 'Choose the correct word:',
-        opts: ['something', 'everything', 'anything', 'nothing'],
-        correct: 3,
-        explanation: '"There was nothing there" — frase afirmativa (was) con significado negativo → nothing. Equivalente: "there wasn\'t anything there". El verbo en afirmativo permite "nothing".',
-        strategy: 'Test rápido: ¿hay "not" o "n\'t" en la frase? → anything. ¿No hay negación pero el sentido es negativo? → nothing. ¿Hay negación + afirmación/oferta? → something.'
-      },
-      {
-        passage: 'Did you hear _____ strange last night? I thought I heard a noise.',
-        question: 'Choose the correct word:',
-        opts: ['nothing', 'something', 'anything', 'everything'],
-        correct: 2,
-        explanation: 'Pregunta neutra (genuina, no oferta) → <em>anything</em>. "Did you hear anything?" es una pregunta de información sin expectativa particular de respuesta.',
-        strategy: 'Preguntas neutras (did you / have you / is there) → anything. Pero: "Did you find something interesting?" puede implicar que el hablante espera que SÍ hayas encontrado algo.'
-      }
-    ]
-  },
-  present_perfect: {
-    label: 'Present Perfect',
-    badge: 'gramatica',
-    desc: 'Señales clave: ever, never, just, already, yet, for, since',
-    questions: [
-      {
-        passage: 'She _____ in Madrid since 2019.',
-        question: 'Choose the correct form:',
-        opts: ['lived', 'has lived', 'is living', 'lives'],
-        correct: 1,
-        explanation: '<em>Since</em> es una señal de Present Perfect. La situación empezó en 2019 y continúa ahora → "has lived". Si la frase dijera "from 2019 to 2022" (período cerrado), usaríamos simple past: "lived".',
-        strategy: 'Señales de Present Perfect: since (punto de inicio) · for (duración hasta ahora) · ever / never · already / yet · just · recently.'
-      },
-      {
-        passage: 'I _____ just _____ the report. Here it is.',
-        question: 'Choose the correct form:',
-        opts: ['did finish', 'have finished', 'finished', 'was finishing'],
-        correct: 1,
-        explanation: '<em>Just</em> con Present Perfect indica que algo ocurrió hace muy poco y el resultado es relevante ahora (aquí, el informe ya listo). "I have just finished" = acabo de terminar.',
-        strategy: '"Just" con Present Perfect indica inmediatez. "I\'ve just eaten / arrived / finished" = hace un momento. Diferente de "I just finished" en inglés americano (coloquial).'
-      },
-      {
-        passage: 'Have you _____ visited Japan?',
-        question: 'Choose the correct form:',
-        opts: ['ever', 'never', 'already', 'yet'],
-        correct: 0,
-        explanation: '<em>Ever</em> en preguntas de experiencia de vida = "alguna vez". "Have you ever visited?" pregunta si tienes esa experiencia en algún momento de tu vida.',
-        strategy: 'Ever = en preguntas de experiencia (Have you ever...?). Never = en respuestas negativas (I\'ve never been to...). Already = antes de lo esperado. Yet = hasta ahora (preguntas/negativas).'
-      },
-      {
-        passage: 'She _____ to Paris three times last year.',
-        question: 'Choose the correct form:',
-        opts: ['has been', 'went', 'has gone', 'goes'],
-        correct: 1,
-        explanation: '"Last year" es una referencia temporal cerrada y específica → Simple Past: <em>went</em>. Con Present Perfect NO se pueden usar marcadores temporales cerrados como last year, yesterday, in 2020, two hours ago.',
-        strategy: 'Si hay un marcador temporal cerrado (last year / yesterday / in 2020 / ago) → Simple Past siempre. Present Perfect solo con referencias abiertas o sin referencia temporal.'
-      },
-      {
-        passage: 'I _____ already _____ this film. Let\'s watch something else.',
-        question: 'Choose the correct form:',
-        opts: ['saw', 'have seen', 'see', 'was seeing'],
-        correct: 1,
-        explanation: '<em>Already</em> con Present Perfect indica que algo ocurrió antes de lo esperado o antes de que alguien lo sugiera. "I\'ve already seen it" = relevancia presente (no quiero verlo otra vez).',
-        strategy: 'Already en afirmativas (I\'ve already done it). Yet en negativas e interrogativas (I haven\'t done it yet / Have you done it yet?).'
-      }
-    ]
-  },
-  passive: {
-    label: 'Voz pasiva y vocabulario',
-    badge: 'gramatica',
-    desc: 'Collocations pasivas frecuentes: attended by, held at, awarded to...',
-    questions: [
-      {
-        passage: 'The ceremony _____ over two thousand people.',
-        question: 'Choose the correct option:',
-        opts: ['attended by', 'was attended by', 'attended', 'has attended'],
-        correct: 1,
-        explanation: 'Pasiva: "The ceremony was attended by 2,000 people" = 2,000 personas asistieron a la ceremonia. En el examen, "attended by" es una collocation pasiva frecuente. El sujeto (ceremony) no puede asistir → pasiva obligatoria.',
-        strategy: '"Attended by" = a la que asistieron [X personas]. Otras pasivas frecuentes: held at (celebrado en) · founded by (fundado por) · awarded to (concedido a) · known for (conocido por).'
-      },
-      {
-        passage: 'The conference _____ the city\'s main convention centre.',
-        question: 'Choose the correct option:',
-        opts: ['held at', 'was held at', 'held in', 'was held by'],
-        correct: 1,
-        explanation: '"Was held at" = se celebró en. "Held at" lleva la preposición <em>at</em> para lugares concretos (the centre, the stadium, the hotel). "In" para ciudades o países.',
-        strategy: 'Held AT + lugar concreto (at the stadium, at the hall). Held IN + ciudad/país (in Madrid, in Spain). "Was held" siempre en pasiva cuando el sujeto es el evento.'
-      },
-      {
-        passage: 'The prize _____ the youngest competitor in the history of the competition.',
-        question: 'Choose the correct option:',
-        opts: ['awarded to', 'was awarded to', 'was awarded by', 'awarded by'],
-        correct: 1,
-        explanation: '"Was awarded to" = le fue concedido a. La preposición correcta es <em>to</em> (el destinatario del premio). "By" indicaría quién lo entregó, no quién lo recibió.',
-        strategy: 'Awarded TO = recibido por (el ganador). Presented BY = entregado por (el presentador). Awarded BY = entregado por (quien lo da). La pregunta suele ir por el ganador → to.'
-      },
-      {
-        passage: 'The company _____ a small group of engineers in a garage in 1994.',
-        question: 'Choose the correct option:',
-        opts: ['was founded by', 'founded by', 'was founding', 'had founded'],
-        correct: 0,
-        explanation: '"Was founded by" = fue fundada por. Pasiva simple past: was/were + participio pasado. "Founded by" sin el verbo to be no es gramáticamente correcto como predicado.',
-        strategy: 'Pasiva simple past: was/were + participio. Founded by · built by · designed by · written by · directed by. Siempre con el verbo to be en la forma correcta del tiempo.'
-      },
-      {
-        passage: 'This region _____ its excellent wine and olive oil.',
-        question: 'Choose the correct option:',
-        opts: ['is known for', 'is known by', 'knows for', 'known for'],
-        correct: 0,
-        explanation: '"Is known for" = es conocida por (algo positivo, una característica). La preposición es <em>for</em>, no "by". "Known by" indicaría el agente que lo conoce, no la razón.',
-        strategy: 'Known FOR + motivo/característica: "known for its wine, known for being expensive". Known BY no es una expresión estándar en este contexto.'
-      }
-    ]
-  },
-  adverbs: {
-    label: 'Adverbios de énfasis',
-    badge: 'gramatica',
-    desc: 'even / just / quite — cada uno tiene un matiz muy específico',
-    questions: [
-      {
-        passage: 'She _____ won the gold medal! She\'s only 17 years old.',
-        question: 'Choose the correct adverb:',
-        opts: ['quite', 'just', 'even', 'very'],
-        correct: 2,
-        explanation: '<em>Even</em> expresa sorpresa o algo inesperado. "She EVEN won the gold medal" enfatiza lo sorprendente del logro dada su juventud. "Even" añade el matiz de "y encima", "para colmo".',
-        strategy: 'Even = incluso, para colmo (sorpresa). Just = exactamente / apenas / simplemente. Quite = bastante (moderado en inglés británico). Very = muy (grado alto, sin matiz).'
-      },
-      {
-        passage: 'The walk to the station is _____ five minutes. It\'s very close.',
-        question: 'Choose the correct adverb:',
-        opts: ['even', 'quite', 'just', 'very'],
-        correct: 2,
-        explanation: '<em>Just</em> aquí significa "solamente / apenas" → minimiza la cantidad. "Just five minutes" = solo cinco minutos. Funciona para restar importancia o tranquilizar.',
-        strategy: 'Just como minimizador: "just five minutes / just a small problem / just around the corner". No implica sorpresa (eso es "even"), sino pequeñez o simplicidad.'
-      },
-      {
-        passage: 'The film was _____ good, but I wouldn\'t say it was amazing.',
-        question: 'Choose the correct adverb:',
-        opts: ['very', 'just', 'even', 'quite'],
-        correct: 3,
-        explanation: '<em>Quite</em> en inglés británico significa "bastante" (grado moderado). "Quite good" = bastante bueno, pero no excepcional. La segunda parte de la frase lo confirma: "not amazing".',
-        strategy: 'Quite (BrE) = bastante, moderadamente. "Quite good" ≠ "very good". Señal contextual: si la frase añade "but not excellent / not amazing" → quite es la respuesta.'
-      },
-      {
-        passage: 'It was so cold that it _____ snowed in April.',
-        question: 'Choose the correct adverb:',
-        opts: ['just', 'quite', 'even', 'very'],
-        correct: 2,
-        explanation: '<em>Even</em> con eventos inesperados o extremos: "it even snowed in April" enfatiza lo extraordinario de que nevara en un mes tan tardío. El contexto ("so cold that") ya prepara para algo sorprendente.',
-        strategy: '"So + adjective + that it even + verb" es una estructura frecuente en el examen. Even siempre añade el matiz de lo inesperado o de ir más allá de lo normal.'
-      },
-      {
-        passage: 'I _____ wanted to say thank you. Nothing more.',
-        question: 'Choose the correct adverb:',
-        opts: ['even', 'quite', 'just', 'very'],
-        correct: 2,
-        explanation: '<em>Just</em> aquí significa "simplemente / solo". "I just wanted to say thank you" = solo quería darte las gracias. Minimiza la intención para que suene humilde o directo.',
-        strategy: 'Just como simplificador de intención: "I just wanted to / I\'m just asking / just checking". Muy frecuente en lenguaje educado y conversacional del examen B1.'
-      }
-    ]
-  },
-  collocations: {
-    label: 'Collocations y expresiones fijas',
-    badge: 'gramatica',
-    desc: 'as well as, make/do, take part/place, look forward to, in/at the end',
-    questions: [
-      {
-        passage: 'She plays tennis _____ swimming twice a week.',
-        question: 'Choose the correct expression:',
-        opts: ['as well as', 'as good as', 'as much as', 'as long as'],
-        correct: 0,
-        explanation: '<em>As well as</em> = además de / al igual que. Cuando va seguido de un verbo, este va en gerundio: "as well as swimming". Equivale a "in addition to + -ing".',
-        strategy: 'As well as + gerundio cuando el siguiente elemento es un verbo: "as well as playing / studying / working". No confundir con "as well" (también, al final de frase).'
-      },
-      {
-        passage: 'She _____ a great effort to pass the exam.',
-        question: 'Choose the correct verb:',
-        opts: ['did', 'made', 'took', 'had'],
-        correct: 1,
-        explanation: 'En inglés se dice "make an effort", no "do an effort". La distinción make/do es una de las collocations más examinadas en B1.',
-        strategy: 'Make + effort / decision / mistake / noise / progress / a phone call / friends. Do + homework / exercise / research / damage / business / a favour.'
-      },
-      {
-        passage: 'The concert _____ at the city\'s main stadium last Saturday.',
-        question: 'Choose the correct expression:',
-        opts: ['took part', 'took place', 'took part in', 'took over'],
-        correct: 1,
-        explanation: '<em>Take place</em> = tener lugar (un evento). <em>Take part in</em> = participar en (una persona o grupo). El sujeto es "the concert" (un evento) → take place.',
-        strategy: 'Take place = el evento ocurre (sujeto: evento). Take part in = participar (sujeto: persona). "The festival took place in July" / "She took part in the competition".'
-      },
-      {
-        passage: 'I\'m really looking forward to _____ the results.',
-        question: 'Choose the correct form:',
-        opts: ['hear', 'to hear', 'hearing', 'heard'],
-        correct: 2,
-        explanation: '"Look forward to" — la "to" es preposición, NO parte del infinitivo. Por tanto, el verbo que sigue va en gerundio: "looking forward to hearing".',
-        strategy: 'Look forward to + -ing es una de las trampas más frecuentes del examen B1. También: "be used to + -ing", "object to + -ing", "when it comes to + -ing".'
-      },
-      {
-        passage: 'He was very nervous, but _____ he passed the exam.',
-        question: 'Choose the correct expression:',
-        opts: ['at the end', 'in the end', 'by the end', 'to the end'],
-        correct: 1,
-        explanation: '<em>In the end</em> = al final (resultado tras un proceso o duda). <em>At the end</em> = al final de algo concreto (at the end of the book / the film / the street). Aquí el significado es "finalmente lo logró" → in the end.',
-        strategy: 'In the end = finally, after all (resultado). At the end of = al final de [algo concreto]. "In the end, everything worked out." / "At the end of the film, she cried."'
-      }
-    ]
-  }
+  tenses_2026: { label: 'Tiempos verbales B1', badge: 'gramatica', desc: 'Present perfect, past simple, future y contraste de tiempos', questions: [
+    q('I _____ this report yesterday afternoon.', 'Choose the correct option:', ['finish', 'finished', 'have finished', 'am finishing'], 1, 'Yesterday exige past simple: finished.', 'Marcadores de pasado terminado: yesterday, last week, in 2020.', 'gramatica', 'Tiempos B1'),
+    q('She _____ in this unit since 2023.', 'Choose the correct option:', ['works', 'worked', 'has worked', 'is work'], 2, 'Since 2023 conecta pasado con presente: has worked.', 'Since/for + periodo hasta ahora = present perfect.', 'gramatica', 'Tiempos B1'),
+    q('Look at those clouds. It _____ rain soon.', 'Choose the correct option:', ['will', 'is going to', 'rains', 'rained'], 1, 'Evidencia visible presente: is going to rain.', 'Going to = prediccion con evidencia.', 'gramatica', 'Tiempos B1'),
+    q('When I arrived, the instructor _____ to the candidates.', 'Choose the correct option:', ['spoke', 'was speaking', 'has spoken', 'speaks'], 1, 'Accion en progreso en un momento pasado: was speaking.', 'When + past simple puede interrumpir past continuous.', 'gramatica', 'Tiempos B1'),
+    q('We _____ the results yet.', 'Choose the correct option:', ['did not receive', 'have not received', 'are not receive', 'do not received'], 1, 'Yet con resultado pendiente: have not received.', 'Yet suele ir con present perfect negativo/interrogativo.', 'gramatica', 'Tiempos B1'),
+    q('The train _____ at 18:20 according to the timetable.', 'Choose the correct option:', ['leaves', 'is leaving', 'will leaving', 'left'], 0, 'Horarios oficiales usan present simple.', 'Timetables: The train leaves, the exam starts.', 'gramatica', 'Tiempos B1'),
+    q('They _____ dinner when the phone rang.', 'Choose the correct option:', ['had', 'were having', 'have had', 'are having'], 1, 'Accion en progreso interrumpida: were having.', 'Past continuous + when + past simple.', 'gramatica', 'Tiempos B1'),
+    q('I _____ never _____ to Scotland.', 'Choose the correct option:', ['did / go', 'have / been', 'am / going', 'was / been'], 1, 'Experience hasta ahora: have never been.', 'Have been to = haber estado en.', 'gramatica', 'Tiempos B1'),
+    q('Next month, we _____ a new training course.', 'Choose the correct option:', ['started', 'have started', 'are going to start', 'starts'], 2, 'Plan futuro: are going to start.', 'Next month apunta a futuro.', 'gramatica', 'Tiempos B1'),
+    q('He _____ his keys, so he cannot enter the office.', 'Choose the correct option:', ['lost', 'has lost', 'was losing', 'loses'], 1, 'Resultado presente: no puede entrar ahora.', 'Present perfect cuando el pasado afecta al presente.', 'gramatica', 'Tiempos B1'),
+    q('The meeting _____ at 10:00 and finished at 11:15.', 'Choose the correct option:', ['began', 'has begun', 'begins', 'was beginning'], 0, 'Accion pasada terminada con hora concreta: began.', 'Hora pasada cerrada = past simple.', 'gramatica', 'Tiempos B1'),
+    q('While the candidates _____, the supervisor checked their documents.', 'Choose the correct option:', ['waited', 'were waiting', 'have waited', 'wait'], 1, 'While introduce accion larga en progreso: were waiting.', 'While + past continuous.', 'gramatica', 'Tiempos B1')
+  ]},
+  gerund_inf_2026: { label: 'Gerundio e infinitivo', badge: 'gramatica', desc: 'Preposiciones, verbos frecuentes y expresiones fijas', questions: [
+    q('He is interested in _____ a military academy.', 'Choose the correct option:', ['join', 'to join', 'joining', 'joined'], 2, 'Preposicion in + gerundio.', 'Preposicion + -ing: interested in joining.', 'gramatica', 'Gerundio/infinitivo'),
+    q('They decided _____ the application before Friday.', 'Choose the correct option:', ['send', 'to send', 'sending', 'sent'], 1, 'Decide + to infinitive.', 'Decide/hope/plan/want + to.', 'gramatica', 'Gerundio/infinitivo'),
+    q('She avoided _____ the same mistake twice.', 'Choose the correct option:', ['make', 'to make', 'making', 'made'], 2, 'Avoid + gerundio.', 'Avoid/enjoy/finish/mind + -ing.', 'gramatica', 'Gerundio/infinitivo'),
+    q('We need _____ the answer sheet carefully.', 'Choose the correct option:', ['check', 'to check', 'checking', 'checked'], 1, 'Need + to infinitive.', 'Need to do = necesitar hacer.', 'gramatica', 'Gerundio/infinitivo'),
+    q('Before _____ the room, turn off your phone.', 'Choose the correct option:', ['enter', 'to enter', 'entering', 'entered'], 2, 'Before como preposicion + gerundio.', 'Before/after/without + -ing.', 'gramatica', 'Gerundio/infinitivo'),
+    q('He promised _____ on time.', 'Choose the correct option:', ['arrive', 'to arrive', 'arriving', 'arrived'], 1, 'Promise + to infinitive.', 'Promise/refuse/manage + to.', 'gramatica', 'Gerundio/infinitivo'),
+    q('There is no point _____ about the result now.', 'Choose the correct option:', ['worry', 'to worry', 'worrying', 'worried'], 2, 'There is no point + gerundio.', 'Expresion fija: no point + -ing.', 'gramatica', 'Gerundio/infinitivo'),
+    q('She is good at _____ clear instructions.', 'Choose the correct option:', ['give', 'to give', 'giving', 'gave'], 2, 'At + gerundio.', 'Good at + -ing.', 'gramatica', 'Gerundio/infinitivo'),
+    q('They offered _____ us with the luggage.', 'Choose the correct option:', ['help', 'to help', 'helping', 'helped'], 1, 'Offer + to infinitive.', 'Offer to help = ofrecerse a ayudar.', 'gramatica', 'Gerundio/infinitivo'),
+    q('He admitted _____ late for the briefing.', 'Choose the correct option:', ['be', 'to be', 'being', 'been'], 2, 'Admit + gerundio.', 'Admit/deny + -ing.', 'gramatica', 'Gerundio/infinitivo')
+  ]},
+  modals_passive_2026: { label: 'Modales y pasiva', badge: 'gramatica', desc: 'Must, should, can, have to y pasiva B1', questions: [
+    q('The form _____ be signed by the applicant.', 'Choose the correct option:', ['must', 'has', 'is', 'does'], 0, 'Must + infinitivo: obligacion.', 'Must be signed = debe ser firmado.', 'gramatica', 'Modales/pasiva'),
+    q('This room _____ cleaned every morning.', 'Choose the correct option:', ['cleans', 'is cleaned', 'cleaned', 'is cleaning'], 1, 'Pasiva presente: is cleaned.', 'Objeto recibe la accion: room is cleaned.', 'gramatica', 'Modales/pasiva'),
+    q('You _____ smoke inside the building.', 'Choose the correct option:', ['must not', 'do not have', 'are not', 'should to'], 0, 'Must not = prohibicion.', 'Must not es mas fuerte que should not.', 'gramatica', 'Modales/pasiva'),
+    q('The exam results _____ published next week.', 'Choose the correct option:', ['will be', 'will', 'are', 'have'], 0, 'Pasiva futura: will be published.', 'Will be + participio.', 'gramatica', 'Modales/pasiva'),
+    q('Candidates _____ bring a dictionary to the test.', 'Choose the correct option:', ['can not to', 'are not allowed to', 'must to', 'do not allowed'], 1, 'Be allowed to expresa permiso/prohibicion.', 'Not allowed to = no se permite.', 'gramatica', 'Modales/pasiva'),
+    q('The documents _____ before the deadline.', 'Choose the correct option:', ['must send', 'must be sent', 'must sent', 'must be send'], 1, 'Pasiva con modal: must be sent.', 'Modal + be + participio.', 'gramatica', 'Modales/pasiva'),
+    q('You _____ see a doctor if the pain continues.', 'Choose the correct option:', ['should', 'must to', 'have', 'can to'], 0, 'Should = consejo.', 'Should + infinitivo sin to.', 'gramatica', 'Modales/pasiva'),
+    q('The old computer _____ repaired yesterday.', 'Choose the correct option:', ['is', 'was', 'has', 'did'], 1, 'Pasiva pasado: was repaired.', 'Yesterday + pasiva = was/were + participio.', 'gramatica', 'Modales/pasiva'),
+    q('We _____ wear uniform during the inspection.', 'Choose the correct option:', ['have to', 'must to', 'can to', 'should to'], 0, 'Have to + infinitivo = obligacion.', 'Have to no lleva to despues del verbo principal.', 'gramatica', 'Modales/pasiva'),
+    q('The instructions _____ understood by all candidates.', 'Choose the correct option:', ['must be', 'must', 'must have', 'must to be'], 0, 'Must be understood = deben ser entendidas.', 'Pasiva con modal: modal + be + participio.', 'gramatica', 'Modales/pasiva')
+  ]},
+  pronouns_relatives_2026: { label: 'Pronombres y relativos', badge: 'gramatica', desc: 'Something/anything, who/which/where, posesivos y cuantificadores', questions: [
+    q('I cannot find _____ in this bag.', 'Choose the correct option:', ['nothing', 'anything', 'something', 'any'], 1, 'En negativa se usa anything.', 'Not + anything; no + nothing en ingles estandar.', 'gramatica', 'Pronombres/relativos'),
+    q('The officer _____ spoke to us was very clear.', 'Choose the correct option:', ['which', 'who', 'where', 'whose'], 1, 'Who para personas.', 'Relative pronoun: people = who/that.', 'gramatica', 'Pronombres/relativos'),
+    q('This is the room _____ the interview will take place.', 'Choose the correct option:', ['who', 'which', 'where', 'whose'], 2, 'Where para lugar.', 'Place + where.', 'gramatica', 'Pronombres/relativos'),
+    q('Is there _____ I can do to help?', 'Choose the correct option:', ['something', 'anything', 'nothing', 'anywhere'], 1, 'Pregunta abierta: anything.', 'Anything en preguntas y negativas.', 'gramatica', 'Pronombres/relativos'),
+    q('The candidate _____ documents were missing called the office.', 'Choose the correct option:', ['who', 'which', 'whose', 'where'], 2, 'Whose expresa posesion.', 'Whose documents = cuyos documentos.', 'gramatica', 'Pronombres/relativos'),
+    q('There are _____ chairs for all candidates.', 'Choose the correct option:', ['enough', 'too much', 'little', 'any'], 0, 'Enough chairs = suficientes sillas.', 'Enough + noun.', 'gramatica', 'Pronombres/relativos'),
+    q('I have _____ time to finish the form.', 'Choose the correct option:', ['many', 'few', 'enough', 'anybody'], 2, 'Enough time = tiempo suficiente.', 'Enough funciona con incontables y contables.', 'gramatica', 'Pronombres/relativos'),
+    q('The book _____ I bought is very useful.', 'Choose the correct option:', ['who', 'which', 'where', 'whose'], 1, 'Which para cosas.', 'Thing = which/that.', 'gramatica', 'Pronombres/relativos'),
+    q('She did not tell _____ about the change.', 'Choose the correct option:', ['somebody', 'anybody', 'nobody', 'anything'], 1, 'Not + anybody.', 'Evita doble negacion: did not tell anybody.', 'gramatica', 'Pronombres/relativos'),
+    q('This is the academy _____ my brother studied.', 'Choose the correct option:', ['which', 'where', 'who', 'whose'], 1, 'Academy como lugar: where.', 'Where = in which para lugares.', 'gramatica', 'Pronombres/relativos')
+  ]},
+  connectors_2026: { label: 'Conectores B1', badge: 'gramatica', desc: 'Although, because, so, despite, unless y finalidad', questions: [
+    q('_____ it was raining, the exercise continued.', 'Choose the correct option:', ['Because', 'Although', 'So', 'If'], 1, 'Although introduce contraste.', 'Although + clause.', 'gramatica', 'Conectores'),
+    q('The road was closed, _____ we had to take another route.', 'Choose the correct option:', ['because', 'so', 'although', 'unless'], 1, 'So introduce consecuencia.', 'Cause -> so -> result.', 'gramatica', 'Conectores'),
+    q('We stayed inside _____ the weather was dangerous.', 'Choose the correct option:', ['because', 'although', 'so', 'unless'], 0, 'Because introduce causa.', 'Because responde a why.', 'gramatica', 'Conectores'),
+    q('_____ the delay, the group arrived before lunch.', 'Choose the correct option:', ['Although', 'Despite', 'Because', 'So'], 1, 'Despite + noun.', 'Despite the delay; although there was a delay.', 'gramatica', 'Conectores'),
+    q('You cannot enter _____ you show your pass.', 'Choose the correct option:', ['unless', 'because', 'although', 'so'], 0, 'Unless = if not.', 'Cannot enter unless = no puedes entrar si no...', 'gramatica', 'Conectores'),
+    q('He trained every day _____ improve his result.', 'Choose the correct option:', ['for', 'to', 'because', 'so'], 1, 'To + infinitive expresa finalidad.', 'To improve = para mejorar.', 'gramatica', 'Conectores'),
+    q('The test was difficult; _____, most candidates passed.', 'Choose the correct option:', ['however', 'because', 'so', 'for'], 0, 'However introduce contraste.', 'However va con coma/punto y coma.', 'gramatica', 'Conectores'),
+    q('Take a jacket _____ it gets cold later.', 'Choose the correct option:', ['in case', 'although', 'despite', 'so'], 0, 'In case = por si.', 'In case + posibilidad futura.', 'gramatica', 'Conectores'),
+    q('She spoke slowly _____ everyone could understand.', 'Choose the correct option:', ['so that', 'because of', 'despite', 'unless'], 0, 'So that expresa finalidad con sujeto + verbo.', 'So that + clause = para que.', 'gramatica', 'Conectores'),
+    q('The office was closed _____ it was a public holiday.', 'Choose the correct option:', ['because', 'although', 'unless', 'so'], 0, 'Because introduce causa.', 'It was a public holiday explica la razon.', 'gramatica', 'Conectores')
+  ]},
+  vocabulary_2026: { label: 'Vocabulario y collocations', badge: 'gramatica', desc: 'Make/do, take, get, phrasal verbs y expresiones frecuentes', questions: [
+    q('You should _____ attention to the instructions.', 'Choose the correct option:', ['make', 'pay', 'do', 'take'], 1, 'Pay attention = prestar atencion.', 'Collocation fija.', 'gramatica', 'Vocabulario'),
+    q('He _____ an effort to improve his pronunciation.', 'Choose the correct option:', ['did', 'made', 'took', 'gave'], 1, 'Make an effort.', 'Make effort, make progress, make a decision.', 'gramatica', 'Vocabulario'),
+    q('The meeting was _____ off because the captain was ill.', 'Choose the correct option:', ['called', 'put', 'taken', 'looked'], 0, 'Call off = cancelar.', 'Phrasal verb frecuente.', 'gramatica', 'Vocabulario'),
+    q('Please _____ in this form before Friday.', 'Choose the correct option:', ['fill', 'make', 'take', 'get'], 0, 'Fill in a form = rellenar un formulario.', 'Form suele ir con fill in.', 'gramatica', 'Vocabulario'),
+    q('The instructor gave us useful _____.', 'Choose the correct option:', ['advices', 'advice', 'advise', 'advises'], 1, 'Advice es incontable; no advices.', 'A piece of advice, some advice.', 'gramatica', 'Vocabulario'),
+    q('We need to _____ a decision today.', 'Choose the correct option:', ['do', 'make', 'take', 'give'], 1, 'Make a decision.', 'Decision va con make.', 'gramatica', 'Vocabulario'),
+    q('The bus was late, so we _____ the train.', 'Choose the correct option:', ['lost', 'missed', 'failed', 'forgot'], 1, 'Miss the train = perder el tren.', 'Lose = perder objeto; miss = perder transporte/oportunidad.', 'gramatica', 'Vocabulario'),
+    q('She is responsible _____ checking the lists.', 'Choose the correct option:', ['of', 'to', 'for', 'with'], 2, 'Responsible for + -ing/noun.', 'Preposicion fija: responsible for.', 'gramatica', 'Vocabulario'),
+    q('The course will _____ place in July.', 'Choose the correct option:', ['take', 'make', 'do', 'have'], 0, 'Take place = tener lugar.', 'Events take place.', 'gramatica', 'Vocabulario'),
+    q('He arrived _____ time for the briefing.', 'Choose the correct option:', ['in', 'on', 'at', 'by'], 0, 'In time = a tiempo antes de empezar.', 'On time = puntual; in time = con tiempo suficiente.', 'gramatica', 'Vocabulario')
+  ]}
 };
 
-/* ══════════════════════════════════════════════════════════════════
-   REAL EXAM DATA — fuente: sermilitar.com (muestra gratuita oficial)
-   50 preguntas de gramática/vocabulario de exámenes reales + 10 textos reading
-══════════════════════════════════════════════════════════════════ */
 const REAL_GRAMMAR = {
-  articulos_pronombres: {
-    label: 'Artículos y pronombres',
-    badge: 'gramatica',
-    desc: 'a/an/the, pronombres objeto y posesivos — del examen real',
-    questions: [
-      { passage: '_____ Rome is in _____ Italy.', question: 'Elige la opción correcta (artículos):', opts: ['— / —','The / —','— / the','The / the'], correct: 0, explanation: 'Los nombres de ciudades y países NO llevan artículo en inglés: "Rome is in Italy". Nunca "the Rome" ni "the Italy".', strategy: 'Regla: ciudades y países sin artículo. Excepción: the USA, the UK, the Netherlands (países con nombre plural o compuesto).' },
-      { passage: 'She wants to be _____ actress.', question: 'Elige el artículo correcto:', opts: ['a','an','—','good'], correct: 1, explanation: '"An" se usa antes de sonido vocálico. "Actress" empieza por vocal → "an actress". Regla: a + consonante, an + vocal.', strategy: 'La regla es por SONIDO, no por letra. "A university" (sonido /j/). "An hour" (la h es muda → sonido vocal).' },
-      { passage: '_____ books are mine.', question: 'Elige el demostrativo correcto:', opts: ['That','Those','This','None'], correct: 1, explanation: '"Books" es plural → "Those books". "That" y "This" son singulares. "Those" = esos/aquellos (lejos, plural).', strategy: 'This/That = singular. These/Those = plural. This/These = cerca. That/Those = lejos.' },
-      { passage: "I'm sorry I didn't phone you. I lost _____ phone number.", question: 'Elige el posesivo correcto:', opts: ['you','yours','your','some'], correct: 2, explanation: '"Your" es adjetivo posesivo y acompaña a un sustantivo: "your phone number". "Yours" es pronombre posesivo y va solo (sin sustantivo).', strategy: 'Your + sustantivo. Yours solo (sin sustantivo). "Is this yours?" / "Give me your number."' },
-      { passage: 'Kate is my friend. I know _____ well.', question: 'Elige el pronombre objeto correcto:', opts: ['her','she','he','him'], correct: 0, explanation: 'Pronombre objeto de persona femenina = "her". "She" es sujeto, no objeto. "I know her" (objeto directo).', strategy: 'Pronombres objeto: me/you/him/her/it/us/them. Van después del verbo o preposición.' }
-    ]
-  },
-  cuantificadores: {
-    label: 'Cuantificadores',
-    badge: 'gramatica',
-    desc: 'much/many/any/some/a lot of — del examen real',
-    questions: [
-      { passage: "I haven't got _____ chocolates.", question: 'Elige el cuantificador correcto:', opts: ['much','little','some','any'], correct: 3, explanation: 'Frase negativa + sustantivo contable plural → "any". "Much" va con incontables. "Some" es para afirmativas.', strategy: 'Any: frases negativas e interrogativas. Some: frases afirmativas y ofertas. Much: incontables. Many: contables.' },
-      { passage: 'There is not _____ sugar in the cupboard.', question: 'Elige el cuantificador correcto:', opts: ['many','much','a lot','some'], correct: 1, explanation: '"Sugar" es incontable → "much". "Many" va con sustantivos contables (many books, many people).', strategy: 'Much + incontable (sugar, water, money, time). Many + contable (books, people, cars).' }
-    ]
-  },
-  wh_questions: {
-    label: 'Preguntas WH y relativos',
-    badge: 'gramatica',
-    desc: 'what/which/whose/who/where + cláusulas de relativo — del examen real',
-    questions: [
-      { passage: '_____ are you doing right now?', question: 'Elige el pronombre interrogativo correcto:', opts: ['Which','What','Where','Who'], correct: 1, explanation: '"What are you doing?" pregunta por una acción/actividad. "Which" implica elección entre opciones concretas. "Where" es para lugares.', strategy: 'What = qué/qué cosa. Which = cuál (de varias opciones). Where = dónde. Who = quién. When = cuándo. Why = por qué.' },
-      { passage: '_____ car is this? It\'s mine.', question: 'Elige el interrogativo correcto:', opts: ['Whose','What','Which','Whom'], correct: 0, explanation: '"Whose" pregunta por la posesión: ¿de quién es? "Whose car" = ¿de quién es el coche?', strategy: 'Whose = de quién (posesión). Whom = a quién / para quién (objeto formal). Who = quién (sujeto).' },
-      { passage: 'The river _____ flows through the town is polluted.', question: 'Elige el relativo correcto:', opts: ['which','who','whose','whom'], correct: 0, explanation: '"Which" se usa para cosas (the river). "Who" para personas. "The river which flows..." = el río que fluye...', strategy: 'Who = personas. Which = cosas/animales. That = personas y cosas (informal). Whose = posesión.' },
-      { passage: 'That is the hotel _____ we met for the first time.', question: 'Elige el relativo correcto:', opts: ['where','that','in which','were'], correct: 0, explanation: '"Where" introduce una cláusula de lugar relativo: "the hotel where we met". "In which" también es posible pero "where" es más natural.', strategy: 'Where = lugar relativo. When = tiempo relativo ("the day when"). Why = razón relativa ("the reason why").' },
-      { passage: 'My friend Ilias, _____ lives in Greece, is a policeman.', question: 'Elige el relativo correcto:', opts: ['than','that','which','who'], correct: 3, explanation: '"Who" para personas en cláusulas explicativas (con comas). No se puede usar "that" en cláusulas explicativas (non-defining).', strategy: 'Cláusula explicativa (con comas) → who/which, nunca that. Cláusula especificativa (sin comas) → that/who/which.' }
-    ]
-  },
-  modales_tiempo: {
-    label: 'Modales y tiempos verbales',
-    badge: 'gramatica',
-    desc: 'could/should/must, pasado simple/continuo, present perfect — del examen real',
-    questions: [
-      { passage: "A year ago I _____ speak English well, but now I can.", question: 'Elige el modal correcto:', opts: ["couldn't","cannot","didn't","didn't can"], correct: 0, explanation: '"A year ago" → pasado → "couldn\'t" (could + not). "Cannot" es presente. "Didn\'t can" no existe en inglés.', strategy: 'Can → could (pasado). Must → had to (pasado). Will → would (pasado). Los modales no tienen "-ed", cambian de forma.' },
-      { passage: "It is important for students to do their homework. They _____ do their homework.", question: 'Elige el modal de obligación:', opts: ['must to','have','can','should'], correct: 3, explanation: '"Should" expresa obligación/recomendación débil. "Must to" no existe (must va directo + infinitivo sin to). "Can" es habilidad/posibilidad.', strategy: 'Must/should/can/may + infinitivo SIN "to". Excepción: ought TO + infinitivo.' },
-      { passage: 'It _____ when the car crashed.', question: 'Elige el tiempo correcto:', opts: ['was raining','rained','have rained','rains'], correct: 0, explanation: 'Pasado continuo para la acción de fondo: "It was raining" (llovía en ese momento). El accidente (pasado simple "crashed") interrumpe la lluvia.', strategy: 'Past continuous = acción en progreso en el pasado (fondo). Past simple = acción puntual que interrumpe (figura).' },
-      { passage: "I _____ to work yesterday because I had an enormous headache.", question: 'Elige el tiempo correcto:', opts: ['went not','didn\'t go','had not gone','don\'t go'], correct: 1, explanation: '"Yesterday" → pasado simple negativo → didn\'t + infinitivo: "didn\'t go". "Went not" no existe.', strategy: 'Pasado simple negativo: didn\'t + infinitivo base. NUNCA "didn\'t went" ni "went not".' },
-      { passage: "Where are Ann and Rob? I _____ them for a couple of weeks.", question: 'Elige el tiempo correcto:', opts: ["haven't seen","didn't see","don't see","hadn't seen"], correct: 0, explanation: '"For a couple of weeks" con situación que continúa hasta ahora → present perfect: "haven\'t seen". "Didn\'t see" necesitaría un tiempo específico cerrado.', strategy: 'Present perfect + for/since = situación que va desde el pasado hasta ahora. Simple past + ago/yesterday/last = tiempo cerrado.' },
-      { passage: "I _____ with my parents. Now I live in my own apartment.", question: 'Elige el tiempo correcto:', opts: ["used to live","'m living","had live","did live"], correct: 0, explanation: '"Used to live" = vivía (habitualmente en el pasado, ya no). El contraste "Now I live..." confirma que ya no vive con sus padres.', strategy: '"Used to + infinitivo" = hábito/estado pasado que ya no existe. No hay forma afirmativa negativa "usen\'t to" en B1 — usar "didn\'t use to".' },
-      { passage: "I _____ John yesterday.", question: 'Elige el tiempo correcto:', opts: ["haven't seen","wish I have seen","must see","didn't see"], correct: 3, explanation: '"Yesterday" es un marcador de tiempo cerrado → pasado simple: "didn\'t see". Present perfect es INCOMPATIBLE con "yesterday/last week/ago".', strategy: 'Marcadores de tiempo CERRADO (yesterday, last night, in 2020, ago) → SIEMPRE pasado simple, nunca present perfect.' },
-      { passage: "I _____ here since nine o'clock.", question: 'Elige el tiempo correcto (contexto: estoy en clase ahora):', opts: ['sit','am sitting','have been sitting','have sit'], correct: 2, explanation: '"Since nine o\'clock" con una acción que CONTINÚA ahora → present perfect continuous: "have been sitting". Enfatiza la duración de la acción en curso.', strategy: 'Have/has been + -ing: acción que empezó en el pasado y continúa ahora. "Since" (punto de inicio) y "for" (duración) activan esta estructura.' }
-    ]
-  },
-  futuro_condicional: {
-    label: 'Futuro y condicionales',
-    badge: 'gramatica',
-    desc: 'going to / will have / unless / condicionales 2ª y 3ª — del examen real',
-    questions: [
-      { passage: "There's a film on TV tonight. _____ watch it.", question: 'Elige la forma de futuro correcta:', opts: ['I go to','I\'m going to','I','I have'], correct: 1, explanation: '"I\'m going to watch it" = intención ya decidida. La película está programada (evidencia/intención previa) → going to.', strategy: 'Going to = intención previa o evidencia visible. Will = decisión espontánea. Present continuous = plan concreto ya organizado.' },
-      { passage: 'We _____ it by next week.', question: 'Elige la forma de futuro correcta:', opts: ['will finish','finish','finished','will have finished'], correct: 3, explanation: '"By next week" + future perfect: "will have finished" = habrá terminado para la semana que viene. "By" + fecha/tiempo → future perfect.', strategy: '"By" + tiempo futuro → will have + participio (future perfect). Indica que algo estará completado antes de ese momento.' },
-      { passage: "I won't fix it _____ you give me the tools.", question: 'Elige la conjunción condicional:', opts: ['when','if','provided','unless'], correct: 3, explanation: '"Unless" = a menos que = if not. "I won\'t fix it unless you give me..." = No lo arreglaré si no me das... La negativa "won\'t" + unless es la estructura estándar.', strategy: 'Unless = if not. "I\'ll go unless it rains" = I\'ll go if it doesn\'t rain. Cuidado: "unless" ya incluye la negación, no añadir "not".' },
-      { passage: 'If I were rich, I _____ buy a Ferrari.', question: 'Elige la forma correcta (2ª condicional):', opts: ['would','will','—','shall'], correct: 0, explanation: '2ª condicional (hipotética): If + past simple → would + infinitivo. "If I were rich, I would buy..." La situación es irreal/hipotética.', strategy: '2ª condicional: If + past simple, would/could/might + infinitivo. "Were" se usa para todas las personas con "be" en 2ª condicional (formal).' },
-      { passage: 'If I had woken up earlier, I _____ the train.', question: 'Elige la forma correcta (3ª condicional):', opts: ["wouldn't missed","wouldn't have missed","hadn't missed","wouldn't had missed"], correct: 1, explanation: '3ª condicional (pasado irreal): If + past perfect → would have + participio. "Wouldn\'t have missed" = no habría perdido.', strategy: '3ª condicional: If + had + participio, would have + participio. Para situaciones pasadas que no ocurrieron.' }
-    ]
-  },
-  pasiva_causativa: {
-    label: 'Pasiva y causativa',
-    badge: 'gramatica',
-    desc: 'passive voice, have something done, is believed to — del examen real',
-    questions: [
-      { passage: "Sue is going to write the report. Rewrite in passive: 'The report _____ by Sue'", question: 'Elige la pasiva correcta:', opts: ['will be written','is written','has been written','is going to be written'], correct: 3, explanation: '"Going to" en activa → "going to be + participio" en pasiva. "The report is going to be written by Sue."', strategy: 'Pasiva de going to: is/are going to be + participio. Pasiva de will: will be + participio. Pasiva simple present: is/are + participio.' },
-      { passage: 'He _____ to have stolen three banks.', question: 'Elige la forma pasiva correcta:', opts: ['is','is believed','believe','had'], correct: 1, explanation: '"Is believed to + infinitivo" es una estructura pasiva de verbos de opinión. "He is believed to have stolen..." = Se cree que robó...', strategy: 'Pasiva de opinión: It is believed/thought/said + that OR He is believed/thought/said + to + infinitivo. Muy frecuente en prensa.' },
-      { passage: "I'm going to the hairdresser. Choose the correct sentence:", question: 'Elige la opción correcta (causativa):', opts: ["I'm going to have my hair cut.","I'm going to cut my hair.","I go to cut my hair.","I'm cutting my hair."], correct: 0, explanation: '"Have + objeto + participio" = causativa: hago que alguien lo haga por mí. "Have my hair cut" = que me corten el pelo (el peluquero). No lo corto yo mismo.', strategy: 'Causativa: have/get + objeto + participio. "Have the car washed/repaired/checked". Get es más informal que have.' }
-    ]
-  },
-  preposiciones_phrasal: {
-    label: 'Preposiciones y phrasal verbs',
-    badge: 'gramatica',
-    desc: 'preposiciones de tiempo/lugar + phrasal verbs frecuentes — del examen real',
-    questions: [
-      { passage: 'I went to a movie _____ Monday.', question: 'Elige la preposición correcta:', opts: ['in','on','at','the'], correct: 1, explanation: '"On" + día de la semana: "on Monday, on Friday, on Christmas Day". "In" para meses/años/estaciones. "At" para horas.', strategy: 'On + día/fecha (on Monday, on 3rd June). In + mes/año/estación (in January, in 2025, in summer). At + hora/festividad (at 8pm, at Christmas).' },
-      { passage: 'Have you ever been _____ London?', question: 'Elige la preposición correcta:', opts: ['at','to','in','on'], correct: 1, explanation: '"Been to" = haber ido a (y vuelto). "Have you ever been TO London?" = ¿Has estado alguna vez en Londres?', strategy: '"Been to" (experiencia de visita) vs "been in" (estar en un lugar en este momento). "I\'ve been to Paris" ≠ "I\'m in Paris now".' },
-      { passage: "I'm afraid _____ rats.", question: 'Elige la preposición correcta:', opts: ['at','of','from','with'], correct: 1, explanation: '"Afraid of" = tener miedo a/de. Preposición fija: afraid OF. "I\'m afraid of spiders/dogs/heights."', strategy: 'Adjetivos + preposición fija: afraid of · good at · interested in · fond of · proud of · responsible for · tired of · bored with.' },
-      { passage: 'She is married _____ my cousin.', question: 'Elige la preposición correcta:', opts: ['with','at','to','from'], correct: 2, explanation: '"Married to" en inglés (no "married with"). "She is married to my cousin." En español decimos "casada CON", en inglés es "married TO".', strategy: '"Married to" (inglés) ≠ "casado con" (español). Otro falso amigo de preposición: "depend ON" (no "depend of").' },
-      { passage: 'Mary is _____ the babies.', question: 'Elige el phrasal verb correcto:', opts: ['looking for','looking after','looking','looking of'], correct: 1, explanation: '"Look after" = cuidar de. "Look for" = buscar. Mary está cuidando a los bebés, no buscándolos.', strategy: 'Look after = cuidar. Look for = buscar. Look forward to = esperar con ilusión. Look up = buscar en un diccionario/internet.' },
-      { passage: 'Bob hasn\'t gone _____ in years.', question: 'Elige la forma correcta:', opts: ['for fishing','to fish','fishing','fished'], correct: 2, explanation: '"Go + -ing" para actividades de ocio: go fishing, go swimming, go shopping, go running, go dancing. Nunca "go for fishing" ni "go to fish".', strategy: 'Go + gerundio (-ing) para actividades de ocio: fishing, swimming, skiing, camping, hiking, dancing, shopping.' },
-      { passage: 'If I were you, I\'d _____ school.', question: 'Elige el phrasal verb correcto:', opts: ['give away','give off','give up','give out'], correct: 2, explanation: '"Give up" = dejar de hacer algo / abandonar. "Give away" = regalar. "Give off" = emitir (olor/luz). "Give out" = distribuir / agotarse.', strategy: 'Give up = abandonar/dejar. Give away = regalar. Give off = emitir. Give out = distribuir. Give in = ceder/rendirse.' },
-      { passage: 'You better fasten your seatbelt. The plane is going to _____.', question: 'Elige el phrasal verb correcto:', opts: ['go off','take out','take off','leave off'], correct: 2, explanation: '"Take off" = despegar (avión). "Go off" = explotar/sonar (alarma). "Take out" = sacar. "Leave off" = parar.', strategy: 'Take off = despegar (avión) / quitarse (ropa). Land = aterrizar. Take off tiene doble sentido frecuente en el examen.' },
-      { passage: 'My cat is good _____ mice.', question: 'Elige la preposición correcta:', opts: ['at catching','catching','on catching','in catching'], correct: 0, explanation: '"Good at + gerundio" = ser bueno en algo. "My cat is good AT catching mice." La preposición "at" es fija con "good".', strategy: 'Good AT + gerundio. Bad at + gerundio. Skilled at. Talented at. El gerundio es obligatorio después de preposición.' },
-      { passage: 'What does NATO _____?', question: 'Elige el phrasal verb correcto:', opts: ['mean','stand for','is','signification'], correct: 1, explanation: '"Stand for" = significar (siglas/abreviaciones). "NATO stands for North Atlantic Treaty Organization." "Mean" también significa "querer decir" pero "stand for" es la expresión correcta para siglas.', strategy: '"Stand for" = ser las siglas de / significar. También: "What does it stand for?" en contextos de acrónimos y abreviaciones.' }
-    ]
-  },
-  conectores_contraste: {
-    label: 'Conectores y conjunciones',
-    badge: 'gramatica',
-    desc: 'despite/even though/so as to/unless — del examen real',
-    questions: [
-      { passage: 'He is learning ironing _____ help his wife.', question: 'Elige el conector de propósito:', opts: ['as','for to','for','so as to'], correct: 3, explanation: '"So as to" = para (expresar propósito, más formal). "In order to" también correcto. "For to" no existe. "For" no introduce infinitivo de propósito.', strategy: 'Propósito: to / in order to / so as to + infinitivo. "For" + gerundio cuando es función general ("This knife is for cutting bread").' },
-      { passage: '_____ ostriches have wings, they can\'t fly.', question: 'Elige el conector de contraste:', opts: ['Despite','Because','Even though','However'], correct: 2, explanation: '"Even though" + oración (sujeto + verbo). "Despite" + sustantivo o gerundio (sin sujeto+verbo). "Even though they have wings" es una oración completa.', strategy: 'Even though / Although / Though + oración completa (S+V). Despite / In spite of + sustantivo o gerundio (-ing).' },
-      { passage: '_____ being only five stories high, the Pentagon is one of the biggest buildings in the world.', question: 'Elige el conector de contraste:', opts: ['Despite','Because','Even though','However'], correct: 0, explanation: '"Despite" + gerundio: "Despite being only five stories high..." No hay sujeto+verbo → Despite/In spite of, no "Even though".', strategy: 'Despite/In spite of + gerundio o sustantivo. "Despite the rain / Despite being tired / In spite of his age." Nunca "Despite that + oración".' },
-      { passage: 'I like playing football.', question: 'Elige la respuesta de acuerdo correcta:', opts: ['So do I.','As I do.','I also.','Same than me.'], correct: 0, explanation: '"So do I" = yo también (acuerdo con afirmativa). La estructura es: So + auxiliar + sujeto. "So do I / So am I / So have I / So can I".', strategy: 'Acuerdo afirmativo: So + aux + I. "I love football — So do I." Acuerdo negativo: Neither/Nor + aux + I. "I don\'t like it — Neither do I."' },
-      { passage: 'As soon as she _____ tell her to see me.', question: 'Elige la forma verbal correcta:', opts: ['will arrive','arrives','arrive','would arrive'], correct: 1, explanation: 'Cláusula temporal de futuro (as soon as / when / after / until) → presente simple en inglés, aunque el significado sea futuro. "As soon as she arrives" (no "will arrive").', strategy: 'Conjunciones de tiempo con referencia futura: when/as soon as/after/before/until + presente simple (NUNCA will).' }
-    ]
-  }
+  huecos_2026: { label: 'Huecos tipo convocatoria 2026', badge: 'gramatica', desc: '30 huecos mezclados de nivel B1', questions: [
+    q('If I _____ enough time, I will review the answers.', 'Choose the correct option:', ['have', 'will have', 'had', 'having'], 0, 'First conditional: if + present, will + infinitive.', 'No uses will despues de if en primera condicional.', 'gramatica', 'Huecos 2026'),
+    q('The exam is _____ difficult than last year.', 'Choose the correct option:', ['more', 'most', 'much', 'many'], 0, 'Comparativo con adjetivo largo: more difficult.', 'More + long adjective + than.', 'gramatica', 'Huecos 2026'),
+    q('He has lived here _____ five years.', 'Choose the correct option:', ['since', 'for', 'during', 'ago'], 1, 'For + duracion.', 'For five years; since 2021.', 'gramatica', 'Huecos 2026'),
+    q('I am looking forward to _____ you soon.', 'Choose the correct option:', ['see', 'to see', 'seeing', 'seen'], 2, 'Look forward to + gerundio.', 'To aqui es preposicion.', 'gramatica', 'Huecos 2026'),
+    q('The room was full, so there were _____ seats available.', 'Choose the correct option:', ['few', 'little', 'much', 'any'], 0, 'Few con contables plurales: seats.', 'Few seats = pocas sillas.', 'gramatica', 'Huecos 2026'),
+    q('This exercise is not _____ to finish in ten minutes.', 'Choose the correct option:', ['enough easy', 'easy enough', 'too easy', 'so easy'], 1, 'Adjective + enough.', 'Easy enough, old enough, fast enough.', 'gramatica', 'Huecos 2026'),
+    q('She _____ to Madrid twice this month.', 'Choose the correct option:', ['has been', 'went', 'goes', 'was going'], 0, 'This month abierto hasta ahora: present perfect.', 'Periodos no terminados suelen llevar present perfect.', 'gramatica', 'Huecos 2026'),
+    q('The answer sheet must _____ in pencil.', 'Choose the correct option:', ['complete', 'be completed', 'completed', 'be completing'], 1, 'Pasiva con modal: must be completed.', 'Modal + be + participio.', 'gramatica', 'Huecos 2026'),
+    q('I do not know _____ he is absent.', 'Choose the correct option:', ['what', 'why', 'which', 'whose'], 1, 'Why pregunta por razon.', 'Reason = why.', 'gramatica', 'Huecos 2026'),
+    q('They were tired _____ they continued working.', 'Choose the correct option:', ['because', 'although', 'but', 'so'], 2, 'But une contraste entre dos frases.', 'Although iria al principio: Although they were tired...', 'gramatica', 'Huecos 2026'),
+    q('The candidate _____ car broke down arrived late.', 'Choose the correct option:', ['who', 'whose', 'which', 'where'], 1, 'Whose indica posesion.', 'Whose car = cuyo coche.', 'gramatica', 'Huecos 2026'),
+    q('I would rather _____ at home tonight.', 'Choose the correct option:', ['stay', 'to stay', 'staying', 'stayed'], 0, 'Would rather + infinitivo sin to.', 'I would rather stay.', 'gramatica', 'Huecos 2026'),
+    q('She is used to _____ early.', 'Choose the correct option:', ['get up', 'getting up', 'got up', 'gets up'], 1, 'Be used to + gerundio.', 'No confundir con used to + infinitivo.', 'gramatica', 'Huecos 2026'),
+    q('There is _____ milk left in the fridge.', 'Choose the correct option:', ['a few', 'a little', 'many', 'anybody'], 1, 'Milk es incontable: a little.', 'A few + contables; a little + incontables.', 'gramatica', 'Huecos 2026'),
+    q('He asked me where I _____.', 'Choose the correct option:', ['live', 'did live', 'lived', 'am live'], 2, 'Pregunta indirecta: orden normal y backshift: where I lived.', 'No inversion en pregunta indirecta.', 'gramatica', 'Huecos 2026')
+  ]}
 };
 
-/* ══════════════════════════════════════════════════════════════════
-   REAL READING — textos calibrados al formato oficial
-   30 textos cortos, 1 pregunta cada uno (4 opciones, 1 correcta)
-   Formato exacto: Orden DEF/862/2014 / DEF/278/2024
-══════════════════════════════════════════════════════════════════ */
 const REAL_READING = {
-  textos_reales: {
-    label: 'Comprensión lectora — Textos oficiales',
-    badge: 'sinonimos',
-    desc: 'Textos cortos tipo examen oficial — 1 pregunta por texto, 4 opciones',
-    questions: [
-      {
-        passage: 'Clara has been working as a nurse at the city hospital for fifteen years. She works long shifts and often has to deal with difficult situations, but she says she loves her job because she can help people every day. In her free time, she enjoys going for long walks in the countryside.',
-        question: 'What does the text say about Clara?',
-        opts: ['She has worked at the hospital for five years', 'She finds her job very satisfying', 'She spends her free time at home', 'She works short hours at the hospital'],
-        correct: 1,
-        explanation: '"She says she loves her job because she can help people every day" = finds her job very satisfying. Las opciones A y D contradicen datos del texto. La opción C contradice "going for long walks".',
-        strategy: 'Busca el sinónimo: "loves her job" = "very satisfying". El examen nunca copia las palabras exactas del texto en la opción correcta.'
-      },
-      {
-        passage: 'The new sports centre opened last September and has already attracted over three thousand members. It offers a wide range of facilities, including two swimming pools, a climbing wall and a café. Membership prices are lower than at similar centres in the area.',
-        question: 'What is stated about the sports centre?',
-        opts: ['It has been open for more than a year', 'It is more affordable than other local centres', 'It has three swimming pools', 'Membership has not been popular'],
-        correct: 1,
-        explanation: '"Membership prices are lower than at similar centres in the area" = more affordable than other local centres. La opción C cambia "two pools" por "three". La opción D contradice "over three thousand members".',
-        strategy: '"Lower prices" = "more affordable". Las opciones que modifican cifras (2 → 3) son trampas numéricas típicas del examen.'
-      },
-      {
-        passage: 'James Carter started his own bakery ten years ago after leaving his job at a large food company. Today, the bakery employs twelve people and supplies bread and cakes to restaurants across the city. James has won several local business awards for his work.',
-        question: 'What do we learn about James Carter?',
-        opts: ['He still works for a large food company', 'He set up his business a decade ago', 'His bakery has fewer than ten employees', 'He has won national business awards'],
-        correct: 1,
-        explanation: '"Ten years ago" = "a decade ago". La opción A contradice "after leaving his job". La opción C cambia "twelve" por "fewer than ten". La opción D cambia "local" por "national".',
-        strategy: '"Ten years ago" = "a decade ago". El examen usa sinónimos de tiempo: decade/year, century/hundred years, fortnight/two weeks.'
-      },
-      {
-        passage: 'The annual food festival takes place every August in the main square of the town. Last year, more than five thousand people attended the event, which featured dishes from over twenty different countries. Entrance to the festival is free, and there is something for visitors of all ages.',
-        question: 'What does the text tell us about the food festival?',
-        opts: ['It takes place in winter', 'There is no charge to enter', 'Only adults can attend', 'It features food from five countries'],
-        correct: 1,
-        explanation: '"Entrance to the festival is free" = no charge to enter. La opción A contradice "every August". La opción C contradice "visitors of all ages". La opción D cambia "twenty" por "five".',
-        strategy: '"Free entrance" = "no charge to enter". Sinónimos de "free": no charge, complimentary, at no cost, free of charge.'
-      },
-      {
-        passage: 'Dr. Angela Reyes has spent most of her career studying the effects of climate change on Arctic wildlife. She has published over thirty scientific papers and has been invited to speak at conferences in more than fifteen countries. Her research has helped shape international environmental policy.',
-        question: 'What does the text say about Dr. Reyes?',
-        opts: ['She has published fewer than thirty papers', 'Her work has influenced environmental decisions worldwide', 'She has only spoken at conferences in Europe', 'She recently started her research career'],
-        correct: 1,
-        explanation: '"Her research has helped shape international environmental policy" = her work has influenced environmental decisions worldwide. La opción A contradice "over thirty". La opción C contradice "more than fifteen countries".',
-        strategy: '"Helped shape policy" = "influenced decisions". "International" = "worldwide". El examen convierte verbos activos en sustantivos: "shape" → "influence".'
-      },
-      {
-        passage: 'The old cinema on Market Street closed down three years ago after nearly fifty years in operation. The building has since been converted into a community arts centre, which now hosts exhibitions, concerts and drama workshops. The centre is run entirely by volunteers.',
-        question: 'What happened to the old cinema building?',
-        opts: ['It was demolished three years ago', 'It is now used for arts and cultural events', 'It is still operating as a cinema', 'It was sold to a private company'],
-        correct: 1,
-        explanation: '"Converted into a community arts centre which hosts exhibitions, concerts and drama workshops" = used for arts and cultural events. Todas las demás opciones contradicen el texto.',
-        strategy: '"Hosts exhibitions and concerts" = "used for cultural events". El examen convierte listas concretas en categorías generales: exhibitions + concerts + workshops = arts and cultural events.'
-      },
-      {
-        passage: 'Sophie started learning to play the violin at the age of seven. She practised for at least two hours every day and gave her first public performance when she was twelve. By the time she was twenty, she had already performed in concert halls in six different countries.',
-        question: 'According to the text, when did Sophie give her first public performance?',
-        opts: ['At the age of seven', 'At the age of twelve', 'When she was twenty', 'After two hours of practice'],
-        correct: 1,
-        explanation: 'Texto directo: "gave her first public performance when she was twelve". La trampa es confundir la edad en que empezó (7) con la del primer concierto (12).',
-        strategy: 'Trampa numérica clásica: múltiples edades en el texto. Construye el mapa: 7 = empezó a tocar · 12 = primer concierto · 20 = ya había tocado en 6 países.'
-      },
-      {
-        passage: 'Volunteering abroad can be a life-changing experience, but it is important to choose the right programme. Some organisations ask volunteers to pay significant fees, which can be difficult for those on a tight budget. Others offer accommodation and meals as part of the arrangement, which can greatly reduce the overall cost.',
-        question: 'What does the text suggest about volunteering abroad?',
-        opts: ['It is always free of charge', 'Careful selection of a programme is important', 'All organisations provide free accommodation', 'It is only suitable for people with a large budget'],
-        correct: 1,
-        explanation: '"It is important to choose the right programme" = careful selection of a programme is important. Las opciones A y C son incorrectas porque el texto dice que "some" organizaciones cobran y "others" ofrecen alojamiento — no todas.',
-        strategy: '"It is important to choose carefully" = "careful selection is important". Ojo con generalizaciones: "some" y "others" en el texto impiden afirmar "all" o "always".'
-      },
-      {
-        passage: 'The Ridgeway is one of the oldest roads in Britain, stretching for over eighty miles through southern England. It has been used by travellers, traders and soldiers for thousands of years. Today it is a popular walking and cycling route, and thousands of people walk its full length every year.',
-        question: 'What does the text tell us about the Ridgeway?',
-        opts: ['It is a recently built road', 'It is used by walkers and cyclists today', 'It is located in northern England', 'It is less than eighty miles long'],
-        correct: 1,
-        explanation: '"Today it is a popular walking and cycling route" = used by walkers and cyclists today. La opción A contradice "oldest roads". La opción C contradice "southern England". La opción D modifica la cifra.',
-        strategy: 'Las opciones incorrectas cambian una palabra clave: "oldest" → "recently built", "southern" → "northern", "over eighty" → "less than eighty".'
-      },
-      {
-        passage: 'A recent survey asked one thousand workers in the UK about their ideal working conditions. The majority said they would prefer to work from home at least three days a week. Many also stated that flexible working hours were more important to them than a higher salary.',
-        question: 'What did the survey reveal?',
-        opts: ['Most workers want to work in an office every day', 'Workers value flexible hours more than extra pay', 'Only a few workers prefer working from home', 'All workers want higher salaries'],
-        correct: 1,
-        explanation: '"Flexible working hours were more important to them than a higher salary" = workers value flexible hours more than extra pay (higher salary = extra pay).', 
-        strategy: '"More important than a higher salary" = "value more than extra pay". El examen parafrasea: salary = pay, important = value, flexible hours = flexible schedule.'
-      }
-    ]
-  }
+  textos_2026: { label: 'Textos tipo convocatoria 2026', badge: 'sinonimos', desc: '15 textos cortos extra para simulacro real', questions: [
+    q('The exam notice says candidates must write their answers on the official answer sheet. Answers written only on the question paper will not be marked.', 'What will not be marked?', ['Answers on the official sheet', 'Answers only on the question paper', 'Answers written in black pen', 'Answers completed before time'], 1, 'Solo se corrige la hoja oficial; lo escrito solo en el cuadernillo no cuenta.', 'Instrucciones oficiales: detecta donde se debe responder.', 'sinonimos', 'Textos 2026'),
+    q('The language test is divided into two parts. Each part lasts 50 minutes, and candidates have a short break between them.', 'How long does each part last?', ['30 minutes', '50 minutes', '60 minutes', '100 minutes'], 1, 'Each part lasts 50 minutes.', 'Each = cada una.', 'sinonimos', 'Textos 2026'),
+    q('A minimum score is required to continue in the selection process. Candidates below that score will not be considered, even if their other marks are high.', 'What happens to candidates below the minimum score?', ['They continue automatically', 'They are not considered', 'Their other marks are doubled', 'They repeat the test immediately'], 1, 'Below minimum = eliminado/no considerado.', 'Even if introduce una condicion que no cambia la regla.', 'sinonimos', 'Textos 2026'),
+    q('The academy recommends practising with a timer because many candidates lose marks when they spend too long on the first questions.', 'Why should candidates use a timer?', ['To improve time management', 'To avoid reading texts', 'To write faster by hand', 'To learn new vocabulary only'], 0, 'Usar temporizador ayuda a no gastar demasiado tiempo al principio.', 'Many candidates lose marks when... indica problema a evitar.', 'sinonimos', 'Textos 2026'),
+    q('The grammar section contains short texts with missing words. For each gap, candidates must choose the best answer from four options.', 'What must candidates do in the grammar section?', ['Write a translation', 'Choose one of four options', 'Listen to a recording', 'Read a long essay'], 1, 'Cada hueco tiene cuatro opciones y hay que elegir la mejor.', 'Gap = hueco; option = opcion.', 'sinonimos', 'Textos 2026'),
+    q('The reading section does not require specialist military knowledge. All the information needed to answer is included in the short text.', 'What does the text say about the reading section?', ['It requires expert military knowledge', 'The necessary information is in the text', 'Candidates must use a dictionary', 'Only officers can answer it'], 1, 'La informacion necesaria esta en el texto.', 'No inventes datos externos.', 'sinonimos', 'Textos 2026'),
+    q('Candidates are advised to read the question before the text. This helps them identify the specific information they need.', 'Why read the question first?', ['To know what information to look for', 'To avoid reading the text', 'To copy the answer', 'To finish without checking'], 0, 'Leer la pregunta primero orienta la busqueda.', 'Specific information = dato concreto que necesitas.', 'sinonimos', 'Textos 2026'),
+    q('The supervisor will announce when ten minutes remain. Candidates should use this time to check that all answers have been transferred correctly.', 'What should candidates do in the final ten minutes?', ['Start a new exam', 'Check transferred answers', 'Leave the room', 'Ask for explanations'], 1, 'Deben comprobar que las respuestas estan pasadas correctamente.', 'Final minutes = revisar, no empezar de cero.', 'sinonimos', 'Textos 2026'),
+    q('Some options may contain words from the text but still be wrong. Candidates should check the whole sentence before choosing.', 'What warning is given?', ['Words from the text always indicate the answer', 'An option can repeat words and still be incorrect', 'Candidates should ignore the text', 'Only long options are correct'], 1, 'Repetir palabras no garantiza que sea correcta.', 'Trampa clasica: palabra copiada, significado cambiado.', 'sinonimos', 'Textos 2026'),
+    q('The test is designed to measure B1 English, not memory. Therefore, understanding the general meaning is often more useful than translating every word.', 'What is often more useful?', ['Translating every word', 'Understanding the general meaning', 'Memorising the text', 'Ignoring unknown words completely'], 1, 'General meaning > traducir palabra por palabra.', 'B1 mide comprension funcional.', 'sinonimos', 'Textos 2026'),
+    q('Candidates should answer all questions because wrong answers do not subtract marks in this practice test.', 'What should candidates do?', ['Leave difficult questions blank', 'Answer all questions', 'Answer only grammar questions', 'Stop after 30 questions'], 1, 'Si no resta, conviene responder todo.', 'Practica: no dejar en blanco si no penaliza.', 'sinonimos', 'Textos 2026'),
+    q('The practice platform saves progress in the browser. If a student changes device, previous sessions may not appear.', 'Where is progress saved?', ['In the browser', 'On paper', 'In the classroom', 'In the exam office'], 0, 'Progress is saved in the browser.', 'Browser/local progress = no se comparte entre dispositivos.', 'sinonimos', 'Textos 2026'),
+    q('The best preparation is regular practice. Short daily sessions are usually more effective than one very long session at the weekend.', 'What does the text recommend?', ['One long weekly session only', 'Short regular practice', 'No weekend practice ever', 'Studying without tests'], 1, 'Short daily sessions = practica breve y regular.', 'Regular practice = constancia.', 'sinonimos', 'Textos 2026'),
+    q('The candidate improved after reviewing his mistakes. He wrote down the reason for each wrong answer and repeated similar questions later.', 'What helped the candidate improve?', ['Ignoring mistakes', 'Reviewing errors carefully', 'Studying only new topics', 'Answering faster without checking'], 1, 'Revisar errores y su razon mejora el resultado.', 'La explicacion del fallo es parte del aprendizaje.', 'sinonimos', 'Textos 2026'),
+    q('The final mark includes the English score, so passing the minimum is not the only objective. A higher score can improve the final ranking.', 'Why is a higher English score useful?', ['It can improve the final ranking', 'It replaces all other tests', 'It removes the need for documents', 'It is not counted'], 0, 'La nota de ingles cuenta para la clasificacion final.', 'No basta con pasar el minimo si la nota suma.', 'sinonimos', 'Textos 2026')
+  ]}
 };
 
-/* ══════════════════════════════════════════════════════════════════
-   EXTRA READING BANK — 20 more texts (pool total: 45 texts)
-══════════════════════════════════════════════════════════════════ */
-const READING_EXTRA = [
-  { passage: 'Mount Fuji is Japan\'s highest mountain, standing at 3,776 metres. It is an active volcano, although it has not erupted since 1707. Every summer, thousands of people climb to the summit, and the mountain is considered a sacred site in the Shinto religion.', question: 'What does the text say about Mount Fuji?', opts: ['It erupts every summer', 'It has religious significance in Japan', 'It is no longer an active volcano', 'It is the highest mountain in Asia'], correct: 1, badge: 'sinonimos', explanation: '"Considered a sacred site in the Shinto religion" = has religious significance in Japan. La opción C contradice "active volcano". La opción A confunde "thousands climb" con "erupts".', strategy: '"Sacred site" = "religious significance". Sinónimos espirituales frecuentes: sacred/holy/revered = significant/important.' },
-  { passage: 'The city of Valencia in Spain hosts the Las Fallas festival every March. The festival involves building large sculptures made of wood and papier-mâché, which are then burned on the final night. It attracts more than one million visitors from around the world each year.', question: 'What happens at the end of the Las Fallas festival?', opts: ['The sculptures are sold to visitors', 'The sculptures are set on fire', 'The festival lasts until April', 'The sculptures are put in a museum'], correct: 1, badge: 'sinonimos', explanation: '"Burned on the final night" = set on fire. "Burned" = "set on fire". Las opciones A, C y D no tienen base en el texto.', strategy: '"Burned" = "set on fire" = "lit up". El examen usa sinónimos de acciones: burned/set on fire, built/constructed, attracted/drew.' },
-  { passage: 'Sarah and Tom are both teachers at the same secondary school. Sarah teaches mathematics and also runs the school chess club after lessons. Tom teaches history and is responsible for organising the annual school trip abroad. Neither of them has any free periods on Mondays.', question: 'What is Tom responsible for at the school?', opts: ['Teaching mathematics', 'Running the chess club', 'Organising international trips', 'Covering Sarah\'s lessons'], correct: 2, badge: 'personajes', explanation: 'Mapa: Sarah = matemáticas + ajedrez. Tom = historia + viaje escolar. "Annual school trip abroad" = international trips. La trampa es la opción A, que es la asignatura de Sarah.', strategy: 'Trampa de personajes clásica: el examen asigna la actividad de uno al otro. Construye el mapa antes de mirar las opciones.' },
-  { passage: 'Researchers at a university in Canada have developed a new type of plastic that can dissolve in seawater within six weeks. Unlike traditional plastics, it leaves no toxic residue. The team hopes the material will help reduce ocean pollution, which currently affects millions of marine animals each year.', question: 'What makes the new plastic different from traditional plastics?', opts: ['It takes longer to dissolve', 'It does not harm the environment when it breaks down', 'It is cheaper to produce', 'It was developed in Europe'], correct: 1, badge: 'sinonimos', explanation: '"Leaves no toxic residue" = does not harm the environment when it breaks down. La opción D cambia "Canada" por "Europe". Las opciones A y C no tienen base.', strategy: '"No toxic residue" = "does not harm the environment". Sinónimo clave: residue/waste = environmental impact.' },
-  { passage: 'The London Marathon takes place every April and attracts runners from over 100 countries. Last year, more than 45,000 people completed the race. The event also raises millions of pounds for charity each year, making it one of the biggest fundraising events in the world.', question: 'According to the text, what is notable about the London Marathon?', opts: ['It takes place every October', 'It raises significant amounts of money for charity', 'Fewer than 10,000 people take part', 'Only British runners are allowed'], correct: 1, badge: 'numerica', explanation: '"Raises millions of pounds for charity" = raises significant amounts of money for charity. La opción A cambia "April" por "October". La opción C cambia "45,000" por "fewer than 10,000".', strategy: 'Trampa numérica: 45,000 aparece como opción incorrecta modificada. "Millions of pounds" = "significant amounts".' },
-  { passage: 'Elena has been learning Arabic for three years and recently passed an advanced language exam. She studied at home using online resources and practised with native speakers through a language exchange app. She is now planning to travel to Morocco to improve her conversational skills.', question: 'How did Elena learn Arabic?', opts: ['She attended a language school', 'She used digital tools and spoke with native speakers', 'She lived in Morocco for three years', 'She studied with a private tutor'], correct: 1, badge: 'sinonimos', explanation: '"Online resources" + "language exchange app" + "native speakers" = digital tools and spoke with native speakers. No menciona academia, Marruecos (es para el futuro) ni tutor.', strategy: '"Online resources + app" = "digital tools". El examen agrupa herramientas tecnológicas bajo un término paraguas.' },
-  { passage: 'The town of Santorini in Greece is famous for its white buildings and blue-domed churches, which attract millions of tourists every summer. However, local residents have raised concerns about the impact of mass tourism on the island\'s infrastructure and traditional way of life.', question: 'What concern do residents have about Santorini?', opts: ['There are not enough tourists', 'Too many visitors are damaging local life', 'The buildings need repainting', 'The churches are being closed'], correct: 1, badge: 'sinonimos', explanation: '"Impact of mass tourism on infrastructure and traditional way of life" = too many visitors are damaging local life. "Mass tourism" = "too many visitors". "Infrastructure and way of life" = "local life".', strategy: '"Mass tourism" = "too many visitors". "Impact on" = "damaging". El examen condensa frases largas en una opción más corta y general.' },
-  { passage: 'Pedro and his sister Laura both enjoy cooking. Pedro specialises in Italian food and spends his weekends making fresh pasta. Laura, on the other hand, prefers Asian cuisine and is particularly skilled at preparing Japanese dishes. Their parents rarely cook and usually order takeaway.', question: 'Who makes fresh pasta at weekends?', opts: ['Laura', 'Their parents', 'Pedro', 'Both Pedro and Laura'], correct: 2, badge: 'personajes', explanation: 'Mapa: Pedro = comida italiana + pasta fresca. Laura = cocina asiática/japonesa. La trampa es la opción D — ambos cocinan pero la pasta es solo de Pedro.', strategy: '"Both" suele ser trampa cuando solo uno hace algo específico. Ancla cada actividad a su persona antes de responder.' },
-  { passage: 'A new study suggests that people who read for pleasure at least thirty minutes a day are less likely to experience stress-related health problems. The researchers found that reading fiction was particularly beneficial, as it allows people to temporarily escape from their daily concerns.', question: 'What does the study suggest about reading fiction?', opts: ['It causes stress', 'It has health benefits for readers', 'It is less effective than reading non-fiction', 'Only children benefit from reading fiction'], correct: 1, badge: 'sinonimos', explanation: '"Particularly beneficial" = "has health benefits". "Less likely to experience stress-related health problems" = health benefits. La opción C contradice el texto directamente.', strategy: '"Beneficial" = "has benefits". "Less likely to experience problems" = "positive health effects". Sinónimos de beneficio: beneficial/helpful/positive/advantageous.' },
-  { passage: 'The new high-speed railway line connecting Madrid and Seville reduced journey times from four hours to just under two and a half hours. The line opened in 1992 and was the first high-speed railway in Spain. Since then, the network has expanded to connect most major Spanish cities.', question: 'What was significant about the Madrid-Seville railway line?', opts: ['It opened in 2002', 'It was Spain\'s first high-speed rail service', 'It reduced journey times to one hour', 'It only operates at weekends'], correct: 1, badge: 'numerica', explanation: '"First high-speed railway in Spain" = Spain\'s first high-speed rail service. Trampa: el texto menciona varias cifras (4 horas → 2,5 horas, 1992) pero la pregunta va por el hecho histórico, no por los números.', strategy: 'No todas las preguntas van por los números aunque haya varios. Lee la pregunta con atención: "What was significant" apunta al dato histórico, no a las cifras.' },
-  { passage: 'Michael runs a small bookshop in the city centre. He opens from Tuesday to Saturday, closing on Sundays and Mondays. He also organises monthly book clubs and occasionally invites local authors to give talks in the shop. Business has been difficult in recent years due to competition from online retailers.', question: 'What challenge does Michael face?', opts: ['He cannot find books to sell', 'Online shops are affecting his business', 'He has to close on too many days', 'He has no customers for his book club'], correct: 1, badge: 'sinonimos', explanation: '"Difficult due to competition from online retailers" = online shops are affecting his business. "Competition from online retailers" = "online shops". "Difficult" = "challenge".', strategy: '"Competition from online retailers" = "online shops affecting business". El examen parafrasea la causa: competition = affect, difficult = challenge.' },
-  { passage: 'The Amazon rainforest covers approximately 5.5 million square kilometres and is home to around 10% of all species on Earth. Despite its importance, large areas are being destroyed every year due to deforestation for farming and logging. Scientists warn that the forest could reach a point of no return within decades.', question: 'What does the text say about the Amazon rainforest?', opts: ['It covers exactly 5.5 million square kilometres', 'It is being damaged at an alarming rate', 'Deforestation has now stopped', 'It contains 50% of all species on Earth'], correct: 1, badge: 'sinonimos', explanation: '"Large areas are being destroyed every year" = being damaged at an alarming rate. La opción A cambia "approximately" por "exactly". La opción C contradice el texto. La opción D cambia "10%" por "50%".', strategy: '"Approximately" ≠ "exactly". "Destroyed every year" = "damaged at an alarming rate". Ojo con porcentajes modificados: 10% → 50% es trampa numérica.' },
-  { passage: 'Anna is a professional photographer who works mainly for travel magazines. She has visited over sixty countries and always travels alone. Her photographs have appeared on the covers of several international publications. She is currently working on a book about remote communities in South America.', question: 'What does the text tell us about Anna?', opts: ['She works for a local newspaper', 'She has travelled to many countries on her own', 'She always travels with a team', 'Her book about South America has already been published'], correct: 1, badge: 'personajes', explanation: '"Over sixty countries" + "always travels alone" = travelled to many countries on her own. La opción C contradice "alone". La opción D contradice "currently working on".', strategy: '"Over sixty countries + always travels alone" = "travelled to many countries on her own". La opción D usa el futuro presente ("currently working") para crear confusión temporal.' },
-  { passage: 'The Blue Lagoon is a geothermal spa located in Iceland. The water temperature stays at around 39 degrees Celsius throughout the year, even in winter when the outside temperature can drop to minus 15 degrees. The spa attracts over one million visitors annually and is one of the most popular tourist attractions in the country.', question: 'What is special about the Blue Lagoon?', opts: ['It is only open in summer', 'The water remains warm all year round', 'It is located in Norway', 'It has fewer than 100,000 visitors a year'], correct: 1, badge: 'numerica', explanation: '"Water temperature stays at around 39°C throughout the year, even in winter" = the water remains warm all year round. Trampa: el texto da varias temperaturas (+39°C y -15°C) y cifras (1 millón).', strategy: '"Throughout the year, even in winter" = "all year round". Trampa numérica: 1 millón → "fewer than 100,000" en la opción incorrecta.' },
-  { passage: 'The school\'s science fair is organised by three teachers: Mr López, Ms Patel and Dr Kim. Mr López is in charge of collecting student project submissions and managing the schedule. Ms Patel judges the projects and selects the winners. Dr Kim handles all communication with parents and external sponsors.', question: 'Who decides which projects win?', opts: ['Mr López', 'Dr Kim', 'Ms Patel', 'All three teachers together'], correct: 2, badge: 'personajes', explanation: '"Ms Patel judges the projects and selects the winners" — directamente en el texto. La trampa es D porque los tres organizan la feria, pero solo Patel elige a los ganadores.', strategy: 'Para preguntas de responsabilidad directa, busca el verbo exacto: "judges" y "selects the winners" nombran a Patel directamente.' },
-  { passage: 'Cycling has become increasingly popular in the Netherlands over the past few decades. Today, there are more bicycles than people in the country, and many cities have extensive networks of dedicated cycle paths. Children are taught cycling safety at school, and bike culture is considered an important part of Dutch identity.', question: 'What does the text suggest about cycling in the Netherlands?', opts: ['It has been popular for centuries', 'It is a central part of everyday Dutch life', 'Cycling paths are only found in Amsterdam', 'The number of cyclists is declining'], correct: 1, badge: 'sinonimos', explanation: '"More bicycles than people" + "extensive networks" + "taught at school" + "part of Dutch identity" = a central part of everyday Dutch life. Ninguna de las otras opciones tiene apoyo textual.', strategy: 'Cuando el texto acumula varios datos positivos sobre un tema, la respuesta correcta es siempre una síntesis general: "central part of daily life / very important / widely practised".' },
-  { passage: 'A team of marine biologists has discovered a new species of deep-sea fish near the coast of New Zealand. The fish lives at depths of over 2,000 metres and produces its own light through a process called bioluminescence. It is estimated that fewer than 500 of these fish exist in the wild.', question: 'What is unusual about the newly discovered fish?', opts: ['It lives in rivers', 'It can generate its own light', 'It is found in large numbers', 'It lives near the surface'], correct: 1, badge: 'sinonimos', explanation: '"Produces its own light through bioluminescence" = can generate its own light. La opción C contradice "fewer than 500". La opción D contradice "over 2,000 metres deep".', strategy: '"Produces its own light" = "can generate its own light". Sinónimo de proceso biológico → capacidad/habilidad. "Bioluminescence" se parafrasea como "generate light".' },
-  { passage: 'Every year, millions of monarch butterflies migrate from Canada and the United States to central Mexico, covering a distance of up to 4,000 kilometres. The journey takes around two months. Scientists are still not fully sure how the butterflies are able to navigate such a vast distance so accurately.', question: 'What does the text say about the monarch butterfly migration?', opts: ['The journey takes more than six months', 'Scientists do not completely understand how the butterflies navigate', 'The butterflies travel from Mexico to Canada', 'The distance is less than 1,000 kilometres'], correct: 1, badge: 'sinonimos', explanation: '"Still not fully sure how the butterflies are able to navigate" = do not completely understand how they navigate. La opción A cambia "two months". La opción C invierte la dirección. La opción D cambia "4,000 km".', strategy: '"Not fully sure" = "do not completely understand". La opción C invierte el origen y destino — trampa de dirección muy común con migraciones.' },
-  { passage: 'The city of Kyoto in Japan has more than 1,600 Buddhist temples and 400 Shinto shrines. It was the country\'s capital for over a thousand years before Tokyo became the capital in 1869. Many of its historic buildings and gardens are protected as UNESCO World Heritage Sites.', question: 'What does the text say about Kyoto?', opts: ['It became Japan\'s capital in 1869', 'It has a large number of historic and religious sites', 'It has more shrines than temples', 'It is currently Japan\'s capital city'], correct: 1, badge: 'sinonimos', explanation: '"1,600 Buddhist temples + 400 Shinto shrines + UNESCO World Heritage Sites" = large number of historic and religious sites. La opción A invierte el dato: 1869 es cuando TOKYO se convirtió en capital (Kyoto lo dejó de ser). La opción D contradice el texto.', strategy: 'Trampa de inversión: 1869 = Tokyo SE CONVIERTE en capital, no Kyoto. Lee quién hace la acción: "Tokyo BECAME the capital" en 1869.' },
-  { passage: 'Paula works as a firefighter and has done so for twelve years. She works a rotating shift pattern, which means she sometimes works nights and weekends. Outside of work, she volunteers as a swimming instructor for children with disabilities. Her colleague Marco has only been with the service for two years but has already received a commendation for bravery.', question: 'What do we learn about Marco?', opts: ['He has worked as a firefighter for twelve years', 'He has been recognised for his courage', 'He also teaches swimming', 'He works the same shifts as Paula'], correct: 1, badge: 'personajes', explanation: '"Already received a commendation for bravery" = has been recognised for his courage. "Commendation" = recognition. "Bravery" = courage. Trampa A: 12 años es de Paula, no de Marco (solo 2 años).', strategy: 'Trampa de personajes + sinónimo: "commendation for bravery" = "recognised for courage". Los años de servicio son de Paula (12), Marco lleva solo 2.' }
-];
+const READING_EXTRA = [];
+const GRAMMAR_EXTRA = [];
 
-/* ══════════════════════════════════════════════════════════════════
-   EXTRA GRAMMAR BANK — 18 more questions (pool total: 96 grammar)
-══════════════════════════════════════════════════════════════════ */
-const GRAMMAR_EXTRA = [
-  { passage: 'She said she _____ come to the party the following day.', question: 'Elige el estilo indirecto correcto:', opts: ['will','would','is going to','shall'], correct: 1, badge: 'gramatica', topic: 'Estilo indirecto', explanation: 'Reported speech: will → would. "She said she WOULD come." El tiempo retrocede en estilo indirecto: will→would, can→could, may→might.', strategy: 'Backshift en reported speech: will→would · can→could · may→might · must→had to · am/is/are→was/were.' },
-  { passage: 'He asked me where _____ the day before.', question: 'Elige la forma correcta de estilo indirecto:', opts: ['did I go','I had gone','I went','have I gone'], correct: 1, badge: 'gramatica', topic: 'Estilo indirecto', explanation: '"Where had I gone" — pregunta indirecta: el orden es sujeto + verbo (sin inversión). Past simple → past perfect en reported speech.', strategy: 'Preguntas indirectas: orden normal S+V, sin auxiliar DO. "He asked where I had gone" (no "where did I go").' },
-  { passage: 'By the time we arrived, the film _____.', question: 'Elige el tiempo verbal correcto:', opts: ['already started','has already started','had already started','was already started'], correct: 2, badge: 'gramatica', topic: 'Past perfect', explanation: '"By the time + past simple" → past perfect para la acción anterior: "had already started". El pasado perfecto marca que algo ocurrió antes de otro momento pasado.', strategy: '"By the time + past simple" → past perfect. "By the time she arrived, he had left." La secuencia: primero el film empezó (past perfect), luego llegamos (past simple).' },
-  { passage: 'She _____ working here for over twenty years when she finally retired.', question: 'Elige el tiempo verbal correcto:', opts: ['has been','had been','was','is'], correct: 1, badge: 'gramatica', topic: 'Past perfect continuous', explanation: 'Past perfect continuous: "had been working for twenty years" = llevaba 20 años trabajando (antes de jubilarse). "When she retired" ancla el punto final en el pasado.', strategy: 'Had been + -ing: acción continua que duró hasta un punto pasado. "She had been waiting for two hours when he finally arrived."' },
-  { passage: 'I wish I _____ harder at school.', question: 'Elige la forma correcta:', opts: ['studied','had studied','would study','have studied'], correct: 1, badge: 'gramatica', topic: 'Wish + pasado', explanation: '"Wish + had + participio" para lamentos sobre el pasado. "I wish I had studied harder" = Ojalá hubiera estudiado más. La situación ya ocurrió y no puede cambiar.', strategy: 'Wish + past simple: deseo presente ("I wish I knew" = ojalá supiera). Wish + past perfect: lamento pasado ("I wish I had known" = ojalá hubiera sabido).' },
-  { passage: 'It\'s time you _____ to bed. You have school tomorrow.', question: 'Elige la forma correcta:', opts: ['go','went','will go','to go'], correct: 1, badge: 'gramatica', topic: 'It\'s time + pasado', explanation: '"It\'s time + past simple" para indicar que algo debería ocurrir ya. "It\'s time you WENT to bed." Gramaticalmente va en pasado aunque el significado es presente/futuro.', strategy: 'Estructuras con pasado de subjuntivo: It\'s time + past simple · I\'d rather + past simple · If only + past simple/perfect · Wish + past.' },
-  { passage: 'The report _____ by the committee before the deadline.', question: 'Elige la forma pasiva correcta:', opts: ['must complete','must be completed','must have completed','must completed'], correct: 1, badge: 'gramatica', topic: 'Pasiva con modales', explanation: '"Must be completed" = pasiva con modal. Modal + be + participio: must be done, should be checked, can be changed.', strategy: 'Pasiva con modales: modal + BE + participio. "The work must be finished / should be checked / can be done." Nunca "must been" ni "must completed".' },
-  { passage: 'Despite _____ hard, she didn\'t pass the exam.', question: 'Elige la forma correcta:', opts: ['study','to study','studying','studied'], correct: 2, badge: 'gramatica', topic: 'Despite + gerundio', explanation: '"Despite" + gerundio (-ing). "Despite studying hard" = a pesar de estudiar duro. "Despite" es una preposición → siempre gerundio.', strategy: 'Despite + gerundio o sustantivo. "Despite the rain / Despite being tired / Despite studying." In spite of funciona igual.' },
-  { passage: 'He\'s the man _____ car was stolen outside the supermarket.', question: 'Elige el relativo correcto:', opts: ['who','which','whose','that'], correct: 2, badge: 'gramatica', topic: 'Relativos de posesión', explanation: '"Whose" indica posesión en cláusulas de relativo. "The man whose car was stolen" = el hombre al que le robaron el coche. "Whose" puede referirse a personas o cosas.', strategy: 'Whose = posesión relativa para personas y cosas. "The company whose CEO resigned" / "The house whose roof is damaged".' },
-  { passage: 'I\'d rather you _____ smoke inside the house.', question: 'Elige la forma correcta:', opts: ['don\'t','didn\'t','not','won\'t'], correct: 1, badge: 'gramatica', topic: 'Would rather + pasado', explanation: '"I\'d rather + sujeto diferente + past simple" para expresar preferencia sobre los actos de otros. "I\'d rather you DIDN\'T smoke." Equivale a "I\'d prefer you not to smoke."', strategy: 'I\'d rather + do (misma persona): "I\'d rather stay home." I\'d rather + S + past simple (otra persona): "I\'d rather you stayed."' },
-  { passage: 'There\'s no point _____ about things you can\'t change.', question: 'Elige la forma correcta:', opts: ['worry','to worry','in worrying','worrying'], correct: 3, badge: 'gramatica', topic: 'Expresiones con gerundio', explanation: '"There\'s no point + gerundio (-ing)". "There\'s no point worrying" = no tiene sentido preocuparse. La preposición "in" es opcional: "There\'s no point (in) worrying."', strategy: 'Expresiones fijas + gerundio: It\'s (not) worth + -ing · There\'s no point (in) + -ing · It\'s no use + -ing · Can\'t help + -ing.' },
-  { passage: 'She _____ leave early today — her boss gave her permission.', question: 'Elige el modal correcto:', opts: ['can','could','was able to','is allowed to'], correct: 3, badge: 'gramatica', topic: 'Modales de permiso', explanation: '"Is allowed to" = tiene permiso para (dado por alguien). "Can" también es correcto para permiso pero "is allowed to" enfatiza que el permiso viene de una autoridad (el jefe).', strategy: 'Permission: can/may (informal) · is allowed to (enfatiza autoridad externa) · be permitted to (formal). "Her boss gave permission" apunta a "is allowed to".' },
-  { passage: 'I can\'t find my keys. I _____ left them at the office.', question: 'Elige el modal de deducción correcto:', opts: ['must have','should have','might','can have'], correct: 0, badge: 'gramatica', topic: 'Modales de deducción pasada', explanation: '"Must have + participio" = deducción lógica sobre el pasado. "I must have left them" = casi seguro que los dejé. "Might have" = posibilidad más débil (quizás).', strategy: 'Deducción pasada: must have + participio (casi seguro) · might/could have + participio (posible) · can\'t have + participio (imposible).' },
-  { passage: 'She _____ be very tired — she\'s been awake for 24 hours.', question: 'Elige el modal de deducción presente:', opts: ['should','must','might','could'], correct: 1, badge: 'gramatica', topic: 'Modales de deducción presente', explanation: '"Must be" = deducción lógica presente, casi segura. "She must be tired" = es casi seguro que está cansada, dado que lleva 24 horas despierta.', strategy: 'Must + infinitivo: deducción presente fuerte. "She\'s pale — she must be ill." Diferente de must + have + participio (deducción pasada).' },
-  { passage: 'The charity _____ over two million euros since it was founded in 2010.', question: 'Elige el tiempo verbal correcto:', opts: ['raised','has raised','had raised','raises'], correct: 1, badge: 'gramatica', topic: 'Present perfect de logro', explanation: '"Since 2010" con resultado relevante ahora → present perfect: "has raised". El total acumulado hasta ahora es el resultado presente del pasado.', strategy: 'Present perfect acumulativo: "We have sold 1,000 tickets / The project has saved €2M." Since/so far/up to now → present perfect.' },
-  { passage: 'If the government _____ more money into education, results would improve.', question: 'Elige la forma correcta (2ª condicional):', opts: ['invests','invested','would invest','had invested'], correct: 1, badge: 'gramatica', topic: 'Condicional 2ª — variantes', explanation: '2ª condicional: If + past simple → would + infinitivo. "If the government INVESTED more money, results would improve." Situación hipotética presente/futura.', strategy: '2ª condicional siempre: If + past simple, would/could/might + infinitivo. Nunca "If + would" en la cláusula condicional.' },
-  { passage: 'She regrets _____ the job offer last year.', question: 'Elige la forma correcta:', opts: ['to refuse','refusing','refuse','refused'], correct: 1, badge: 'gramatica', topic: 'Verbos + gerundio', explanation: '"Regret + gerundio" = lamentarse de algo hecho. "She regrets refusing" = se arrepiente de haber rechazado. "Regret + infinitivo" tiene otro significado: "I regret to inform you" (lamento comunicarle).', strategy: 'Verbos + gerundio: enjoy/avoid/consider/suggest/regret (pasado)/admit/deny/finish/miss/keep/practise/risk. Verbos + infinitivo: want/hope/decide/plan/refuse/manage/promise.' },
-  { passage: 'He managed _____ the project on time despite all the difficulties.', question: 'Elige la forma correcta:', opts: ['finishing','to finish','finish','finished'], correct: 1, badge: 'gramatica', topic: 'Verbos + infinitivo', explanation: '"Manage + to + infinitivo" = conseguir hacer algo. "He managed TO finish" = logró terminarlo. "Manage" siempre va seguido de infinitivo con "to".', strategy: 'Managed to = conseguir/lograr (con esfuerzo). "I managed to find a seat / She managed to pass." Siempre to + infinitivo.' }
-];
-
-/* ══════════════════════════════════════════════════════════════════
-   POOL HELPERS — combina todos los bancos para examen aleatorio
-══════════════════════════════════════════════════════════════════ */
 function getAllReadingQuestions() {
   var pool = [];
   Object.keys(READING).forEach(function(k){
@@ -1361,7 +824,7 @@ function goModuleSelect(mod) {
 
   if(mod === 'reading') {
     title.textContent = 'Comprensión escrita — Elige el tipo de trampa';
-    sub.textContent = 'Practica cada trampa por separado antes de mezclarlas en el simulacro.';
+    sub.textContent = 'Entrena textos cortos con cuatro opciones, como en la convocatoria.';
     grid.innerHTML = '';
     Object.keys(READING).forEach(function(k) {
       var t = READING[k];
@@ -1378,11 +841,11 @@ function goModuleSelect(mod) {
     var allBtn = document.createElement('button');
     allBtn.className = 'topic-btn';
     allBtn.onclick = function(){startQuiz('reading','all');};
-    allBtn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todos los tipos</div><div class="topic-btn-detail">15 textos mezclados — nivel máximo</div></div><div class="topic-btn-score">→</div>';
+    allBtn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todos los bloques</div><div class="topic-btn-detail">Textos cortos mezclados — formato 2026</div></div><div class="topic-btn-score">→</div>';
     grid.appendChild(allBtn);
   } else {
     title.textContent = 'Gramática y vocabulario — Elige la categoría';
-    sub.textContent = 'Los 7 errores detectados en el simulacro de julio 2024.';
+    sub.textContent = 'Huecos en blanco con cuatro opciones, nivel B1 MCERL.';
     grid.innerHTML = '';
     Object.keys(GRAMMAR).forEach(function(k) {
       var t = GRAMMAR[k];
@@ -1398,12 +861,12 @@ function goModuleSelect(mod) {
     var allBtnG = document.createElement('button');
     allBtnG.className = 'topic-btn';
     allBtnG.onclick = function(){startQuiz('grammar','all');};
-    allBtnG.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todas las categorías</div><div class="topic-btn-detail">35 preguntas — repaso completo</div></div><div class="topic-btn-score">→</div>';
+    allBtnG.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todas las categorías</div><div class="topic-btn-detail">Huecos mezclados — repaso completo</div></div><div class="topic-btn-score">→</div>';
     grid.appendChild(allBtnG);
   }
 
   if(mod === 'real') {
-    title.textContent = 'Examen Real — Fuente: Sermilitar';
+    title.textContent = 'Convocatoria 2026 — Formato confirmado';
     sub.textContent = 'Preguntas de gramática y comprensión de convocatorias reales anteriores (muestra gratuita oficial).';
     grid.innerHTML = '';
     // Grammar topics
@@ -1424,7 +887,7 @@ function goModuleSelect(mod) {
     var readBtn = document.createElement('button');
     readBtn.className = 'topic-btn';
     readBtn.onclick = function(){startQuiz('real_reading', 'textos_reales');};
-    readBtn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Comprensión lectora — Textos reales</div><div class="topic-btn-detail">10 textos con preguntas tipo examen oficial</div></div><div class="topic-btn-score'+(pct2!==null?' done':'')+'">'+
+    readBtn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Comprensión lectora — Textos reales</div><div class="topic-btn-detail">Textos cortos extra tipo convocatoria</div></div><div class="topic-btn-score'+(pct2!==null?' done':'')+'">'+
       (pct2!==null ? pct2+'%' : '—')+'</div>';
     grid.appendChild(readBtn);
     // All real
@@ -1734,7 +1197,7 @@ updateHomeStats();
 (function() {
   var stats = getBankStats();
   var footer = document.querySelector('.footer');
-  if(footer) footer.innerHTML = 'Banco: <b>'+ stats.reading +'</b> textos · <b>'+ stats.grammar +'</b> gramática · <b>'+(stats.reading+stats.grammar)+'</b> preguntas únicas — B1 · AGBS LII Promoción';
+  if(footer) footer.innerHTML = 'Banco nuevo: <b>'+ stats.reading +'</b> textos · <b>'+ stats.grammar +'</b> huecos · <b>'+(stats.reading+stats.grammar)+'</b> preguntas únicas — B1 · Convocatoria 2026';
 })();
 </script>
 </body>
