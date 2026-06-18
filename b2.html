@@ -417,8 +417,8 @@ nav {
       <h3>Gramática y vocabulario</h3>
       <p>Use of English B2: inversiÃ³n, condicionales mixtas, modales perfectos, reported speech, participios y collocations.</p>
       <div class="module-meta">
-        <span><b>45</b> preguntas</span>
-        <span><b>7</b> categorías</span>
+        <span><b>60</b> preguntas</span>
+        <span><b>8</b> categorías</span>
         <span><b>50</b> min examen</span>
       </div>
       <div class="module-progress">
@@ -430,7 +430,7 @@ nav {
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#C9A84C,#A67A2E)"></div>
       <div class="module-tag" style="background:rgba(16,185,129,0.15);color:#10b981">Modo B2</div>
       <h3>Examen tipo B2</h3>
-      <p>50 preguntas de gramática + 10 textos de comprensión de exámenes reales de convocatorias anteriores.</p>
+      <p>Bloque mixto B2 con transformaciones, Use of English y comprensión avanzada.</p>
       <div class="module-meta">
         <span><b>60</b> preguntas</span>
         <span><b>Examen real</b></span>
@@ -612,6 +612,23 @@ const GRAMMAR = {
     q(`They _____ taken the wrong road because they arrived from the opposite direction.`, `Choose the correct option:`, [`must have`, `should have`, `can't have`, `needn't have`], 0, `Must have = deduccion logica fuerte.`, `Con evidencia clara: must have + participio.`),
     q(`She _____ checked the figures before sending the report; several totals were wrong.`, `Choose the correct option:`, [`might have`, `should have`, `must have`, `can't have`], 1, `Should have done = critica o recomendacion sobre algo que no se hizo.`, `Should have + participio = deberia haber hecho.`),
     q(`The message _____ been sent by Carlos; he was on duty without internet access.`, `Choose the correct option:`, [`must have`, `can't have`, `should have`, `needn't have`], 1, `Can't have been sent = imposible segun la evidencia.`, `Para imposibilidad pasada: can't/couldn't have + participio.`)
+  ]},
+  gerund_infinitive: { label: 'Gerundio e infinitivo B2', badge: 'gramatica', desc: 'Patrones avanzados: no point, worth, object to, regret, remember, stop y verbos con preposicion', questions: [
+    q(`There is little point _____ the appeal unless you add new evidence.`, `Choose the correct option:`, [`submit`, `to submit`, `submitting`, `submitted`], 2, `There is little/no point + gerundio: submitting.`, `No point / little point + -ing. En B2 aparece con matices: little point, no point, not much point.`),
+    q(`It is no use _____ the instructions after the test has started.`, `Choose the correct option:`, [`read`, `to read`, `reading`, `readed`], 2, `It is no use + gerundio: reading.`, `Familia fija: no use + -ing, no point + -ing, worth + -ing.`),
+    q(`The supervisor objected to _____ the deadline again.`, `Choose the correct option:`, [`extend`, `to extend`, `extending`, `extended`], 2, `Object to + gerundio: extending.`, `El "to" de object to es preposicion, como en look forward to y be used to.`),
+    q(`The candidates are looking forward to _____ their final scores.`, `Choose the correct option:`, [`receive`, `to receive`, `receiving`, `received`], 2, `Look forward to + gerundio: receiving.`, `Trampa clasica: to no siempre introduce infinitivo. Aqui es preposicion.`),
+    q(`He admitted _____ the safety procedure incorrectly.`, `Choose the correct option:`, [`follow`, `to follow`, `following`, `followed`], 2, `Admit + gerundio: following.`, `Admit, deny, avoid, consider, suggest y risk suelen ir con -ing.`),
+    q(`She managed _____ the report before the system closed.`, `Choose the correct option:`, [`upload`, `to upload`, `uploading`, `uploaded`], 1, `Manage + infinitivo con to: to upload.`, `Manage, refuse, offer, promise, fail y decide suelen ir con to + infinitivo.`),
+    q(`They failed _____ the documents before the deadline.`, `Choose the correct option:`, [`send`, `to send`, `sending`, `sent`], 1, `Fail + to infinitive: to send.`, `Fail to do something = no conseguir/no hacer algo esperado.`),
+    q(`He risked _____ valuable time by changing all his answers.`, `Choose the correct option:`, [`lose`, `to lose`, `losing`, `lost`], 2, `Risk + gerundio: losing.`, `Risk + -ing es muy frecuente: risk losing, risk failing, risk damaging.`),
+    q(`I regret _____ you that your application was incomplete.`, `Choose the correct option:`, [`tell`, `to tell`, `telling`, `told`], 1, `Regret to tell/inform = lamento comunicar.`, `Regret to say/tell/inform = anuncio formal malo. Regret + -ing = arrepentirse de algo hecho.`),
+    q(`He regrets _____ the instructions too quickly.`, `Choose the correct option:`, [`read`, `to read`, `reading`, `reads`], 2, `Regret + gerundio = arrepentirse de algo hecho: reading.`, `Contraste B2: regret to inform (comunicar) vs regret doing (arrepentirse).`),
+    q(`Remember _____ your ID before entering the room.`, `Choose the correct option:`, [`show`, `to show`, `showing`, `shown`], 1, `Remember to do = acordarse de hacer algo pendiente.`, `Remember to show = acuerdate de mostrar. Remember showing = recordar haber mostrado.`),
+    q(`I remember _____ this question in the previous practice test.`, `Choose the correct option:`, [`see`, `to see`, `seeing`, `seen`], 2, `Remember + gerundio = recordar haber hecho/visto algo.`, `Remember doing = memoria pasada; remember to do = tarea pendiente.`),
+    q(`The instructor stopped _____ the rule because several candidates looked confused.`, `Choose the correct option:`, [`explain`, `to explain`, `explaining`, `explained`], 1, `Stop to explain = parar para explicar.`, `Stop to do = parar con el objetivo de hacer algo. Stop doing = dejar de hacer algo.`),
+    q(`The instructor stopped _____ when the candidates understood the rule.`, `Choose the correct option:`, [`explain`, `to explain`, `explaining`, `explained`], 2, `Stop explaining = dejar de explicar.`, `Contraste B2: stop to explain (parar para explicar) vs stop explaining (dejar de explicar).`),
+    q(`The report needs _____ before it is sent to headquarters.`, `Choose the correct option:`, [`check`, `to check`, `checking`, `checked`], 2, `Need + gerundio con sentido pasivo: needs checking.`, `En B2 aparece needs checking/repairing/rewriting = needs to be checked/repaired/rewritten.`)
   ]},
   reporting: { label: 'Reported speech B2', badge: 'gramatica', desc: 'Reporting verbs, estructuras con objeto, gerundio e infinitivo', questions: [
     q(`The instructor warned us _____ the safety line.`, `Choose the correct option:`, [`not crossing`, `not to cross`, `to not crossing`, `not cross`], 1, `Warn + object + not to + infinitive.`, `Warn/tell/advise/remind someone to do.`),
@@ -808,7 +825,7 @@ function goModuleSelect(mod) {
     var allBtnG = document.createElement('button');
     allBtnG.className = 'topic-btn';
     allBtnG.onclick = function(){startQuiz('grammar','all');};
-    allBtnG.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todas las categorías</div><div class="topic-btn-detail">45 preguntas — repaso completo B2</div></div><div class="topic-btn-score">→</div>';
+    allBtnG.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todas las categorías</div><div class="topic-btn-detail">50 preguntas — repaso completo B2</div></div><div class="topic-btn-score">→</div>';
     grid.appendChild(allBtnG);
   }
 
