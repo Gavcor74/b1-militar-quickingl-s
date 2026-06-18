@@ -3,10 +3,6 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/b1",
-      "destination": "/index.html"
-    },
-    {
       "source": "/b2",
       "destination": "/b2.html"
     },

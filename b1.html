@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B1 Militar · AGBS 2026 · Quickinglés</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surf1: #141414;
+  --surf2: #1c1c1c;
+  --surf3: #242424;
+  --accent: #C9A84C;
+  --accent-dim: rgba(201,168,76,0.13);
+  --amber: #A67A2E;
+  --amber-dim: rgba(166,122,46,0.13);
+  --text: #F0EAE0;
+  --muted: #6B6050;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(201,168,76,0.30);
+  --success: #10b981;
+  --danger: #ef4444;
+  --success-bg: rgba(16,185,129,0.10);
+  --danger-bg: rgba(239,68,68,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── GRID BG ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── LAYOUT ── */
+.screen { display: none; min-height: 100vh; position: relative; z-index: 1; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ── NAV ── */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--accent); text-transform: uppercase;
+}
+.nav-logo span { color: var(--amber); }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-stat {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px; color: var(--muted);
+}
+.nav-stat b { color: var(--text); }
+.nav-back {
+  background: none; border: 1px solid var(--border2);
+  color: var(--accent); font-size: 13px; padding: 5px 12px;
+  border-radius: 4px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: background 0.15s;
+}
+.nav-back:hover { background: var(--accent-dim); }
+
+/* ── HOME ── */
+.home-hero {
+  padding: 56px 28px 32px;
+  text-align: center;
+}
+.callsign {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px; letter-spacing: 0.2em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 12px;
+}
+.home-hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 7vw, 58px);
+  font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; line-height: 1.05;
+  margin-bottom: 10px;
+}
+.home-hero h1 em { font-style: normal; color: var(--accent); }
+.home-hero p { color: var(--muted); font-size: 15px; max-width: 480px; margin: 0 auto 40px; }
+
+/* ── STAT CARDS ── */
+.stat-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px; padding: 0 28px; max-width: 860px; margin: 0 auto 40px; width: 100%;
+}
+.stat-card {
+  background: var(--surf1); border: 1px solid var(--border);
+  border-radius: 6px; padding: 16px;
+}
+.stat-card .lbl { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+.stat-card .val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px; font-weight: 700; color: var(--text); line-height: 1;
+}
+.stat-card .val.accent { color: var(--accent); }
+.stat-card .val.amber { color: var(--amber); }
+.stat-card .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* ── MODULE CARDS ── */
+.modules {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px; padding: 0 28px 40px; max-width: 860px; margin: 0 auto; width: 100%;
+}
+.module-card {
+  background: var(--surf1); border: 1px solid var(--border);
+  border-radius: 8px; padding: 22px;
+  cursor: pointer; transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.module-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.module-card.reading::before { background: var(--accent); }
+.module-card.grammar::before { background: var(--amber); }
+.module-card.mixed::before { background: linear-gradient(90deg, var(--accent), var(--amber)); }
+.module-card:hover {
+  border-color: rgba(201,168,76,0.35);
+  background: var(--surf2);
+  transform: translateY(-2px);
+}
+.module-tag {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 3px; margin-bottom: 12px;
+}
+.reading .module-tag { background: var(--accent-dim); color: var(--accent); }
+.grammar .module-tag { background: var(--amber-dim); color: var(--amber); }
+.mixed .module-tag { background: rgba(255,255,255,0.06); color: var(--text); }
+.module-card h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 700; letter-spacing: 0.03em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.module-card p { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+.module-meta { display: flex; gap: 14px; }
+.module-meta span { font-size: 12px; color: var(--muted); }
+.module-meta span b { color: var(--text); }
+.module-progress {
+  margin-top: 14px; height: 3px; background: var(--border);
+  border-radius: 2px; overflow: hidden;
+}
+.module-progress-fill { height: 100%; border-radius: 2px; transition: width 0.4s; }
+.reading .module-progress-fill { background: var(--accent); }
+.grammar .module-progress-fill { background: var(--amber); }
+
+/* ── TOPIC SELECT ── */
+.topic-screen { padding: 32px 28px; max-width: 860px; margin: 0 auto; width: 100%; }
+.screen-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.screen-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.topic-btn {
+  background: var(--surf1); border: 1px solid var(--border);
+  border-radius: 6px; padding: 16px 18px;
+  cursor: pointer; text-align: left; transition: all 0.18s;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%;
+}
+.topic-btn:hover { background: var(--surf2); border-color: rgba(201,168,76,0.35); }
+.topic-btn-left {}
+.topic-btn-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--text);
+}
+.topic-btn-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.topic-btn-score {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0;
+}
+.topic-btn-score.done { color: var(--success); }
+
+/* ── QUIZ SCREEN ── */
+.quiz-wrap { padding: 24px 28px; max-width: 720px; margin: 0 auto; width: 100%; flex: 1; }
+.quiz-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.quiz-progress-text {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px; color: var(--muted);
+}
+.quiz-timer {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px; font-weight: 500; color: var(--text);
+  background: var(--surf1); border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 4px;
+}
+.quiz-timer.warn { color: var(--accent); border-color: rgba(201,168,76,0.5); }
+.quiz-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 24px; }
+.quiz-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+
+.type-badge {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 3px; margin-bottom: 14px;
+}
+.type-badge.numerica { background: rgba(166,122,46,0.15); color: var(--amber); }
+.type-badge.personajes { background: rgba(201,168,76,0.15); color: var(--accent); }
+.type-badge.sinonimos { background: rgba(16,185,129,0.15); color: var(--success); }
+.type-badge.gramatica { background: rgba(166,122,46,0.18); color: #D4A030; }
+
+.passage {
+  background: var(--surf1); border: 1px solid var(--border);
+  border-left: 3px solid var(--border2);
+  border-radius: 0 6px 6px 0;
+  padding: 18px 20px; font-size: 15px; line-height: 1.8;
+  margin-bottom: 20px; color: var(--text);
+}
+.passage .hl-num { background: rgba(201,168,76,0.22); color: #E8C060; border-radius: 2px; padding: 0 3px; }
+.passage .hl-who { background: rgba(201,168,76,0.15); color: #D4AF6A; border-radius: 2px; padding: 0 3px; }
+.passage .hl-syn { background: rgba(16,185,129,0.2); color: #6ee7b7; border-radius: 2px; padding: 0 3px; }
+.passage .blank {
+  display: inline-block; min-width: 80px; border-bottom: 2px solid var(--accent);
+  text-align: center; color: var(--accent); font-weight: 500;
+  margin: 0 4px; letter-spacing: 0.05em;
+}
+
+.question-text {
+  font-size: 16px; font-weight: 500; color: var(--text);
+  margin-bottom: 16px; line-height: 1.5;
+}
+
+.opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.opt {
+  background: var(--surf1); border: 1px solid var(--border);
+  border-radius: 6px; padding: 12px 16px;
+  cursor: pointer; text-align: left; font-size: 14px; color: var(--text);
+  display: flex; align-items: flex-start; gap: 12px;
+  transition: all 0.15s; width: 100%;
+}
+.opt:hover:not(:disabled) { background: var(--surf2); border-color: rgba(201,168,76,0.4); }
+.opt:disabled { cursor: default; }
+.opt-letter {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px; color: var(--muted); font-weight: 500;
+  min-width: 16px; margin-top: 1px; flex-shrink: 0;
+}
+.opt.correct { background: var(--success-bg); border-color: rgba(16,185,129,0.5); }
+.opt.correct .opt-letter { color: var(--success); }
+.opt.wrong { background: var(--danger-bg); border-color: rgba(239,68,68,0.5); }
+.opt.wrong .opt-letter { color: var(--danger); }
+.opt.reveal { background: rgba(16,185,129,0.06); border-color: rgba(16,185,129,0.3); opacity: 0.7; }
+
+.feedback {
+  border-radius: 6px; padding: 14px 16px;
+  font-size: 14px; line-height: 1.65; margin-bottom: 20px;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.ok { background: var(--success-bg); border: 1px solid rgba(16,185,129,0.3); color: #6ee7b7; }
+.feedback.err { background: var(--danger-bg); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+.feedback strong { color: inherit; font-weight: 600; }
+.strategy-box {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px; color: rgba(255,255,255,0.55);
+}
+.strategy-box b { color: rgba(255,255,255,0.7); }
+
+.btn-next {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--accent); color: #0a0a0a; border: none;
+  padding: 12px 28px; border-radius: 5px; cursor: pointer;
+  transition: opacity 0.15s; display: none; width: 100%;
+}
+.btn-next:hover { opacity: 0.88; }
+.btn-next.visible { display: block; }
+
+/* ── RESULTS ── */
+.results-wrap { padding: 32px 28px; max-width: 720px; margin: 0 auto; width: 100%; }
+.results-header { text-align: center; margin-bottom: 32px; }
+.results-score-big {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 72px; font-weight: 700; line-height: 1;
+  margin-bottom: 6px;
+}
+.results-score-big.excellent { color: var(--success); }
+.results-score-big.good { color: var(--accent); }
+.results-score-big.ok { color: var(--amber); }
+.results-score-big.bad { color: var(--danger); }
+.results-label { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+.results-box { background: var(--surf1); border: 1px solid var(--border); border-radius: 6px; padding: 14px; text-align: center; }
+.results-box .n { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700; }
+.results-box .l { font-size: 11px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.07em; }
+
+.answer-review { margin-bottom: 28px; }
+.review-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.review-item {
+  background: var(--surf1); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 16px; margin-bottom: 8px;
+}
+.review-item.wrong-item { border-color: rgba(239,68,68,0.3); }
+.review-q { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.review-answer { font-size: 14px; margin-bottom: 4px; }
+.review-answer .r { color: var(--success); } .review-answer .w { color: var(--danger); }
+.review-explanation { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+.results-btns { display: flex; gap: 10px; }
+.btn-primary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--accent); color: #0a0a0a; border: none;
+  padding: 12px 24px; border-radius: 5px; cursor: pointer; flex: 1;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-secondary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: none; color: var(--muted); border: 1px solid var(--border);
+  padding: 12px 24px; border-radius: 5px; cursor: pointer; flex: 1;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { background: var(--surf1); color: var(--text); }
+
+.footer { padding: 28px; text-align: center; color: var(--muted); font-size: 12px; letter-spacing: 0.05em; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  nav { padding: 12px 16px; }
+  .home-hero { padding: 36px 16px 24px; }
+  .stat-row, .modules, .topic-screen, .quiz-wrap, .results-wrap { padding-left: 16px; padding-right: 16px; }
+  .results-grid { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ HOME ═══ -->
+<div id="screen-home" class="screen active">
+  <nav>
+    <div class="nav-logo">Quick<span>inglés</span> · B1</div>
+    <div class="nav-right">
+      <div class="nav-stat">Sesiones: <b id="home-sessions">0</b></div>
+      <div class="nav-stat">Total: <b id="home-total">0</b> preguntas</div>
+    </div>
+  </nav>
+
+  <div class="home-hero">
+    <div class="callsign">// AGBS · CONVOCATORIA 2026 · Quickinglés</div>
+    <h1>Lee.<br><em>Elige.</em><br>Suma.</h1>
+    <p>Formato convocatoria 2026: 30 textos cortos + 30 huecos de gramática y vocabulario, nivel B1.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="lbl">Nota actual</div>
+      <div class="val amber">30+</div>
+      <div class="sub">mínimo no eliminatorio</div>
+    </div>
+    <div class="stat-card">
+      <div class="lbl">Objetivo</div>
+      <div class="val accent">50+</div>
+      <div class="sub">objetivo competitivo</div>
+    </div>
+    <div class="stat-card">
+      <div class="lbl">Acierto hoy</div>
+      <div class="val" id="home-pct">—</div>
+      <div class="sub" id="home-pct-sub">Sin sesiones hoy</div>
+    </div>
+    <div class="stat-card">
+      <div class="lbl">Cuenta</div>
+      <div class="val" style="color:var(--danger)">CF</div>
+      <div class="sub">PFC + PI/2</div>
+    </div>
+  </div>
+
+  <div class="modules">
+    <div class="module-card reading" onclick="goModuleSelect('reading')">
+      <div class="module-tag">Parte 1</div>
+      <h3>Comprensión escrita</h3>
+      <p>Estrategias anti-trampa para los 3 tipos de error: datos numéricos, personajes múltiples y sinónimos ocultos.</p>
+      <div class="module-meta">
+        <span><b>48</b> textos</span>
+        <span><b>3</b> bloques</span>
+        <span><b>50</b> min examen</span>
+      </div>
+      <div class="module-progress">
+        <div class="module-progress-fill" id="prog-reading" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="module-card grammar" onclick="goModuleSelect('grammar')">
+      <div class="module-tag">Parte 2</div>
+      <h3>Gramática y vocabulario</h3>
+      <p>Huecos en blanco tipo B1: tiempos, gerundio/infinitivo, modales, pasiva, relativos, conectores y collocations.</p>
+      <div class="module-meta">
+        <span><b>91</b> huecos</span>
+        <span><b>7</b> categorías</span>
+        <span><b>50</b> min examen</span>
+      </div>
+      <div class="module-progress">
+        <div class="module-progress-fill" id="prog-grammar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="module-card" style="position:relative;overflow:hidden" onclick="goModuleSelect('real')">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#C9A84C,#A67A2E)"></div>
+      <div class="module-tag" style="background:rgba(16,185,129,0.15);color:#10b981">Formato 2026</div>
+      <h3>Convocatoria 2026</h3>
+      <p>50 preguntas de gramática + 10 textos de comprensión de exámenes reales de convocatorias anteriores.</p>
+      <div class="module-meta">
+        <span><b>60</b> preguntas</span>
+        <span><b>Examen real</b></span>
+        <span><b>Con solución</b></span>
+      </div>
+      <div class="module-progress">
+        <div class="module-progress-fill" id="prog-real" style="width:0%;background:linear-gradient(90deg,#C9A84C,#A67A2E)"></div>
+      </div>
+    </div>
+
+    <div class="module-card mixed" onclick="startQuiz('mixed', null)">
+      <div class="module-tag">Simulacro completo</div>
+      <h3>Examen 60 preguntas</h3>
+      <p>30 reading + 30 gramática seleccionadas aleatoriamente del banco completo. Distinto cada vez.</p>
+      <div class="module-meta">
+        <span><b>60</b> preguntas</span>
+        <span><b>Aleatorio</b></span>
+        <span><b>Cronómetro</b></span>
+      </div>
+      <div class="module-progress">
+        <div class="module-progress-fill" id="prog-mixed" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--amber))"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Quickinglés · B1 Militar · Convocatoria 2026 · quickingles.com</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ MODULE SELECT ═══ -->
+<div id="screen-module" class="screen">
+  <nav>
+    <div class="nav-logo">Quick<span>inglés</span> · B1</div>
+    <button class="nav-back" onclick="goHome()">← Inicio</button>
+  </nav>
+  <div class="topic-screen">
+    <div class="screen-title" id="module-title"></div>
+    <div class="screen-sub" id="module-sub"></div>
+    <div class="topic-grid" id="topic-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ QUIZ ═══ -->
+<div id="screen-quiz" class="screen">
+  <nav>
+    <div class="nav-logo">Quick<span>inglés</span> · B1</div>
+    <div class="nav-right">
+      <div class="quiz-timer" id="timer">00:00</div>
+      <button class="nav-back" onclick="confirmExit()">Salir</button>
+    </div>
+  </nav>
+  <div class="quiz-wrap">
+    <div class="quiz-top">
+      <div class="quiz-progress-text" id="quiz-prog-text">Pregunta 1 de 5</div>
+      <div class="quiz-progress-text" id="quiz-topic-label"></div>
+    </div>
+    <div class="quiz-bar"><div class="quiz-bar-fill" id="quiz-bar-fill"></div></div>
+    <div id="quiz-content"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Siguiente pregunta →</button>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ RESULTS ═══ -->
+<div id="screen-results" class="screen">
+  <nav>
+    <div class="nav-logo">Quick<span>inglés</span> · B1</div>
+    <button class="nav-back" onclick="goHome()">← Inicio</button>
+  </nav>
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-score-big" id="res-score-big">0/0</div>
+      <div class="results-label" id="res-label"></div>
+      <div class="results-grid">
+        <div class="results-box">
+          <div class="n" id="res-correct" style="color:var(--success)">0</div>
+          <div class="l">Correctas</div>
+        </div>
+        <div class="results-box">
+          <div class="n" id="res-wrong" style="color:var(--danger)">0</div>
+          <div class="l">Errores</div>
+        </div>
+        <div class="results-box">
+          <div class="n" id="res-time" style="color:var(--accent)">0:00</div>
+          <div class="l">Tiempo</div>
+        </div>
+      </div>
+    </div>
+    <div class="answer-review">
+      <div class="review-title">Revisión de respuestas</div>
+      <div id="review-list"></div>
+    </div>
+    <div class="results-btns">
+      <button class="btn-primary" id="res-retry">Repetir módulo</button>
+      <button class="btn-secondary" onclick="goHome()">Volver al inicio</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════════════════════════ */
+function q(passage, question, opts, correct, explanation, strategy, badge, topic) {
+  return { passage: passage, question: question, opts: opts, correct: correct, explanation: explanation, strategy: strategy, badge: badge, topic: topic };
+}
+
+const READING = {
+  instrucciones_junio: {
+    label: 'Textos cortos - instrucciones',
+    badge: 'numerica',
+    desc: 'Avisos, normas, horarios y condiciones con distractores cercanos',
+    questions: [
+      q('Candidates must arrive at the north gate before 8:10. Anyone arriving after 8:20 will not be allowed to enter the examination room.', 'What is the latest time allowed for entry?', ['8:10', '8:20', '8:30', '9:00'], 1, 'El texto dice que despues de las 8:20 no se permite entrar; por tanto 8:20 es el limite.', 'En avisos con horas, separa hora recomendada de hora limite.', 'numerica', 'Instrucciones junio'),
+      q('The equipment office lends helmets and gloves, but boots must be provided by each candidate. Items borrowed from the office must be returned before 18:00.', 'What must candidates bring themselves?', ['Helmets', 'Gloves', 'Boots', 'Office forms'], 2, 'Los cascos y guantes se prestan; las botas las aporta cada candidato.', 'But suele introducir la excepcion importante.', 'numerica', 'Instrucciones junio'),
+      q('The medical questionnaire can be completed online until Thursday evening. Paper copies will only be accepted on Friday morning.', 'When are paper copies accepted?', ['Until Thursday evening', 'Only on Friday morning', 'Every afternoon', 'After the test'], 1, 'Las copias en papel solo se aceptan el viernes por la maÃ±ana.', 'Only limita la respuesta: no generalices.', 'numerica', 'Instrucciones junio'),
+      q('The coach to the training area leaves from Platform 3. Candidates staying in the residence should wait outside Block C, where a minibus will collect them.', 'Where should residents wait?', ['Platform 3', 'Outside Block C', 'The main classroom', 'The medical centre'], 1, 'Los residentes esperan fuera del Bloque C.', 'Distingue la regla general del grupo concreto.', 'numerica', 'Instrucciones junio'),
+      q('The language room has 24 computers. If more candidates attend, the remaining students will take the test in Room 12 with paper answer sheets.', 'What happens if there are more than 24 candidates?', ['They use paper answer sheets in Room 12', 'The test is cancelled', 'They all share computers', 'They wait until the next day'], 0, 'Los candidatos restantes van al aula 12 con hojas de respuesta.', 'If introduce una condicion; lee la consecuencia completa.', 'numerica', 'Instrucciones junio'),
+      q('Lunch is served from 13:15 to 14:00. Candidates with dietary requirements must inform the kitchen before 10:30.', 'Who must contact the kitchen before 10:30?', ['All candidates', 'Only candidates with dietary requirements', 'The instructors', 'Visitors after lunch'], 1, 'La obligacion afecta solo a quienes tienen necesidades dieteticas.', 'No conviertas un subgrupo en todos.', 'numerica', 'Instrucciones junio'),
+      q('The practice test contains 60 questions. Candidates should spend no more than 50 minutes on the reading section and 50 minutes on grammar and vocabulary.', 'How long should candidates spend on grammar and vocabulary?', ['30 minutes', '50 minutes', '60 minutes', '100 minutes'], 1, 'La seccion de gramatica y vocabulario dura 50 minutos.', 'Cuando hay varias cifras, anota a que se refiere cada una.', 'numerica', 'Instrucciones junio'),
+      q('The library printer is available until 19:00, except on Wednesdays, when it closes at 16:30 for maintenance.', 'When does the printer close on Wednesdays?', ['16:30', '17:00', '19:00', '19:30'], 0, 'Los miercoles cierra a las 16:30.', 'Except cambia la regla general.', 'numerica', 'Instrucciones junio'),
+      q('The briefing has been moved to the small auditorium because the lecture hall is being painted. The time remains 11:45.', 'What has changed?', ['The place', 'The time', 'The speaker', 'The date'], 0, 'Solo cambia el lugar; la hora sigue siendo 11:45.', 'Remain significa que algo no cambia.', 'numerica', 'Instrucciones junio'),
+      q('Candidates may use the lockers during the test, but they must collect their belongings before the building closes at 17:00.', 'What must candidates do before 17:00?', ['Start the test', 'Collect their belongings', 'Open the building', 'Return home by bus'], 1, 'Deben recoger sus pertenencias antes del cierre.', 'Before + hora suele marcar plazo.', 'numerica', 'Instrucciones junio'),
+      q('The swimming pool is closed to the public during military training sessions. It reopens to visitors at 18:30.', 'When can visitors use the pool again?', ['During training', 'At 18:30', 'Before lunch', 'Only on Sundays'], 1, 'Reopens to visitors at 18:30.', 'Reopen = volver a abrir.', 'numerica', 'Instrucciones junio'),
+      q('The online platform saves each attempt automatically. However, answers are not submitted until the candidate presses the final button.', 'What must candidates do to submit answers?', ['Close the browser', 'Press the final button', 'Wait for automatic submission', 'Start a new attempt'], 1, 'Guardar no es lo mismo que enviar; hay que pulsar el boton final.', 'However introduce una diferencia clave.', 'numerica', 'Instrucciones junio')
+    ]
+  },
+  parafrasis_junio: {
+    label: 'Textos cortos - sinonimos',
+    badge: 'sinonimos',
+    desc: 'La respuesta correcta aparece reformulada, no copiada',
+    questions: [
+      q('The new timetable gives candidates a longer break between the two English tests.', 'What has changed?', ['There is more time to rest between tests', 'The tests are shorter', 'The timetable has been cancelled', 'There are fewer candidates'], 0, 'A longer break = mas tiempo para descansar.', 'Busca equivalencias: break = rest period.', 'sinonimos', 'Parafrasis junio'),
+      q('The instructor said that speed was useful, but accuracy was more important.', 'What did the instructor value most?', ['Writing quickly', 'Being accurate', 'Speaking loudly', 'Finishing first'], 1, 'Accuracy was more important = lo mas valorado era la precision.', 'More important marca prioridad.', 'sinonimos', 'Parafrasis junio'),
+      q('The road to the base is narrow, so drivers are advised to avoid overtaking.', 'What should drivers avoid?', ['Driving slowly', 'Passing other vehicles', 'Using the road', 'Stopping at the base'], 1, 'Overtaking = adelantar/pasar a otros vehiculos.', 'Aprende equivalencias de trafico: overtake = pass another vehicle.', 'sinonimos', 'Parafrasis junio'),
+      q('The room was available, but it was not suitable for an exam because there was too much noise outside.', 'Why was the room unsuitable?', ['It was too noisy', 'It was locked', 'It was too small', 'It had no chairs'], 0, 'Too much noise outside = demasiado ruido.', 'Unsuitable = not appropriate.', 'sinonimos', 'Parafrasis junio'),
+      q('The candidate improved steadily after he began reviewing his mistakes every evening.', 'What helped the candidate?', ['Checking his errors regularly', 'Avoiding difficult questions', 'Studying only at weekends', 'Changing the exam date'], 0, 'Reviewing mistakes every evening = revisar errores con regularidad.', 'Steadily = de forma constante.', 'sinonimos', 'Parafrasis junio'),
+      q('The new jacket is waterproof, which means it keeps the wearer dry in heavy rain.', 'What does waterproof mean?', ['It dries very slowly', 'It protects against rain', 'It is only for summer', 'It is easy to tear'], 1, 'Waterproof = protege del agua/lluvia.', 'Definiciones dentro del texto suelen dar la respuesta.', 'sinonimos', 'Parafrasis junio'),
+      q('The course is aimed at applicants who can already understand everyday English but need more exam practice.', 'Who is the course for?', ['People with basic English who need practice', 'Complete beginners', 'Native speakers', 'Only teachers'], 0, 'Can already understand everyday English = tienen base; need exam practice = necesitan practica.', 'Aimed at = dirigido a.', 'sinonimos', 'Parafrasis junio'),
+      q('The bus service is reliable, although it is not very frequent after 20:00.', 'What is the bus service like?', ['Usually dependable but less frequent in the evening', 'Always late and expensive', 'Only available before lunch', 'Completely unsuitable'], 0, 'Reliable = dependable; not frequent after 20:00 = menos frecuente por la noche.', 'Although combina punto positivo y limite.', 'sinonimos', 'Parafrasis junio'),
+      q('The supervisor reminded candidates to check both sides of the answer sheet.', 'What did candidates need to do?', ['Look at the front and back of the sheet', 'Use two answer sheets', 'Write on the question paper', 'Ask for extra time'], 0, 'Both sides = anverso y reverso.', 'Both sides suele ser una trampa sencilla.', 'sinonimos', 'Parafrasis junio'),
+      q('The report was brief but included all the essential information.', 'What does the text say about the report?', ['It was short and complete', 'It was long and confusing', 'It missed important details', 'It was written too late'], 0, 'Brief = short; essential information included = complete.', 'No confundas breve con incompleto.', 'sinonimos', 'Parafrasis junio'),
+      q('The applicant was nervous at first, but he became more confident during the interview.', 'How did the applicant change?', ['He became less nervous', 'He refused to answer', 'He got more confused', 'He left the interview'], 0, 'Became more confident = se puso menos nervioso/mas seguro.', 'At first + but marca cambio.', 'sinonimos', 'Parafrasis junio'),
+      q('The training area is close to the residence, so candidates normally walk there.', 'How do candidates usually get to the training area?', ['On foot', 'By plane', 'By train', 'By taxi'], 0, 'Walk there = go on foot.', 'Walk = go on foot.', 'sinonimos', 'Parafrasis junio')
+    ]
+  },
+  referencia_junio: {
+    label: 'Textos cortos - referencia',
+    badge: 'personajes',
+    desc: 'Personas, pronombres y grupos con acciones parecidas',
+    questions: [
+      q('Nadia printed the forms while Sergio prepared the envelopes. She put them on the instructorâ€™s desk.', 'What did Nadia put on the desk?', ['The forms', 'The envelopes', 'The printer', 'The keys'], 0, 'She = Nadia; them se refiere a the forms.', 'Sigue los pronombres paso a paso.', 'personajes', 'Referencia junio'),
+      q('The first team checked the radios. The second team cleaned them before returning them to the store.', 'What did the second team clean?', ['The radios', 'The store', 'The first team', 'The vehicles'], 0, 'Them se refiere a radios.', 'El pronombre plural suele retomar el objeto plural anterior.', 'personajes', 'Referencia junio'),
+      q('Luis booked the room, but Clara changed the time of the meeting. It will now begin at 12:30.', 'What will begin at 12:30?', ['The room', 'The meeting', 'The booking system', 'The lunch break'], 1, 'It se refiere a the meeting.', 'Identifica el sustantivo que puede comenzar.', 'personajes', 'Referencia junio'),
+      q('The doctor examined the candidates and gave those with fever a second appointment.', 'Who received a second appointment?', ['All candidates', 'Candidates with fever', 'The doctor', 'The instructors'], 1, 'Those with fever = candidatos con fiebre.', 'Those with... indica subgrupo.', 'personajes', 'Referencia junio'),
+      q('Paula and Irene studied together. Paula passed the grammar section, whereas Irene got a better score in reading.', 'Who scored better in reading?', ['Paula', 'Irene', 'Both of them', 'Neither of them'], 1, 'Irene obtuvo mejor nota en reading.', 'Whereas contrasta dos personas.', 'personajes', 'Referencia junio'),
+      q('The officer gave the visitor a temporary pass and told him to return it before leaving.', 'What must the visitor return?', ['The pass', 'The officer', 'The building', 'The visit'], 0, 'It se refiere a temporary pass.', 'Busca el objeto que se puede devolver.', 'personajes', 'Referencia junio'),
+      q('The old tablets were slow, so the academy replaced them with newer ones.', 'What was replaced?', ['The old tablets', 'The academy', 'The instructors', 'The internet'], 0, 'Them = old tablets; newer ones = tablets nuevas.', 'Ones sustituye un sustantivo ya mencionado.', 'personajes', 'Referencia junio'),
+      q('Mario finished the listening practice before Elena, but she completed the reading task first.', 'Who finished the reading task first?', ['Mario', 'Elena', 'Both students', 'The teacher'], 1, 'She = Elena; completed the reading task first.', 'Hay dos tareas: listening y reading. No las mezcles.', 'personajes', 'Referencia junio'),
+      q('The candidates gave their phones to the supervisor, who locked them in a cabinet.', 'What was locked in a cabinet?', ['The phones', 'The candidates', 'The supervisor', 'The answer sheets'], 0, 'Them se refiere a phones.', 'Pronombre plural despues de un objeto plural.', 'personajes', 'Referencia junio'),
+      q('The main entrance was crowded, so the guards opened another one on the west side.', 'What does "another one" refer to?', ['Another entrance', 'Another guard', 'Another candidate', 'Another side'], 0, 'One sustituye entrance.', 'One/ones evitan repetir el sustantivo.', 'personajes', 'Referencia junio'),
+      q('The instructor spoke to the group after they had completed the warm-up.', 'Who completed the warm-up?', ['The group', 'The instructor', 'The visitors', 'The medical team'], 0, 'They se refiere a the group.', 'They puede referirse a un grupo mencionado antes.', 'personajes', 'Referencia junio'),
+      q('The form asks for the candidateâ€™s address and phone number. These must be written clearly.', 'What must be written clearly?', ['The address and phone number', 'The candidateâ€™s name only', 'The instructions', 'The exam date'], 0, 'These retoma address and phone number.', 'These suele retomar varios elementos anteriores.', 'personajes', 'Referencia junio')
+    ]
+  }
+};
+
+const GRAMMAR = {
+  tiempos_junio: { label: 'Tiempos verbales B1', badge: 'gramatica', desc: 'Past simple, present perfect, going to, will y continuous', questions: [
+    q('They _____ the inspection last Friday.', 'Choose the correct option:', ['pass', 'passed', 'have passed', 'are passing'], 1, 'Last Friday exige past simple.', 'Fecha pasada cerrada = past simple.', 'gramatica', 'Tiempos junio'),
+    q('I _____ my ID card. I cannot enter the building.', 'Choose the correct option:', ['lost', 'have lost', 'lose', 'am losing'], 1, 'Hay resultado presente: no puede entrar ahora.', 'Present perfect para pasado con efecto presente.', 'gramatica', 'Tiempos junio'),
+    q('Listen! Someone _____ outside the door.', 'Choose the correct option:', ['talks', 'is talking', 'talked', 'has talked'], 1, 'Listen indica accion en progreso ahora.', 'Now/listen/look = present continuous.', 'gramatica', 'Tiempos junio'),
+    q('The course _____ next Monday.', 'Choose the correct option:', ['starts', 'is start', 'has started', 'was starting'], 0, 'Horarios/programas usan present simple.', 'Timetable: starts, leaves, opens.', 'gramatica', 'Tiempos junio'),
+    q('We _____ the answer sheets yet.', 'Choose the correct option:', ['did not receive', 'have not received', 'do not received', 'are not receive'], 1, 'Yet con negativa: present perfect.', 'Yet = todavia en preguntas/negativas.', 'gramatica', 'Tiempos junio'),
+    q('Look at the runner. He _____ win the race.', 'Choose the correct option:', ['will', 'is going to', 'wins', 'won'], 1, 'Evidencia visible: is going to.', 'Going to para prediccion con evidencia.', 'gramatica', 'Tiempos junio'),
+    q('The phone rang while she _____ the report.', 'Choose the correct option:', ['wrote', 'was writing', 'has written', 'writes'], 1, 'Accion larga interrumpida: was writing.', 'While + past continuous.', 'gramatica', 'Tiempos junio'),
+    q('I _____ never _____ such a difficult question.', 'Choose the correct option:', ['did / see', 'have / seen', 'am / seeing', 'was / see'], 1, 'Experiencia hasta ahora: have never seen.', 'Have/has + participio.', 'gramatica', 'Tiempos junio'),
+    q('He _____ in the army when he was younger.', 'Choose the correct option:', ['serves', 'served', 'has served', 'is serving'], 1, 'When he was younger marca pasado terminado.', 'When + pasado concreto = past simple.', 'gramatica', 'Tiempos junio'),
+    q('This is the first time I _____ this type of test.', 'Choose the correct option:', ['take', 'took', 'have taken', 'am taking'], 2, 'This is the first time + present perfect.', 'Estructura fija de experiencia.', 'gramatica', 'Tiempos junio')
+  ]},
+  huecos_verbos_junio: { label: 'Gerundio e infinitivo', badge: 'gramatica', desc: 'Verb patterns y preposiciones frecuentes', questions: [
+    q('She is thinking of _____ for the advanced course.', 'Choose the correct option:', ['apply', 'to apply', 'applying', 'applied'], 2, 'Of es preposicion: of + gerundio.', 'Preposicion + -ing.', 'gramatica', 'Gerundio junio'),
+    q('He hopes _____ the results tomorrow.', 'Choose the correct option:', ['receive', 'to receive', 'receiving', 'received'], 1, 'Hope + to infinitive.', 'Hope/want/decide/plan + to.', 'gramatica', 'Gerundio junio'),
+    q('They finished _____ the room at 18:00.', 'Choose the correct option:', ['clean', 'to clean', 'cleaning', 'cleaned'], 2, 'Finish + gerundio.', 'Finish/enjoy/avoid + -ing.', 'gramatica', 'Gerundio junio'),
+    q('We agreed _____ outside the station.', 'Choose the correct option:', ['meet', 'to meet', 'meeting', 'met'], 1, 'Agree + to infinitive.', 'Agree to do something.', 'gramatica', 'Gerundio junio'),
+    q('After _____ the instructions, answer the questions.', 'Choose the correct option:', ['read', 'to read', 'reading', 'reads'], 2, 'After como preposicion + gerundio.', 'After/before/without + -ing.', 'gramatica', 'Gerundio junio'),
+    q('He refused _____ the document without checking it.', 'Choose the correct option:', ['sign', 'to sign', 'signing', 'signed'], 1, 'Refuse + to infinitive.', 'Refuse/offer/manage + to.', 'gramatica', 'Gerundio junio'),
+    q('They are tired of _____ the same mistake.', 'Choose the correct option:', ['make', 'to make', 'making', 'made'], 2, 'Of + gerundio.', 'Tired of + -ing.', 'gramatica', 'Gerundio junio'),
+    q('She managed _____ all the questions in time.', 'Choose the correct option:', ['answer', 'to answer', 'answering', 'answered'], 1, 'Manage + to infinitive.', 'Manage to = conseguir.', 'gramatica', 'Gerundio junio'),
+    q('It is worth _____ the answers before submitting them.', 'Choose the correct option:', ['check', 'to check', 'checking', 'checked'], 2, 'Worth + gerundio.', 'It is worth + -ing.', 'gramatica', 'Gerundio junio'),
+    q('He suggested _____ a short break.', 'Choose the correct option:', ['take', 'to take', 'taking', 'taken'], 2, 'Suggest + gerundio.', 'Suggest doing / suggest that...', 'gramatica', 'Gerundio junio'),
+    q('There is no point _____ about the result now.', 'Choose the correct option:', ['worry', 'to worry', 'worrying', 'worried'], 2, 'There is no point + gerundio: worrying.', 'Expresion fija: no point + -ing. No traduzcas "sentido para preocuparse"; memoriza el bloque completo.', 'gramatica', 'Gerundio junio'),
+    q('There is no point _____ the same answer twice.', 'Choose the correct option:', ['write', 'to write', 'writing', 'wrote'], 2, 'There is no point + -ing: writing.', 'No point + gerundio siempre: no point waiting, no point asking, no point writing.', 'gramatica', 'Gerundio junio'),
+    q('It is no use _____ the question if you do not read the text carefully.', 'Choose the correct option:', ['answer', 'to answer', 'answering', 'answered'], 2, 'It is no use + gerundio: answering.', 'Familia de expresiones fijas: no use + -ing, no point + -ing, worth + -ing.', 'gramatica', 'Gerundio junio'),
+    q('It is worth _____ the options before choosing.', 'Choose the correct option:', ['compare', 'to compare', 'comparing', 'compared'], 2, 'It is worth + gerundio: comparing.', 'Worth + -ing: worth checking, worth studying, worth comparing.', 'gramatica', 'Gerundio junio'),
+    q('I am looking forward to _____ the final result.', 'Choose the correct option:', ['know', 'to know', 'knowing', 'known'], 2, 'Look forward to + gerundio: knowing.', 'En look forward to, "to" es preposicion; por eso va -ing.', 'gramatica', 'Gerundio junio'),
+    q('He is used to _____ under pressure.', 'Choose the correct option:', ['work', 'to work', 'working', 'worked'], 2, 'Be used to + gerundio: working.', 'Be used to + -ing = estar acostumbrado a. Diferente de used to + infinitivo.', 'gramatica', 'Gerundio junio'),
+    q('Instead of _____ quickly, read the whole sentence.', 'Choose the correct option:', ['answer', 'to answer', 'answering', 'answered'], 2, 'Instead of + gerundio: answering.', 'Preposicion + verbo = -ing: of answering, without checking, before leaving.', 'gramatica', 'Gerundio junio'),
+    q('He left the room without _____ his answer sheet.', 'Choose the correct option:', ['submit', 'to submit', 'submitting', 'submitted'], 2, 'Without + gerundio: submitting.', 'Without/before/after/instead of + -ing.', 'gramatica', 'Gerundio junio'),
+    q('Would you mind _____ the instructions again?', 'Choose the correct option:', ['repeat', 'to repeat', 'repeating', 'repeated'], 2, 'Would you mind + gerundio: repeating.', 'Mind + -ing. Es una pregunta educada, pero gramaticalmente pide gerundio.', 'gramatica', 'Gerundio junio'),
+    q('She spent ten minutes _____ the answers.', 'Choose the correct option:', ['check', 'to check', 'checking', 'checked'], 2, 'Spend time + gerundio: checking.', 'Spend time + -ing: spend five minutes reading, spend an hour revising.', 'gramatica', 'Gerundio junio'),
+    q('Many candidates have difficulty _____ the exact meaning.', 'Choose the correct option:', ['understand', 'to understand', 'understanding', 'understood'], 2, 'Have difficulty + gerundio: understanding.', 'Have difficulty/trouble/problems + -ing.', 'gramatica', 'Gerundio junio'),
+    q('He avoided _____ the same mistake in the next test.', 'Choose the correct option:', ['make', 'to make', 'making', 'made'], 2, 'Avoid + gerundio: making.', 'Avoid, enjoy, finish, admit, deny y suggest suelen ir con -ing.', 'gramatica', 'Gerundio junio'),
+    q('They decided _____ the answers one more time.', 'Choose the correct option:', ['check', 'to check', 'checking', 'checked'], 1, 'Decide + infinitivo con to: to check.', 'Contraste importante: decide/hope/plan/want + to; avoid/enjoy/finish + -ing.', 'gramatica', 'Gerundio junio'),
+    q('She promised _____ more carefully next time.', 'Choose the correct option:', ['read', 'to read', 'reading', 'readed'], 1, 'Promise + infinitivo con to: to read.', 'Promise/refuse/manage/offer + to. No todos los verbos van con -ing.', 'gramatica', 'Gerundio junio'),
+    q('He denied _____ the answer from another candidate.', 'Choose the correct option:', ['copy', 'to copy', 'copying', 'copied'], 2, 'Deny + gerundio: copying.', 'Deny/admit + -ing. Muy frecuente en huecos de B1/B2.', 'gramatica', 'Gerundio junio'),
+    q('She offered _____ the new student with the platform.', 'Choose the correct option:', ['help', 'to help', 'helping', 'helped'], 1, 'Offer + infinitivo con to: to help.', 'Offer/manage/refuse/promise + to. Usalo para contrastar con los verbos de gerundio.', 'gramatica', 'Gerundio junio')
+  ]},
+  modales_pasiva_junio: { label: 'Modales y pasiva', badge: 'gramatica', desc: 'Obligacion, consejo, permiso y voz pasiva', questions: [
+    q('The answer sheet _____ be completed in black pen.', 'Choose the correct option:', ['must', 'has', 'is', 'does'], 0, 'Must + infinitivo expresa obligacion.', 'Must be completed = debe completarse.', 'gramatica', 'Modales junio'),
+    q('The classroom _____ locked after the exam.', 'Choose the correct option:', ['is', 'was', 'will be', 'has'], 2, 'Futuro pasivo: will be locked.', 'Will be + participio.', 'gramatica', 'Modales junio'),
+    q('You _____ use a calculator in this section.', 'Choose the correct option:', ['must not', 'do not have', 'are not', 'should to'], 0, 'Must not = prohibicion.', 'Prohibicion fuerte: must not.', 'gramatica', 'Modales junio'),
+    q('The forms _____ checked by the secretary yesterday.', 'Choose the correct option:', ['are', 'were', 'have', 'do'], 1, 'Pasiva en pasado plural: were checked.', 'Yesterday + plural passive = were + participio.', 'gramatica', 'Modales junio'),
+    q('Candidates _____ leave the room before the end.', 'Choose the correct option:', ['are not allowed to', 'do not allowed to', 'must to not', 'cannot to'], 0, 'Be allowed to expresa permiso.', 'Not allowed to = no se permite.', 'gramatica', 'Modales junio'),
+    q('You _____ revise the irregular verbs before the test.', 'Choose the correct option:', ['should', 'should to', 'must to', 'can to'], 0, 'Should + infinitivo sin to.', 'Should = consejo.', 'gramatica', 'Modales junio'),
+    q('The message _____ sent to all candidates this morning.', 'Choose the correct option:', ['was', 'were', 'did', 'has'], 0, 'Pasiva singular pasado: was sent.', 'Message singular = was.', 'gramatica', 'Modales junio'),
+    q('We _____ wear helmets during the cycling exercise.', 'Choose the correct option:', ['have to', 'has to', 'can to', 'must to'], 0, 'Have to + infinitivo.', 'We have to; he has to.', 'gramatica', 'Modales junio'),
+    q('The results _____ published on the website.', 'Choose the correct option:', ['will', 'will be', 'will have', 'will to be'], 1, 'Pasiva futura: will be published.', 'Objeto recibe accion.', 'gramatica', 'Modales junio'),
+    q('Students _____ ask for help if they do not understand.', 'Choose the correct option:', ['can', 'can to', 'must to', 'are can'], 0, 'Can + infinitivo sin to.', 'Can = permiso/capacidad.', 'gramatica', 'Modales junio')
+  ]},
+  pronombres_junio: { label: 'Pronombres y relativos', badge: 'gramatica', desc: 'Anything, enough, whose, who, which y where', questions: [
+    q('There is _____ wrong with this computer.', 'Choose the correct option:', ['anything', 'something', 'nothing', 'any'], 1, 'Frase afirmativa: something wrong.', 'Something en afirmativas; anything en preguntas/negativas.', 'gramatica', 'Pronombres junio'),
+    q('I did not see _____ in the corridor.', 'Choose the correct option:', ['somebody', 'anybody', 'nobody', 'somewhere'], 1, 'Negativa con not: anybody.', 'No uses doble negacion.', 'gramatica', 'Pronombres junio'),
+    q('The woman _____ helped us works at reception.', 'Choose the correct option:', ['which', 'who', 'where', 'whose'], 1, 'Who para personas.', 'Personas: who/that.', 'gramatica', 'Pronombres junio'),
+    q('This is the office _____ we collected the forms.', 'Choose the correct option:', ['who', 'where', 'which', 'whose'], 1, 'Where para lugares.', 'Place + where.', 'gramatica', 'Pronombres junio'),
+    q('The candidate _____ bag was lost reported it immediately.', 'Choose the correct option:', ['who', 'whose', 'which', 'where'], 1, 'Whose indica posesion.', 'Whose bag = cuyo bolso/mochila.', 'gramatica', 'Pronombres junio'),
+    q('We have _____ chairs for everyone.', 'Choose the correct option:', ['enough', 'too much', 'little', 'anybody'], 0, 'Enough chairs = suficientes sillas.', 'Enough + noun.', 'gramatica', 'Pronombres junio'),
+    q('The map _____ you gave me was very useful.', 'Choose the correct option:', ['who', 'which', 'where', 'whose'], 1, 'Which para cosas.', 'Things: which/that.', 'gramatica', 'Pronombres junio'),
+    q('Is there _____ near the base where we can buy food?', 'Choose the correct option:', ['somewhere', 'anywhere', 'nowhere', 'anything'], 1, 'Pregunta: anywhere.', 'Anywhere en preguntas.', 'gramatica', 'Pronombres junio'),
+    q('He has _____ money to buy the ticket.', 'Choose the correct option:', ['enough', 'many', 'few', 'anybody'], 0, 'Enough money = dinero suficiente.', 'Enough con incontables tambien.', 'gramatica', 'Pronombres junio'),
+    q('The place _____ we met is next to the station.', 'Choose the correct option:', ['where', 'who', 'whose', 'which person'], 0, 'Where para lugar.', 'Place where...', 'gramatica', 'Pronombres junio')
+  ]},
+  conectores_junio: { label: 'Conectores B1', badge: 'gramatica', desc: 'Because, although, so, despite, unless, in case', questions: [
+    q('We took a taxi _____ we were late.', 'Choose the correct option:', ['because', 'although', 'so', 'unless'], 0, 'Because introduce causa.', 'Because responde a why.', 'gramatica', 'Conectores junio'),
+    q('It was cold, _____ we continued the exercise.', 'Choose the correct option:', ['because', 'but', 'so', 'unless'], 1, 'But introduce contraste.', 'Cold pero siguieron.', 'gramatica', 'Conectores junio'),
+    q('_____ the traffic, we arrived on time.', 'Choose the correct option:', ['Despite', 'Although', 'Because', 'So'], 0, 'Despite + noun.', 'Despite the traffic; although there was traffic.', 'gramatica', 'Conectores junio'),
+    q('You will miss the bus _____ you leave now.', 'Choose the correct option:', ['unless', 'because', 'although', 'so'], 0, 'Unless = if not.', 'Miss the bus unless you leave = si no sales.', 'gramatica', 'Conectores junio'),
+    q('Take your ID card _____ they ask for it.', 'Choose the correct option:', ['in case', 'despite', 'although', 'because of'], 0, 'In case = por si.', 'In case + posibilidad.', 'gramatica', 'Conectores junio'),
+    q('She studied hard _____ pass the exam.', 'Choose the correct option:', ['to', 'for', 'because', 'although'], 0, 'To + infinitivo expresa finalidad.', 'To pass = para aprobar.', 'gramatica', 'Conectores junio'),
+    q('The exercise was cancelled _____ the storm.', 'Choose the correct option:', ['because', 'because of', 'although', 'so'], 1, 'Because of + noun.', 'Because + clause; because of + noun.', 'gramatica', 'Conectores junio'),
+    q('He spoke slowly _____ everyone could follow him.', 'Choose the correct option:', ['so that', 'because of', 'despite', 'unless'], 0, 'So that + subject + verb expresa finalidad.', 'So that = para que.', 'gramatica', 'Conectores junio'),
+    q('_____ she was tired, she checked every answer.', 'Choose the correct option:', ['Although', 'Because', 'So', 'Unless'], 0, 'Although introduce contraste.', 'Aunque estaba cansada, reviso.', 'gramatica', 'Conectores junio'),
+    q('The printer was broken, _____ we wrote the answers by hand.', 'Choose the correct option:', ['so', 'although', 'unless', 'despite'], 0, 'So introduce consecuencia.', 'Causa -> so -> resultado.', 'gramatica', 'Conectores junio')
+  ]},
+  vocabulario_junio: { label: 'Vocabulario y collocations', badge: 'gramatica', desc: 'Make/do/take, preposiciones y phrasal verbs frecuentes', questions: [
+    q('Please _____ sure your name is on every page.', 'Choose the correct option:', ['do', 'make', 'take', 'get'], 1, 'Make sure = asegurarse.', 'Collocation fija.', 'gramatica', 'Vocabulario junio'),
+    q('The event will _____ place next week.', 'Choose the correct option:', ['take', 'make', 'do', 'get'], 0, 'Take place = tener lugar.', 'Events take place.', 'gramatica', 'Vocabulario junio'),
+    q('She is responsible _____ updating the list.', 'Choose the correct option:', ['of', 'for', 'to', 'with'], 1, 'Responsible for + noun/-ing.', 'Preposicion fija.', 'gramatica', 'Vocabulario junio'),
+    q('He _____ progress after practising every day.', 'Choose the correct option:', ['did', 'made', 'took', 'gave'], 1, 'Make progress.', 'Make progress, make an effort.', 'gramatica', 'Vocabulario junio'),
+    q('The meeting was put _____ until Friday.', 'Choose the correct option:', ['off', 'up', 'out', 'over'], 0, 'Put off = posponer.', 'Phrasal verb frecuente.', 'gramatica', 'Vocabulario junio'),
+    q('I need to fill _____ this form.', 'Choose the correct option:', ['in', 'on', 'at', 'by'], 0, 'Fill in a form = rellenar.', 'Form -> fill in.', 'gramatica', 'Vocabulario junio'),
+    q('The train was delayed, so we arrived _____ than expected.', 'Choose the correct option:', ['late', 'later', 'latest', 'lately'], 1, 'Comparativo: later than expected.', 'Than pide comparativo.', 'gramatica', 'Vocabulario junio'),
+    q('The instructions were clear and easy to _____.', 'Choose the correct option:', ['follow', 'make', 'miss', 'lose'], 0, 'Follow instructions = seguir instrucciones.', 'Collocation fija.', 'gramatica', 'Vocabulario junio'),
+    q('He apologised _____ being late.', 'Choose the correct option:', ['for', 'of', 'to', 'with'], 0, 'Apologise for + -ing/noun.', 'Preposicion fija: for.', 'gramatica', 'Vocabulario junio'),
+    q('We ran _____ of time before the last question.', 'Choose the correct option:', ['out', 'off', 'up', 'down'], 0, 'Run out of time = quedarse sin tiempo.', 'Phrasal verb muy util.', 'gramatica', 'Vocabulario junio')
+  ]}
+};
+
+const REAL_GRAMMAR = {
+  huecos_extra_junio: { label: 'Huecos extra - lote junio', badge: 'gramatica', desc: '15 huecos mezclados nuevos para simulacro', questions: [
+    q('This question is _____ difficult than the previous one.', 'Choose the correct option:', ['more', 'most', 'much', 'many'], 0, 'Comparativo con adjetivo largo: more difficult.', 'More + adjective + than.', 'gramatica', 'Huecos extra junio'),
+    q('He has worked here _____ March.', 'Choose the correct option:', ['for', 'since', 'during', 'ago'], 1, 'Since + punto de inicio.', 'Since March; for three months.', 'gramatica', 'Huecos extra junio'),
+    q('There are _____ people in the waiting room.', 'Choose the correct option:', ['too many', 'too much', 'little', 'any'], 0, 'People es plural contable: too many.', 'Many con contables plurales.', 'gramatica', 'Huecos extra junio'),
+    q('The bag is not big _____ for all the books.', 'Choose the correct option:', ['enough', 'too', 'such', 'so'], 0, 'Adjective + enough: big enough.', 'Enough va despues del adjetivo.', 'gramatica', 'Huecos extra junio'),
+    q('She asked me _____ I had finished.', 'Choose the correct option:', ['if', 'what', 'which', 'whose'], 0, 'If introduce pregunta indirecta de si/no.', 'Ask if/whether...', 'gramatica', 'Huecos extra junio'),
+    q('I would like _____ a coffee, please.', 'Choose the correct option:', ['have', 'to have', 'having', 'had'], 1, 'Would like + to infinitive.', 'Would like to...', 'gramatica', 'Huecos extra junio'),
+    q('The documents were sent _____ email.', 'Choose the correct option:', ['by', 'for', 'with', 'at'], 0, 'By email = por correo electronico.', 'Medio de envio: by.', 'gramatica', 'Huecos extra junio'),
+    q('If it rains, we _____ inside.', 'Choose the correct option:', ['train', 'will train', 'trained', 'have trained'], 1, 'First conditional: if + present, will + infinitive.', 'If it rains, we will...', 'gramatica', 'Huecos extra junio'),
+    q('He is the man _____ repaired the radio.', 'Choose the correct option:', ['who', 'which', 'where', 'whose'], 0, 'Who para persona sujeto.', 'The man who...', 'gramatica', 'Huecos extra junio'),
+    q('I am used to _____ early.', 'Choose the correct option:', ['get up', 'getting up', 'got up', 'gets up'], 1, 'Be used to + gerundio.', 'No confundir con used to + infinitivo.', 'gramatica', 'Huecos extra junio'),
+    q('We do not have _____ information yet.', 'Choose the correct option:', ['many', 'much', 'few', 'a few'], 1, 'Information es incontable: much.', 'Much con incontables.', 'gramatica', 'Huecos extra junio'),
+    q('The test was easier _____ I expected.', 'Choose the correct option:', ['that', 'than', 'then', 'as'], 1, 'Comparativo + than.', 'Easier than...', 'gramatica', 'Huecos extra junio'),
+    q('She has _____ finished the report.', 'Choose the correct option:', ['yet', 'already', 'still', 'any'], 1, 'Already en afirmativa: ya.', 'Already suele ir con present perfect afirmativo.', 'gramatica', 'Huecos extra junio'),
+    q('The candidate did _____ well in the interview.', 'Choose the correct option:', ['quite', 'quiet', 'quit', 'quick'], 0, 'Quite well = bastante bien.', 'No confundir quite con quiet.', 'gramatica', 'Huecos extra junio'),
+    q('They arrived _____ time to hear the instructions.', 'Choose the correct option:', ['in', 'on', 'at', 'by'], 0, 'In time = con tiempo suficiente.', 'On time = puntual; in time = a tiempo para algo.', 'gramatica', 'Huecos extra junio')
+  ]}
+};
+
+const REAL_READING = {
+  textos_extra_junio: { label: 'Textos extra - lote junio', badge: 'sinonimos', desc: '12 textos cortos nuevos para simulacro', questions: [
+    q('The notice says that candidates should not write anything on the question booklet. Only answers on the answer sheet will be marked.', 'Where must candidates write their answers?', ['On the answer sheet', 'On the booklet only', 'On the desk', 'On their ID card'], 0, 'Only answers on the answer sheet will be marked.', 'Only marca la opcion valida.', 'sinonimos', 'Textos extra junio'),
+    q('The practice room is small, so students are asked to book a seat before arriving.', 'Why should students book a seat?', ['Because space is limited', 'Because the room is closed', 'Because the test is online', 'Because seats are expensive'], 0, 'Small room implica espacio limitado.', 'Busca causa implicita sencilla.', 'sinonimos', 'Textos extra junio'),
+    q('The candidate was not sure about three answers, so he marked them and returned to them later.', 'What did the candidate do with uncertain answers?', ['He came back to them later', 'He left the exam', 'He copied them', 'He deleted all answers'], 0, 'Marked them and returned to them later = las seÃ±alo para volver despues.', 'Return to = come back to.', 'sinonimos', 'Textos extra junio'),
+    q('The academy advises students to study little and often instead of doing one long session every week.', 'What does the academy recommend?', ['Short regular study', 'One long weekly session', 'No practice tests', 'Studying only grammar'], 0, 'Little and often = poco pero con frecuencia.', 'Regularidad gana a maraton semanal.', 'sinonimos', 'Textos extra junio'),
+    q('The weather improved in the afternoon, so the outdoor activity was not cancelled.', 'Why did the activity continue?', ['The weather got better', 'It moved indoors', 'It was compulsory', 'There was no instructor'], 0, 'Improved = got better.', 'Sinomino directo.', 'sinonimos', 'Textos extra junio'),
+    q('The new checklist reduced mistakes because candidates could see what they had already completed.', 'Why was the checklist useful?', ['It helped candidates track completed tasks', 'It made the test shorter', 'It gave the answers', 'It replaced the supervisor'], 0, 'See what they had already completed = seguir tareas completadas.', 'Track/check progress es idea clave.', 'sinonimos', 'Textos extra junio'),
+    q('The instructor explained the rule again as several candidates had misunderstood it.', 'Why was the rule explained again?', ['Some candidates had not understood it', 'The instructor forgot it', 'The rule was cancelled', 'Everyone already knew it'], 0, 'Misunderstood = no entendieron bien.', 'Prefix mis- suele indicar error.', 'sinonimos', 'Textos extra junio'),
+    q('The train station is opposite the main gate, so candidates can find it easily.', 'Where is the station?', ['Across from the main gate', 'Inside the base', 'Behind the classroom', 'Far from the gate'], 0, 'Opposite = enfrente de/across from.', 'Preposiciones de lugar frecuentes.', 'sinonimos', 'Textos extra junio'),
+    q('The supervisor collected the papers immediately after the timer stopped.', 'When were the papers collected?', ['As soon as the time ended', 'Before the test began', 'During the break', 'The next morning'], 0, 'Immediately after the timer stopped = en cuanto termino el tiempo.', 'Immediately after = as soon as after.', 'sinonimos', 'Textos extra junio'),
+    q('The candidate passed the minimum score, but he wants to improve because English counts towards the final mark.', 'Why does he want to improve?', ['English affects the final mark', 'He failed the minimum', 'The test is optional', 'He wants fewer questions'], 0, 'Counts towards the final mark = cuenta para la nota final.', 'No basta con minimo si suma en ranking.', 'sinonimos', 'Textos extra junio'),
+    q('The office is closed at lunchtime. Forms can be submitted before 13:00 or after 15:00.', 'When can forms be submitted?', ['Before 13:00 or after 15:00', 'Only at 14:00', 'During lunch', 'Only at night'], 0, 'El horario excluye la comida.', 'Before/after definen ventana permitida.', 'sinonimos', 'Textos extra junio'),
+    q('The listening files are short, but candidates may hear each one only once.', 'What is important about the listening files?', ['They are played only one time', 'They are very long', 'They can be paused', 'They are optional'], 0, 'Only once = una sola vez.', 'Only + cantidad limita.', 'sinonimos', 'Textos extra junio')
+  ]}
+};
+
+const READING_EXTRA = [];
+const GRAMMAR_EXTRA = [];
+
+function getAllReadingQuestions() {
+  var pool = [];
+  Object.keys(READING).forEach(function(k){
+    READING[k].questions.forEach(function(q){ pool.push({...q, badge:READING[k].badge, topic:READING[k].label, topicKey:k}); });
+  });
+  Object.keys(REAL_READING).forEach(function(k){
+    REAL_READING[k].questions.forEach(function(q){ pool.push({...q, topic:REAL_READING[k].label, topicKey:k}); });
+  });
+  READING_EXTRA.forEach(function(q){ pool.push({...q, topicKey:'extra'}); });
+  return pool;
+}
+
+function getAllGrammarQuestions() {
+  var pool = [];
+  Object.keys(GRAMMAR).forEach(function(k){
+    GRAMMAR[k].questions.forEach(function(q){ pool.push({...q, badge:GRAMMAR[k].badge, topic:GRAMMAR[k].label, topicKey:k}); });
+  });
+  Object.keys(REAL_GRAMMAR).forEach(function(k){
+    REAL_GRAMMAR[k].questions.forEach(function(q){ pool.push({...q, badge:REAL_GRAMMAR[k].badge, topic:REAL_GRAMMAR[k].label, topicKey:k}); });
+  });
+  GRAMMAR_EXTRA.forEach(function(q){ pool.push({...q, topicKey:'extra'}); });
+  return pool;
+}
+
+function shuffle(arr) {
+  for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   FULL EXAM — 30 reading + 30 grammar, random pick each time
+══════════════════════════════════════════════════════════════════ */
+function buildFullExam() {
+  var reading = shuffle(getAllReadingQuestions()).slice(0, 30);
+  var grammar = shuffle(getAllGrammarQuestions()).slice(0, 30);
+  return shuffle(reading.concat(grammar));
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MIXED QUIZ (20 questions, random selection — kept for compatibility)
+══════════════════════════════════════════════════════════════════ */
+function buildMixedQuiz() {
+  return buildFullExam().slice(0, 20);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════════════════ */
+var state = {
+  currentModule: null,
+  currentTopic: null,
+  questions: [],
+  qi: 0,
+  answers: [],
+  startTime: null,
+  timerInterval: null
+};
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem('b1_progress') || '{}'); } catch(e) { return {}; }
+}
+function saveProgress(data) {
+  try { localStorage.setItem('b1_progress', JSON.stringify(data)); } catch(e) {}
+}
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem('b1_history') || '[]'); } catch(e) { return []; }
+}
+function saveHistory(record) {
+  var h = loadHistory();
+  h.push(record);
+  if(h.length > 50) h = h.slice(-50);
+  try { localStorage.setItem('b1_history', JSON.stringify(h)); } catch(e) {}
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════════════════════ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  clearInterval(state.timerInterval);
+  updateHomeStats();
+  showScreen('home');
+}
+
+function goModuleSelect(mod) {
+  state.currentModule = mod;
+  var title = document.getElementById('module-title');
+  var sub = document.getElementById('module-sub');
+  var grid = document.getElementById('topic-grid');
+  var progress = loadProgress();
+
+  if(mod === 'reading') {
+    title.textContent = 'Comprensión escrita — Elige el tipo de trampa';
+    sub.textContent = 'Entrena textos cortos con cuatro opciones, como en la convocatoria.';
+    grid.innerHTML = '';
+    Object.keys(READING).forEach(function(k) {
+      var t = READING[k];
+      var p = progress['r_'+k] || {correct:0, total:0};
+      var pct = p.total ? Math.round(p.correct/p.total*100) : null;
+      var btn = document.createElement('button');
+      btn.className = 'topic-btn';
+      btn.onclick = function(){startQuiz('reading', k);};
+      btn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">'+t.label+'</div><div class="topic-btn-detail">'+t.desc+'</div></div><div class="topic-btn-score'+(pct!==null?' done':'')+'">'+
+        (pct!==null ? pct+'%' : '—')+'</div>';
+      grid.appendChild(btn);
+    });
+    // All reading
+    var allBtn = document.createElement('button');
+    allBtn.className = 'topic-btn';
+    allBtn.onclick = function(){startQuiz('reading','all');};
+    allBtn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todos los bloques</div><div class="topic-btn-detail">Textos cortos mezclados — formato 2026</div></div><div class="topic-btn-score">→</div>';
+    grid.appendChild(allBtn);
+  } else {
+    title.textContent = 'Gramática y vocabulario — Elige la categoría';
+    sub.textContent = 'Huecos en blanco con cuatro opciones, nivel B1 MCERL.';
+    grid.innerHTML = '';
+    Object.keys(GRAMMAR).forEach(function(k) {
+      var t = GRAMMAR[k];
+      var p = progress['g_'+k] || {correct:0, total:0};
+      var pct = p.total ? Math.round(p.correct/p.total*100) : null;
+      var btn = document.createElement('button');
+      btn.className = 'topic-btn';
+      btn.onclick = function(){startQuiz('grammar', k);};
+      btn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">'+t.label+'</div><div class="topic-btn-detail">'+t.desc+'</div></div><div class="topic-btn-score'+(pct!==null?' done':'')+'">'+
+        (pct!==null ? pct+'%' : '—')+'</div>';
+      grid.appendChild(btn);
+    });
+    var allBtnG = document.createElement('button');
+    allBtnG.className = 'topic-btn';
+    allBtnG.onclick = function(){startQuiz('grammar','all');};
+    allBtnG.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Todas las categorías</div><div class="topic-btn-detail">Huecos mezclados — repaso completo</div></div><div class="topic-btn-score">→</div>';
+    grid.appendChild(allBtnG);
+  }
+
+  if(mod === 'real') {
+    title.textContent = 'Convocatoria 2026 — Formato confirmado';
+    sub.textContent = 'Preguntas de gramática y comprensión de convocatorias reales anteriores (muestra gratuita oficial).';
+    grid.innerHTML = '';
+    // Grammar topics
+    Object.keys(REAL_GRAMMAR).forEach(function(k) {
+      var t = REAL_GRAMMAR[k];
+      var p = progress['rg_'+k] || {correct:0, total:0};
+      var pct = p.total ? Math.round(p.correct/p.total*100) : null;
+      var btn = document.createElement('button');
+      btn.className = 'topic-btn';
+      btn.onclick = function(){startQuiz('real_grammar', k);};
+      btn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">'+t.label+'</div><div class="topic-btn-detail">'+t.desc+'</div></div><div class="topic-btn-score'+(pct!==null?' done':'')+'">'+
+        (pct!==null ? pct+'%' : '—')+'</div>';
+      grid.appendChild(btn);
+    });
+    // Reading real
+    var p2 = progress['rr_textos_reales'] || {correct:0, total:0};
+    var pct2 = p2.total ? Math.round(p2.correct/p2.total*100) : null;
+    var readBtn = document.createElement('button');
+    readBtn.className = 'topic-btn';
+    readBtn.onclick = function(){startQuiz('real_reading', 'textos_reales');};
+    readBtn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name">Comprensión lectora — Textos reales</div><div class="topic-btn-detail">Textos cortos extra tipo convocatoria</div></div><div class="topic-btn-score'+(pct2!==null?' done':'')+'">'+
+      (pct2!==null ? pct2+'%' : '—')+'</div>';
+    grid.appendChild(readBtn);
+    // All real
+    var allRealBtn = document.createElement('button');
+    allRealBtn.className = 'topic-btn';
+    allRealBtn.onclick = function(){startQuiz('real','all');};
+    allRealBtn.innerHTML = '<div class="topic-btn-left"><div class="topic-btn-name" style="color:#10b981">★ Todo junto — Examen completo real</div><div class="topic-btn-detail">60 preguntas de gramática + comprensión mezcladas</div></div><div class="topic-btn-score">→</div>';
+    grid.appendChild(allRealBtn);
+  }
+
+  showScreen('module');
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   QUIZ START
+══════════════════════════════════════════════════════════════════ */
+function startQuiz(mod, topic) {
+  var questions = [];
+  if(mod === 'mixed') {
+    questions = buildFullExam();
+  } else if(mod === 'full_exam') {
+    questions = buildFullExam();
+  } else if(mod === 'reading') {
+    if(topic === 'all') {
+      Object.keys(READING).forEach(function(k){
+        READING[k].questions.forEach(function(q){ questions.push({...q, badge:READING[k].badge, topicKey:k}); });
+      });
+    } else {
+      READING[topic].questions.forEach(function(q){ questions.push({...q, badge:READING[topic].badge, topicKey:topic}); });
+    }
+  } else if(mod === 'grammar') {
+    if(topic === 'all') {
+      Object.keys(GRAMMAR).forEach(function(k){
+        GRAMMAR[k].questions.forEach(function(q){ questions.push({...q, badge:GRAMMAR[k].badge, topicKey:k}); });
+      });
+    } else {
+      GRAMMAR[topic].questions.forEach(function(q){ questions.push({...q, badge:GRAMMAR[topic].badge, topicKey:topic}); });
+    }
+  } else if(mod === 'real_grammar') {
+    if(topic === 'all') {
+      Object.keys(REAL_GRAMMAR).forEach(function(k){
+        REAL_GRAMMAR[k].questions.forEach(function(q){ questions.push({...q, badge:REAL_GRAMMAR[k].badge, topicKey:k, topic:REAL_GRAMMAR[k].label}); });
+      });
+    } else {
+      REAL_GRAMMAR[topic].questions.forEach(function(q){ questions.push({...q, badge:REAL_GRAMMAR[topic].badge, topicKey:topic, topic:REAL_GRAMMAR[topic].label}); });
+    }
+  } else if(mod === 'real_reading') {
+    REAL_READING[topic].questions.forEach(function(q){ questions.push({...q, badge:REAL_READING[topic].badge, topicKey:topic, topic:REAL_READING[topic].label}); });
+  } else if(mod === 'real') {
+    if(topic === 'all') {
+      Object.keys(REAL_GRAMMAR).forEach(function(k){
+        REAL_GRAMMAR[k].questions.forEach(function(q){ questions.push({...q, badge:REAL_GRAMMAR[k].badge, topicKey:k, topic:REAL_GRAMMAR[k].label}); });
+      });
+      Object.keys(REAL_READING).forEach(function(k){
+        REAL_READING[k].questions.forEach(function(q){ questions.push({...q, badge:REAL_READING[k].badge, topicKey:k, topic:REAL_READING[k].label}); });
+      });
+    }
+  }
+  // shuffle
+  for(var i=questions.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[questions[i],questions[j]]=[questions[j],questions[i]];}
+
+  state.currentModule = mod;
+  state.currentTopic = topic;
+  state.questions = questions;
+  state.qi = 0;
+  state.answers = [];
+  state.startTime = Date.now();
+
+  clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(updateTimer, 1000);
+
+  showScreen('quiz');
+  renderQuestion();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TIMER
+══════════════════════════════════════════════════════════════════ */
+function updateTimer() {
+  var elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+  var m = Math.floor(elapsed/60);
+  var s = elapsed % 60;
+  var el = document.getElementById('timer');
+  el.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  el.className = 'quiz-timer' + (elapsed > 45*60 ? ' warn' : '');
+}
+
+function getElapsedStr() {
+  var elapsed = Math.floor((Date.now() - state.startTime) / 1000);
+  var m = Math.floor(elapsed/60);
+  var s = elapsed % 60;
+  return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RENDER QUESTION
+══════════════════════════════════════════════════════════════════ */
+function renderQuestion() {
+  var q = state.questions[state.qi];
+  var total = state.questions.length;
+  var pct = Math.round((state.qi / total) * 100);
+
+  document.getElementById('quiz-prog-text').textContent = 'Pregunta '+(state.qi+1)+' de '+total;
+  document.getElementById('quiz-topic-label').textContent = q.topic || (READING[q.topicKey]||GRAMMAR[q.topicKey]||{}).label || '';
+  document.getElementById('quiz-bar-fill').style.width = pct + '%';
+
+  var badgeClass = q.badge || 'gramatica';
+  var html = '<div class="type-badge '+badgeClass+'">'+
+    (q.badge==='numerica'?'Trampa numérica':q.badge==='personajes'?'Personajes múltiples':q.badge==='sinonimos'?'Sinónimo oculto':'Gramática')+'</div>';
+
+  if(q.passage) {
+    html += '<div class="passage">'+q.passage+'</div>';
+  }
+  html += '<div class="question-text">'+q.question+'</div>';
+  html += '<div class="opts" id="opts">';
+  q.opts.forEach(function(opt, i) {
+    html += '<button class="opt" id="opt'+i+'" onclick="answer('+i+')">'+
+      '<span class="opt-letter">'+String.fromCharCode(65+i)+'</span>'+
+      '<span>'+opt+'</span></button>';
+  });
+  html += '</div>';
+  html += '<div class="feedback" id="feedback"></div>';
+
+  document.getElementById('quiz-content').innerHTML = html;
+  document.getElementById('btn-next').className = 'btn-next';
+  document.getElementById('btn-next').textContent = state.qi < total-1 ? 'Siguiente pregunta →' : 'Ver resultados →';
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   ANSWER
+══════════════════════════════════════════════════════════════════ */
+function answer(oi) {
+  var q = state.questions[state.qi];
+  var isOk = oi === q.correct;
+  state.answers.push({qi: state.qi, chosen: oi, correct: q.correct, isOk: isOk});
+
+  q.opts.forEach(function(_, i) {
+    var btn = document.getElementById('opt'+i);
+    btn.disabled = true;
+    if(i === q.correct) btn.classList.add(isOk && i===oi ? 'correct' : 'reveal');
+    if(i === oi && !isOk) btn.classList.add('wrong');
+  });
+
+  var fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (isOk ? 'ok' : 'err');
+  fb.innerHTML = (isOk ? '<strong>Correcto.</strong> ' : '<strong>Incorrecto.</strong> ') +
+    (q.explanation || '') +
+    (q.strategy ? '<div class="strategy-box"><b>Estrategia:</b> '+q.strategy+'</div>' : '');
+
+  document.getElementById('btn-next').className = 'btn-next visible';
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   NEXT QUESTION
+══════════════════════════════════════════════════════════════════ */
+function nextQuestion() {
+  state.qi++;
+  if(state.qi >= state.questions.length) {
+    showResults();
+  } else {
+    renderQuestion();
+    window.scrollTo(0,0);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RESULTS
+══════════════════════════════════════════════════════════════════ */
+function showResults() {
+  clearInterval(state.timerInterval);
+  var elapsed = getElapsedStr();
+  var correct = state.answers.filter(function(a){return a.isOk;}).length;
+  var total = state.questions.length;
+  var pct = Math.round(correct/total*100);
+
+  // Save progress
+  var progress = loadProgress();
+  var h = loadHistory();
+  var today = new Date().toDateString();
+  var todayH = h.filter(function(x){return x.date===today;});
+  var todayC = todayH.reduce(function(s,x){return s+x.correct;},0);
+  var todayT = todayH.reduce(function(s,x){return s+x.total;},0);
+
+  if(state.currentModule==='reading' && state.currentTopic && state.currentTopic!=='all' && state.currentTopic!=='mixed') {
+    var key = 'r_'+state.currentTopic;
+    var old = progress[key]||{correct:0,total:0};
+    progress[key] = {correct:old.correct+correct, total:old.total+total};
+  } else if(state.currentModule==='grammar' && state.currentTopic && state.currentTopic!=='all' && state.currentTopic!=='mixed') {
+    var key2 = 'g_'+state.currentTopic;
+    var old2 = progress[key2]||{correct:0,total:0};
+    progress[key2] = {correct:old2.correct+correct, total:old2.total+total};
+  } else if(state.currentModule==='real_grammar' && state.currentTopic && state.currentTopic!=='all') {
+    var key3 = 'rg_'+state.currentTopic;
+    var old3 = progress[key3]||{correct:0,total:0};
+    progress[key3] = {correct:old3.correct+correct, total:old3.total+total};
+  } else if(state.currentModule==='real_reading' && state.currentTopic) {
+    var key4 = 'rr_'+state.currentTopic;
+    var old4 = progress[key4]||{correct:0,total:0};
+    progress[key4] = {correct:old4.correct+correct, total:old4.total+total};
+  }
+  saveProgress(progress);
+  saveHistory({date:today, correct:correct, total:total, module:state.currentModule, topic:state.currentTopic});
+
+  // Score display
+  var scoreEl = document.getElementById('res-score-big');
+  scoreEl.textContent = correct+'/'+total;
+  scoreEl.className = 'results-score-big ' + (pct>=90?'excellent':pct>=75?'good':pct>=60?'ok':'bad');
+
+  var labels = {excellent:'Excelente — nivel listo para el examen', good:'Buen resultado — sigue practicando', ok:'Aceptable — refuerza los errores', bad:'Necesita más práctica en este bloque'};
+  document.getElementById('res-label').textContent = pct+'% de acierto · '+labels[pct>=90?'excellent':pct>=75?'good':pct>=60?'ok':'bad'];
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = total-correct;
+  document.getElementById('res-time').textContent = elapsed;
+
+  // Review
+  var list = document.getElementById('review-list');
+  list.innerHTML = '';
+  state.answers.forEach(function(a) {
+    var q = state.questions[a.qi];
+    var div = document.createElement('div');
+    div.className = 'review-item' + (a.isOk ? '' : ' wrong-item');
+    var chosenText = q.opts[a.chosen];
+    var correctText = q.opts[a.correct];
+    div.innerHTML = '<div class="review-q">P'+(a.qi+1)+': '+q.question+'</div>'+
+      '<div class="review-answer">'+
+        (a.isOk
+          ? '<span class="r">Correcto: '+correctText+'</span>'
+          : '<span class="w">Tu respuesta: '+chosenText+'</span> → <span class="r">Correcta: '+correctText+'</span>')+
+      '</div>'+
+      (a.isOk ? '' : '<div class="review-explanation">'+(q.explanation||'')+'</div>');
+    list.appendChild(div);
+  });
+
+  document.getElementById('res-retry').onclick = function(){startQuiz(state.currentModule, state.currentTopic);};
+  showScreen('results');
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   HOME STATS
+══════════════════════════════════════════════════════════════════ */
+function updateHomeStats() {
+  var h = loadHistory();
+  var p = loadProgress();
+  var today = new Date().toDateString();
+  var todayH = h.filter(function(x){return x.date===today;});
+  var todayC = todayH.reduce(function(s,x){return s+x.correct;},0);
+  var todayT = todayH.reduce(function(s,x){return s+x.total;},0);
+
+  document.getElementById('home-sessions').textContent = h.length;
+  document.getElementById('home-total').textContent = h.reduce(function(s,x){return s+x.total;},0);
+
+  var pctEl = document.getElementById('home-pct');
+  var subEl = document.getElementById('home-pct-sub');
+  if(todayT > 0) {
+    var pct = Math.round(todayC/todayT*100);
+    pctEl.textContent = pct+'%';
+    pctEl.className = 'val '+(pct>=90?'accent':pct>=75?'accent':'amber');
+    subEl.textContent = todayC+'/'+todayT+' hoy';
+  } else {
+    pctEl.textContent = '—';
+    subEl.textContent = 'Sin sesiones hoy';
+  }
+
+  // Reading progress
+  var rKeys = Object.keys(READING);
+  var rC = 0, rT = 0;
+  rKeys.forEach(function(k){ var x=p['r_'+k]||{correct:0,total:0}; rC+=x.correct; rT+=x.total; });
+  var rMax = rKeys.reduce(function(s,k){return s+READING[k].questions.length;},0) * 3;
+  document.getElementById('prog-reading').style.width = rT>0 ? Math.min(100, Math.round(rC/Math.max(rT,1)*100))+'%' : '0%';
+
+  // Grammar progress
+  var gKeys = Object.keys(GRAMMAR);
+  var gC = 0, gT = 0;
+  gKeys.forEach(function(k){ var x=p['g_'+k]||{correct:0,total:0}; gC+=x.correct; gT+=x.total; });
+  document.getElementById('prog-grammar').style.width = gT>0 ? Math.min(100, Math.round(gC/Math.max(gT,1)*100))+'%' : '0%';
+
+  // Mixed
+  var mix = h.filter(function(x){return x.module==='mixed';});
+  var mC = mix.reduce(function(s,x){return s+x.correct;},0);
+  var mT = mix.reduce(function(s,x){return s+x.total;},0);
+  document.getElementById('prog-mixed').style.width = mT>0 ? Math.min(100, Math.round(mC/mT*100))+'%' : '0%';
+
+  // Real exams
+  var rgKeys = Object.keys(REAL_GRAMMAR);
+  var rgC = 0, rgT = 0;
+  rgKeys.forEach(function(k){ var x=p['rg_'+k]||{correct:0,total:0}; rgC+=x.correct; rgT+=x.total; });
+  var rrX = p['rr_textos_reales']||{correct:0,total:0}; rgC+=rrX.correct; rgT+=rrX.total;
+  var progReal = document.getElementById('prog-real');
+  if(progReal) progReal.style.width = rgT>0 ? Math.min(100, Math.round(rgC/rgT*100))+'%' : '0%';
+}
+
+function confirmExit() {
+  if(confirm('¿Salir del ejercicio? Perderás el progreso de esta sesión.')) { goHome(); }
+}
+
+function getBankStats() {
+  return {
+    reading: getAllReadingQuestions().length,
+    grammar: getAllGrammarQuestions().length
+  };
+}
+
+// Init
+updateHomeStats();
+
+// Show bank stats in footer
+(function() {
+  var stats = getBankStats();
+  var footer = document.querySelector('.footer');
+  if(footer) footer.innerHTML = 'Banco nuevo junio 2026: <b>'+ stats.reading +'</b> textos · <b>'+ stats.grammar +'</b> huecos · <b>'+(stats.reading+stats.grammar)+'</b> preguntas únicas — B1 · Convocatoria 2026';
+})();
+</script>
+</body>
+</html>
